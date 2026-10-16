@@ -1,0 +1,1190 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Контакты | DotaFresh</title>
+
+
+    <style>
+
+        /* =========================================================
+           ШРИФТЫ
+        ========================================================= */
+
+        @font-face {
+            font-family: 'Gilroy-Medium';
+            src: url("{{ url_for('static', filename='fonts/Gilroy-Medium_0.ttf') }}") format('truetype');
+        }
+
+        @font-face {
+            font-family: 'Gilroy-Bold';
+            src: url("{{ url_for('static', filename='fonts/Gilroy-Bold_0.ttf') }}") format('truetype');
+        }
+
+        @font-face {
+            font-family: 'AAvanteBsExtraBold';
+            src: url("{{ url_for('static', filename='fonts/a_AvanteBs-ExtraBold.ttf') }}") format('truetype');
+        }
+
+        @font-face {
+            font-family: 'Naston';
+            src: url("{{ url_for('static', filename='fonts/Naston-Regular.ttf') }}") format('truetype');
+        }
+
+
+        /* =========================================================
+           RESET
+        ========================================================= */
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+
+        body {
+            min-height: 100vh;
+            background: #06060d;
+            color: #ffffff;
+            font-family: 'Gilroy-Medium', Arial, sans-serif;
+        }
+
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+
+        /* =========================================================
+           HEADER
+        ========================================================= */
+
+        header {
+            width: 100%;
+            height: 75px;
+
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+
+            display: flex;
+            align-items: center;
+
+            padding: 0 34px;
+
+            background: rgba(7, 6, 18, 0.92);
+
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+        }
+
+
+        /* =========================================================
+           LOGO
+        ========================================================= */
+
+        .logo {
+            height: 75px;
+
+            display: flex;
+            align-items: center;
+
+            flex-shrink: 0;
+
+            text-decoration: none !important;
+        }
+
+
+        .logo:hover {
+            text-decoration: none !important;
+        }
+
+
+        .logo img {
+            width: 42px;
+            height: 42px;
+
+            object-fit: contain;
+
+            margin-right: 11px;
+        }
+
+
+        .logo-text {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+
+        .logo-name {
+            font-family: 'Naston', 'Gilroy-Bold', sans-serif;
+            font-size: 21px;
+            line-height: 21px;
+
+            color: #ffffff;
+
+            text-decoration: none !important;
+        }
+
+
+        .logo-subtitle {
+            margin-top: 3px;
+
+            font-family: 'Gilroy-Medium', sans-serif;
+            font-size: 10px;
+            line-height: 10px;
+
+            color: #9a63ff;
+
+            text-decoration: none !important;
+        }
+
+
+        /* =========================================================
+           NAVIGATION
+        ========================================================= */
+
+        nav {
+            height: 75px;
+
+            display: flex;
+            align-items: center;
+
+            gap: 31px;
+
+            margin-left: clamp(180px, 25vw, 480px);
+
+            flex-shrink: 0;
+        }
+
+
+        nav a {
+            position: relative;
+
+            font-family: 'Gilroy-Medium', sans-serif;
+            font-size: 14px;
+
+            color: rgba(240, 236, 250, 0.72);
+
+            white-space: nowrap;
+
+            transition:
+                color .25s ease,
+                opacity .25s ease;
+        }
+
+
+        nav a:hover {
+            color: #ffffff;
+        }
+
+
+        nav a::after {
+            content: "";
+
+            position: absolute;
+
+            left: 0;
+            bottom: -8px;
+
+            width: 0;
+            height: 2px;
+
+            border-radius: 10px;
+
+            background: #914cff;
+
+            transition: width .25s ease;
+        }
+
+
+        nav a:hover::after {
+            width: 100%;
+        }
+
+        nav a.active {
+            color: #ffffff;
+        }
+
+        nav a.active::after {
+            width: 100%;
+        }
+
+
+        /* =========================================================
+           HEADER BUTTONS
+        ========================================================= */
+
+        .header-actions {
+            margin-left: auto;
+
+            height: 75px;
+
+            display: flex;
+            align-items: center;
+
+            flex-shrink: 0;
+        }
+
+
+        .booster-sector {
+            height: 75px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            padding: 0 10px;
+        }
+
+
+        .account-sector {
+            height: 75px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            padding-left: 2px;
+        }
+
+
+        .header-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            height: 38px;
+
+            border-radius: 10px;
+
+            font-family: 'Gilroy-Bold', sans-serif;
+            font-size: 13px;
+
+            transition:
+                transform .25s ease,
+                background .25s ease,
+                border-color .25s ease;
+        }
+
+
+        .header-btn:hover {
+            transform: translateY(-1px);
+        }
+
+
+        .header-btn.booster {
+            width: 80px;
+
+            background: rgba(145, 76, 255, 0.12);
+
+            border: 1px solid rgba(145, 76, 255, 0.28);
+
+            color: #b27aff;
+        }
+
+
+        .header-btn.account {
+            width: 140px;
+
+            background: #914cff;
+
+            border: 1px solid #914cff;
+
+            color: #ffffff;
+        }
+
+
+        .header-btn.account:hover {
+            background: #a05fff;
+            border-color: #a05fff;
+        }
+
+
+        /* =========================================================
+           CONTACT HERO
+        ========================================================= */
+
+        .contact-page {
+            position: relative;
+
+            min-height: calc(100vh - 75px);
+
+            overflow: hidden;
+        }
+
+
+        .contact-page::before {
+            content: "";
+
+            position: absolute;
+
+            width: 650px;
+            height: 650px;
+
+            left: -260px;
+            top: 70px;
+
+            background: radial-gradient(
+                circle,
+                rgba(126, 54, 255, 0.13) 0%,
+                rgba(126, 54, 255, 0.04) 40%,
+                transparent 70%
+            );
+
+            pointer-events: none;
+        }
+
+
+        .contact-page::after {
+            content: "";
+
+            position: absolute;
+
+            width: 650px;
+            height: 650px;
+
+            right: -300px;
+            top: 120px;
+
+            background: radial-gradient(
+                circle,
+                rgba(126, 54, 255, 0.10) 0%,
+                transparent 68%
+            );
+
+            pointer-events: none;
+        }
+
+
+        /* =========================================================
+           HERO CONTENT
+        ========================================================= */
+
+        .contact-hero {
+            position: relative;
+            z-index: 2;
+
+            width: 1180px;
+            max-width: calc(100% - 60px);
+
+            margin: 0 auto;
+
+            padding-top: 105px;
+            padding-bottom: 85px;
+        }
+
+
+        .contact-label {
+            margin-bottom: 15px;
+
+            font-family: 'Gilroy-Bold', sans-serif;
+            font-size: 13px;
+
+            letter-spacing: 0.8px;
+
+            color: #a56cff;
+
+            text-transform: uppercase;
+        }
+
+
+        .contact-hero h1 {
+            max-width: 760px;
+
+            font-family: 'AAvanteBsExtraBold', 'Gilroy-Bold', sans-serif;
+
+            font-size: 52px;
+            line-height: 1.08;
+
+            color: #f5f2ff;
+        }
+
+
+        .contact-hero h1 span {
+            color: #9b5cff;
+        }
+
+
+        .contact-description {
+            max-width: 690px;
+
+            margin-top: 25px;
+
+            font-family: 'Gilroy-Medium', sans-serif;
+
+            font-size: 16px;
+            line-height: 1.7;
+
+            color: rgba(231, 227, 244, 0.62);
+        }
+
+
+        /* =========================================================
+           CONTACT CARDS
+        ========================================================= */
+
+        .contact-cards {
+            display: grid;
+
+            grid-template-columns: repeat(4, 1fr);
+
+            gap: 16px;
+
+            margin-top: 52px;
+        }
+
+
+        .contact-card {
+            min-height: 145px;
+
+            padding: 24px;
+
+            border-radius: 16px;
+
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(32, 22, 57, 0.82),
+                    rgba(13, 10, 27, 0.82)
+                );
+
+            border: 1px solid rgba(145, 76, 255, 0.20);
+
+            transition:
+                transform .3s ease,
+                border-color .3s ease,
+                box-shadow .3s ease;
+        }
+
+
+        .contact-card:hover {
+            transform: translateY(-4px);
+
+            border-color: rgba(145, 76, 255, 0.48);
+
+            box-shadow:
+                0 15px 45px rgba(72, 30, 140, 0.14);
+        }
+
+
+        .contact-card-icon {
+            width: 42px;
+            height: 42px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            margin-bottom: 18px;
+
+            border-radius: 12px;
+
+            background: rgba(145, 76, 255, 0.12);
+
+            border: 1px solid rgba(145, 76, 255, 0.22);
+
+            color: #a66cff;
+
+            font-size: 18px;
+        }
+
+
+        .contact-card h3 {
+            margin-bottom: 7px;
+
+            font-family: 'Gilroy-Bold', sans-serif;
+            font-size: 16px;
+
+            color: #ffffff;
+        }
+
+
+        .contact-card p {
+            font-size: 13px;
+
+            color: rgba(231, 227, 244, 0.48);
+        }
+
+
+        .contact-card .soon {
+            color: #a66cff;
+        }
+
+
+        /* =========================================================
+           НИЖНИЙ ИНФОРМАЦИОННЫЙ БЛОК
+        ========================================================= */
+
+        .contact-info {
+            position: relative;
+            z-index: 2;
+
+            width: 100%;
+
+            padding: 90px 0 120px;
+
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+
+            background: #06060d;
+        }
+
+
+        .contact-info::before {
+            content: "";
+
+            position: absolute;
+
+            width: 500px;
+            height: 500px;
+
+            left: 50%;
+            top: 0;
+
+            transform: translateX(-50%);
+
+            background: radial-gradient(
+                circle,
+                rgba(128, 59, 255, 0.07),
+                transparent 70%
+            );
+
+            pointer-events: none;
+        }
+
+
+        .contact-info-inner {
+            position: relative;
+            z-index: 2;
+
+            width: 690px;
+            max-width: calc(100% - 40px);
+
+            margin: 0 auto;
+        }
+
+
+        .contact-info .contact-label {
+            margin-bottom: 14px;
+
+            font-family: 'Gilroy-Bold', sans-serif;
+
+            font-size: 14px;
+
+            letter-spacing: 0.5px;
+
+            color: #a66cff;
+
+            text-transform: uppercase;
+        }
+
+
+        .contact-info h2 {
+            margin: 0 0 24px;
+
+            font-family: 'AAvanteBsExtraBold', 'Gilroy-Bold', sans-serif;
+
+            font-size: 34px;
+
+            line-height: 1.2;
+
+            color: #f3f0ff;
+        }
+
+
+        .contact-info p {
+            margin: 0 0 18px;
+
+            font-family: 'Gilroy-Medium', sans-serif;
+
+            font-size: 15px;
+
+            line-height: 1.65;
+
+            color: rgba(231, 227, 244, 0.62);
+        }
+
+
+        .contact-info p:last-child {
+            margin-bottom: 0;
+        }
+
+
+        .contact-info p strong {
+            color: #a66cff;
+
+            font-family: 'Gilroy-Bold', sans-serif;
+        }
+
+
+        /* =========================================================
+           FOOTER
+        ========================================================= */
+
+        footer {
+            position: relative;
+
+            z-index: 3;
+
+            width: 100%;
+
+            padding: 25px 40px;
+
+            border-top: 1px solid rgba(255, 255, 255, 0.06);
+
+            background: #05050b;
+        }
+
+
+        .footer-inner {
+            max-width: 1180px;
+
+            margin: 0 auto;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+        }
+
+
+        .footer-logo {
+            font-family: 'Gilroy-Bold', sans-serif;
+
+            font-size: 14px;
+
+            color: #ffffff;
+        }
+
+
+        .footer-text {
+            font-size: 12px;
+
+            color: rgba(231, 227, 244, 0.35);
+        }
+
+
+        /* =========================================================
+           ADAPTIVE
+        ========================================================= */
+
+        @media (max-width: 1500px) {
+
+            nav {
+                margin-left: 180px;
+            }
+
+        }
+
+
+        @media (max-width: 1250px) {
+
+            nav {
+                margin-left: 100px;
+                gap: 22px;
+            }
+
+            .contact-cards {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+        }
+
+
+        @media (max-width: 1100px) {
+
+            header {
+                padding: 0 20px;
+            }
+
+            nav {
+                margin-left: 50px;
+                gap: 16px;
+            }
+
+            nav a {
+                font-size: 13px;
+            }
+
+            .contact-hero h1 {
+                font-size: 46px;
+            }
+
+        }
+
+
+        @media (max-width: 900px) {
+
+            nav {
+                display: none;
+            }
+
+            .header-actions {
+                margin-left: auto;
+            }
+
+            .contact-hero {
+                padding-top: 80px;
+            }
+
+            .contact-hero h1 {
+                font-size: 42px;
+            }
+
+        }
+
+
+        @media (max-width: 650px) {
+
+            header {
+                padding: 0 15px;
+            }
+
+            .logo img {
+                width: 38px;
+                height: 38px;
+            }
+
+            .logo-name {
+                font-size: 19px;
+            }
+
+            .header-btn.booster {
+                width: 70px;
+            }
+
+            .header-btn.account {
+                width: 120px;
+            }
+
+            .contact-hero {
+                max-width: calc(100% - 35px);
+
+                padding-top: 65px;
+                padding-bottom: 65px;
+            }
+
+            .contact-hero h1 {
+                font-size: 36px;
+            }
+
+            .contact-description {
+                font-size: 14px;
+            }
+
+            .contact-cards {
+                grid-template-columns: 1fr;
+
+                margin-top: 38px;
+            }
+
+            .contact-info {
+                padding: 70px 0 85px;
+            }
+
+            .contact-info h2 {
+                font-size: 27px;
+            }
+
+            .contact-info p {
+                font-size: 14px;
+            }
+
+            .footer-inner {
+                flex-direction: column;
+
+                gap: 10px;
+
+                text-align: center;
+            }
+
+        }
+
+
+        @media (max-width: 450px) {
+
+            .header-btn.booster {
+                display: none;
+            }
+
+            .header-btn.account {
+                width: 125px;
+            }
+
+            .contact-hero h1 {
+                font-size: 31px;
+            }
+
+            .contact-info h2 {
+                font-size: 24px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- =========================================================
+         HEADER
+    ========================================================= -->
+
+    <header>
+
+
+        <!-- LOGO -->
+
+        <a href="{{ url_for('index') }}" class="logo">
+
+            <img
+                src="{{ url_for('static', filename='img/лого.png') }}"
+                alt="DotaFresh"
+            >
+
+            <div class="logo-text">
+
+                <div class="logo-name">
+                    DotaFresh
+                </div>
+
+                <div class="logo-subtitle">
+                    dota2 boost
+                </div>
+
+            </div>
+
+        </a>
+
+
+        <!-- NAVIGATION -->
+
+        <nav>
+
+            <a href="{{ url_for('index') }}">
+                Услуги
+            </a>
+
+            <a href="{{ url_for('index') }}#egirl">
+                E-Girl
+            </a>
+
+            <a href="{{ url_for('contact') }}" class="active">
+                Контакты
+            </a>
+
+            <a href="{{ url_for('job') }}">
+                Работа
+            </a>
+
+            <a href="{{ url_for('index') }}#guides">
+                Гайды
+            </a>
+
+            <a href="{{ url_for('about') }}">
+                О нас
+            </a>
+
+        </nav>
+
+
+        <!-- HEADER BUTTONS -->
+
+        <div class="header-actions">
+
+            <div class="booster-sector">
+
+                <a
+                    href="{{ url_for('index') }}"
+                    class="header-btn booster"
+                >
+                    Бустер
+                </a>
+
+            </div>
+
+
+            <div class="account-sector">
+
+                <a
+                    href="{{ url_for('login') }}"
+                    class="header-btn account"
+                >
+                    Личный кабинет
+                </a>
+
+            </div>
+
+        </div>
+
+
+    </header>
+
+
+
+    <!-- =========================================================
+         CONTACT PAGE
+    ========================================================= -->
+
+    <main class="contact-page">
+
+
+        <!-- =====================================================
+             HERO
+        ===================================================== -->
+
+        <section class="contact-hero">
+
+
+            <div class="contact-label">
+                / КОНТАКТЫ
+            </div>
+
+
+            <h1>
+
+                Связаться<br>
+
+                с <span>DotaFresh</span>
+
+            </h1>
+
+
+            <p class="contact-description">
+
+                Если у вас есть вопросы по услугам, заказу или работе
+                нашего сервиса — здесь будут все способы связи с
+                DotaFresh. Сейчас контакты находятся в процессе настройки.
+
+            </p>
+
+
+
+            <!-- =================================================
+                 CONTACT CARDS
+            ================================================= -->
+
+            <div class="contact-cards">
+
+
+                <!-- TELEGRAM -->
+
+                <div class="contact-card">
+
+                    <div class="contact-card-icon">
+                        ✈
+                    </div>
+
+                    <h3>
+                        Telegram
+                    </h3>
+
+                    <p class="soon">
+                        Скоро будет доступен
+                    </p>
+
+                </div>
+
+
+                <!-- VK -->
+
+                <div class="contact-card">
+
+                    <div class="contact-card-icon">
+                        VK
+                    </div>
+
+                    <h3>
+                        ВКонтакте
+                    </h3>
+
+                    <p class="soon">
+                        Скоро будет доступен
+                    </p>
+
+                </div>
+
+
+                <!-- DISCORD -->
+
+                <div class="contact-card">
+
+                    <div class="contact-card-icon">
+                        ◉
+                    </div>
+
+                    <h3>
+                        Discord
+                    </h3>
+
+                    <p class="soon">
+                        Скоро будет доступен
+                    </p>
+
+                </div>
+
+
+                <!-- SUPPORT -->
+
+                <div class="contact-card">
+
+                    <div class="contact-card-icon">
+                        ?
+                    </div>
+
+                    <h3>
+                        Поддержка
+                    </h3>
+
+                    <p class="soon">
+                        Скоро будет доступна
+                    </p>
+
+                </div>
+
+
+            </div>
+
+
+        </section>
+
+
+
+        <!-- =====================================================
+             НИЖНИЙ БЛОК
+             ВМЕСТО БОТА
+        ===================================================== -->
+
+        <section class="contact-info">
+
+
+            <div class="contact-info-inner">
+
+
+                <div class="contact-label">
+                    / ПОДДЕРЖКА
+                </div>
+
+
+                <h2>
+
+                    Как связаться с DotaFresh<br>
+
+                    и что нас чаще всего спрашивают
+
+                </h2>
+
+
+                <p>
+
+                    Менеджер DotaFresh всегда готов помочь с выбором
+                    услуги, ответить на вопросы по заказу и подсказать
+                    подходящий вариант. Написать нам можно будет через
+                    Telegram, ВКонтакте, Discord и другие удобные
+                    способы связи.
+
+                </p>
+
+
+                <p>
+
+                    Чтобы мы сразу могли назвать цену и сроки, просто
+                    напишите, какая услуга вам нужна, ваш текущий MMR
+                    или другую необходимую информацию. Если вы не
+                    уверены в выборе, менеджер поможет подобрать
+                    подходящий вариант.
+
+                </p>
+
+
+                <p>
+
+                    Мы ценим конфиденциальность наших клиентов.
+                    Данные заказа используются только для его выполнения,
+                    а общение с менеджером проходит напрямую через
+                    выбранный вами способ связи.
+
+                </p>
+
+
+                <p>
+
+                    Частый вопрос — сроки выполнения. Они зависят от
+                    выбранной услуги и объёма заказа. Перед началом
+                    менеджер сообщит ориентировочное время выполнения
+                    и ответит на все интересующие вас вопросы.
+
+                </p>
+
+
+            </div>
+
+
+        </section>
+
+
+    </main>
+
+
+
+    <!-- =========================================================
+         FOOTER
+    ========================================================= -->
+
+    <footer>
+
+
+        <div class="footer-inner">
+
+
+            <div class="footer-logo">
+                DotaFresh
+            </div>
+
+
+            <div class="footer-text">
+                Dota 2 Service
+            </div>
+
+
+        </div>
+
+
+    </footer>
+
+
+    
+    <script>
+        // Подсветка активного пункта меню
+        document.addEventListener('DOMContentLoaded', function () {
+            const path = window.location.pathname;
+
+            document.querySelectorAll('header nav a').forEach(link => {
+                if (link.getAttribute('href') === '/contact' && path === '/contact') {
+                    link.classList.add('active');
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>

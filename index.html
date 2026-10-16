@@ -1,0 +1,6103 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>DOTA SERVICE</title>
+
+    <style>
+
+        /* Шрифт меню: Gilroy-Medium_0.ttf */
+        @font-face {
+            font-family: "GilroyMenu";
+            src: url("{{ url_for('static', filename='fonts/Gilroy-Medium_0.ttf') }}") format("truetype");
+            font-weight: 500;
+            font-style: normal;
+            font-display: swap;
+        }
+
+        /* ==============================
+           ШРИФТЫ
+           Файлы шрифтов должны лежать в:
+           static/fonts/
+           ============================== */
+
+        @font-face {
+            font-family: "Gilroy";
+            src: url("{{ url_for('static', filename='fonts/Gilroy-Medium_0.ttf') }}") format("truetype");
+            font-weight: 500;
+            font-style: normal;
+            font-display: swap;
+        }
+
+        @font-face {
+            font-family: "Gilroy";
+            src: url("{{ url_for('static', filename='fonts/Gilroy-Bold_0.ttf') }}") format("truetype");
+            font-weight: 700;
+            font-style: normal;
+            font-display: swap;
+        }
+
+        @font-face {
+            font-family: "AAvanteBsExtraBold";
+            src: url("{{ url_for('static', filename='fonts/AAvanteBsExtraBold.ttf') }}") format("truetype");
+            font-weight: 800;
+            font-style: normal;
+            font-display: swap;
+        }
+
+        @font-face {
+            font-family: "Nastol";
+            src: url("{{ url_for('static', filename='fonts/Naston-Regular.ttf.ttf') }}") format("truetype");
+            font-weight: 400;
+            font-style: normal;
+            font-display: swap;
+        }
+
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            margin: 0;
+            background: #0b0b0d;
+            color: white;
+            font-family: 'Gilroy', sans-serif;
+            font-weight: 500;
+        }
+
+        /* ШАПКА */
+
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+height: 62px;
+            padding: 0 5.8%;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: #080810;
+            border-bottom: 1px solid #24242e;
+        }
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    text-decoration: none !important;
+}
+
+.logo img {
+    width: 40px;
+    height: 40px;
+    object-fit: contain;
+}
+
+.logo-text {
+    display: flex;
+    flex-direction: column;
+    line-height: 1;
+}
+
+.logo-name {
+     font-size: 20px;
+     letter-spacing: 0px;
+     line-height: 22px;
+     color: #ffffff;
+     font-family: "Naston", sans-serif;
+     text-align: center;
+     font-weight: 400;
+     text-decoration: none !important;
+ }
+
+.logo-subtitle {
+    color: #8d8d98;
+    font-size: 10px;
+    margin-top: 3px;
+    letter-spacing: 1px;
+    text-decoration: none !important;
+}
+
+        nav {
+            display: flex;
+            align-items: center;
+            gap: 38px;
+        }
+
+        nav a {
+            position: relative;
+            color: rgba(240, 236, 250, 0.72);
+            text-decoration: none;
+            font-family: 'Gilroy', sans-serif;
+            font-weight: 500;
+            transition:
+                color .25s ease,
+                opacity .25s ease;
+        }
+
+        nav a:hover {
+            color: #fff;
+        }
+
+        nav a::after {
+            content: "";
+            position: absolute;
+            left: 0;
+            bottom: -5px;
+            width: 0;
+            height: 2px;
+            border-radius: 10px;
+            background: #914cff;
+            transition: width .25s ease;
+        }
+
+        nav a:hover::after {
+            width: 100%;
+        }
+
+        nav a.active {
+            color: #fff;
+        }
+
+        nav a.active::after {
+            width: 100%;
+        }
+
+        .header-buttons {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .header-button {
+            height: 44px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0 18px;
+            border: 1px solid rgba(255,255,255,.10);
+            border-radius: 9px;
+            background: #12121d;
+            color: #fff;
+            text-decoration: none;
+            font-family: 'GilroyMenu', sans-serif;
+            font-size: 13px;
+            font-weight: 500;
+            transition: .2s ease;
+        }
+
+        .header-button:hover {
+            background: #1a1a27;
+            border-color: rgba(255,255,255,.18);
+        }
+
+        .booster-button {
+            min-width: 86px;
+        }
+
+        .cabinet-button {
+            min-width: 172px;
+            gap: 10px;
+            background: url("{{ url_for('static', filename='img/КНОПКА РЕГИСТРАЦИЯ.png') }}") center / 100% 100% no-repeat;
+            border-color: transparent;
+            box-shadow: none;
+        }
+
+        .cabinet-button:hover {
+            background: url("{{ url_for('static', filename='img/КНОПКА РЕГИСТРАЦИЯ.png') }}") center / 100% 100% no-repeat;
+            border-color: transparent;
+            transform: translateY(-1px);
+            transition: transform .35s cubic-bezier(.22,1,.36,1);
+        }
+
+        .cabinet-arrow {
+            font-size: 22px;
+            line-height: 1;
+            font-weight: 400;
+            margin-top: -1px;
+        }
+
+
+        /* ГЛАВНЫЙ ЭКРАН */
+
+.hero {
+    min-height: calc(100vh - 75px);
+    padding: 90px 6% 80px;
+    display: flex;
+    align-items: flex-start;
+    background-image: url("/static/img/Главный фон.png");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+
+    position: relative;
+}
+
+        .hero-text {
+    max-width: 700px;
+}
+
+        .subtitle {
+            font-family: 'Gilroy', sans-serif;
+            font-weight: 500;
+            color: #e74c3c;
+            letter-spacing: 4px;
+            font-size: 13px;
+        }
+
+        .hero h1 {
+            font-size: 78px;
+            line-height: 1.02;
+            margin: 20px 0;
+        }
+
+        .hero-title-first {
+            font-family: 'AAvanteBsExtraBold', sans-serif;
+            font-weight: 800;
+        }
+
+        .hero-title-second {
+            font-family: 'Nastol', sans-serif;
+            font-weight: 400;
+        }
+
+        .hero-description {
+            font-family: 'Gilroy', sans-serif;
+            font-weight: 500;
+            max-width: 760px;
+            color: #ffffff;
+            font-size: 24px;
+            line-height: 1.3;
+        }
+
+        .main-button {
+            font-family: 'Gilroy', sans-serif;
+            font-weight: 700;
+            display: inline-block;
+
+            margin-top: 25px;
+
+            padding: 17px 30px;
+
+            background: #e74c3c;
+            color: white;
+
+            text-decoration: none;
+
+            border-radius: 8px;
+            font-weight: bold;
+        }
+
+        .hero-buttons {
+            display: flex;
+            align-items: center;
+            gap: 22px;
+            margin-top: 38px;
+        }
+
+        .hero-buttons .main-button {
+            margin-top: 0;
+            width: 238px;
+            min-width: 238px;
+            height: 78px;
+            padding: 0 22px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            border-radius: 12px;
+            font-family: 'Gilroy', sans-serif;
+            font-weight: 700;
+            background: url("{{ url_for('static', filename='img/КНОПКА НАЧАТЬ БУСТ.png') }}") center / 100% 100% no-repeat;
+            border: 0;
+            box-shadow: none;
+        }
+
+        .hero-buttons .main-button:hover {
+            background: url("{{ url_for('static', filename='img/КНОПКА НАЧАТЬ БУСТ.png') }}") center / 100% 100% no-repeat;
+            transform: translateY(-1px);
+        }
+
+        .hero-buttons .main-button span {
+            width: auto;
+            height: auto;
+            border: 0;
+            border-radius: 0;
+            display: inline;
+            font-size: 22px;
+            line-height: 1;
+            font-family: Arial, sans-serif;
+            font-weight: bold;
+            flex: 0 0 auto;
+        }
+
+        .hero-buttons .main-button:hover span {
+            border-color: rgba(255,255,255,.75);
+        }
+
+        .hero-buttons .secondary-button {
+            width: 155px;
+            min-width: 155px;
+            height: 62px;
+            background: url("{{ url_for('static', filename='img/КНОПКА К УСЛУГАМ.png') }}") center / 100% 100% no-repeat;
+            border: 0;
+            font-family: 'Gilroy', sans-serif;
+            font-weight: 700;
+        }
+
+        .hero-buttons .secondary-button:hover {
+            background: url("{{ url_for('static', filename='img/КНОПКА К УСЛУГАМ.png') }}") center / 100% 100% no-repeat;
+        }
+
+        .hero-security {
+            margin-top: 28px;
+            font-family: 'Gilroy', sans-serif;
+            font-size: 14px;
+            color: #f0edf7;
+        }
+
+        .stats {
+            display: flex;
+            gap: 60px;
+            margin-top: 60px;
+        }
+
+        .stat h2 {
+            margin: 0;
+            font-size: 28px;
+        }
+
+        .stat p {
+            color: #777;
+            margin-top: 8px;
+        }
+
+
+        /* УСЛУГИ — дизайн по присланным плашкам */
+
+        .services {
+            padding: 95px 10% 80px;
+            background:
+                radial-gradient(circle at 15% 0%, rgba(110, 56, 190, 0.18), transparent 35%),
+                #090811;
+            position: relative;
+        }
+
+        .services .section-small-title {
+            text-align: center;
+            color: #a16cff;
+            font-size: 13px;
+            letter-spacing: 3px;
+        }
+
+        .services .section-title {
+            margin-top: 15px;
+            font-size: 45px;
+            text-align: center;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 346px));
+            justify-content: center;
+            gap: 52px;
+            margin-top: 52px;
+        }
+
+        .service-card {
+            position: relative;
+            min-height: 276px;
+            overflow: hidden;
+            border: 1px solid rgba(170, 118, 255, 0.35);
+            border-radius: 15px;
+            background: #100d20;
+            box-shadow: 0 15px 45px rgba(0,0,0,.25);
+            transition: transform .3s, border-color .3s, box-shadow .3s;
+        }
+
+        .service-card:hover {
+            transform: translateY(-7px);
+            border-color: rgba(171, 111, 255, .75);
+            box-shadow: 0 20px 55px rgba(99, 48, 180, .22);
+        }
+
+        .service-card .service-art {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            pointer-events: none;
+        }
+
+        .service-card .service-content {
+            position: relative;
+            z-index: 2;
+            height: 276px;
+            padding: 22px 24px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .service-number {
+            display: none;
+        }
+
+        .service-card h3 {
+            font-family: 'Gilroy', sans-serif;
+            font-weight: 500;
+            margin: 0;
+            font-size: 27px;
+            line-height: 1.05;
+            max-width: 300px;
+            letter-spacing: -0.5px;
+        }
+
+        .service-card p {
+            font-family: 'Gilroy', sans-serif;
+            font-weight: 500;
+            margin: 8px 0 0;
+            color: #f0edf7;
+            font-size: 15px;
+            line-height: 1.45;
+            max-width: 275px;
+        }
+
+        .service-card .price {
+            font-family: 'Gilroy', sans-serif;
+            font-weight: 700;
+            margin-top: auto;
+            color: #fff;
+            font-size: 27px;
+            font-weight: bold;
+        }
+
+        .service-card .service-arrow {
+            position: absolute;
+            right: 24px;
+            bottom: 24px;
+            width: 46px;
+            height: 46px;
+            border-radius: 50%;
+            background: #09090f;
+            border: 1px solid rgba(160, 49, 99, 0.38);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #ffffff;
+            font-size: 24px;
+            font-weight: 400;
+            line-height: 1;
+            cursor: pointer;
+            transition:
+                background .28s ease,
+                border-color .28s ease,
+                box-shadow .28s ease,
+                transform .28s ease,
+                color .28s ease;
+            box-shadow: 0 0 0 rgba(160, 49, 99, 0);
+        }
+
+        .service-card .service-arrow::before {
+            content: "";
+            position: absolute;
+            inset: -1px;
+            border-radius: 50%;
+            opacity: 0;
+            transform: scale(.7);
+            border: 1px solid rgba(160, 49, 99, .75);
+            transition: opacity .28s ease, transform .28s ease;
+        }
+
+        .service-card:hover .service-arrow,
+        .service-card .service-arrow:hover {
+            background: #A03163;
+            border-color: #A03163;
+            color: #fff;
+            transform: translateY(-2px) scale(1.04) rotate(-25deg);
+            box-shadow:
+                0 0 18px rgba(160, 49, 99, .55),
+                0 0 34px rgba(160, 49, 99, .22);
+        }
+
+        .service-card:hover .service-arrow::before,
+        .service-card .service-arrow:hover::before {
+            opacity: 1;
+            transform: scale(1.22);
+        }
+
+        .service-card .service-arrow:active {
+            transform: translateY(0) scale(.95);
+            box-shadow: 0 0 12px rgba(160, 49, 99, .45);
+        }
+
+        .service-card.popular {
+            transform: none;
+            border: 1px solid rgba(170, 118, 255, 0.35);
+        }
+
+        .service-card.popular:hover {
+            transform: translateY(-7px);
+        }
+
+        .popular-label {
+            display: none;
+        }
+        /* Показываем все 6 карточек услуг */
+        .services .service-card:nth-child(n+4) {
+            display: block;
+        }
+
+        /* БАННЕР СКИДКИ */
+        .banner {
+            margin: 55px 10% 95px;
+            min-height: 179px;
+            padding: 0;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            border: 1px solid rgba(170, 118, 255, 0.35);
+            border-radius: 15px;
+            background: #100d20;
+            box-shadow: 0 15px 50px rgba(0,0,0,.28);
+        }
+
+        .banner .sale-art {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            pointer-events: none;
+        }
+        
+        .banner-content {
+            position: relative;
+            z-index: 2;
+            width: 100%;
+            min-height: 179px;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            padding: 20px 28%;
+        }
+
+        .banner h2 {
+            font-family: 'Gilroy', sans-serif;
+            font-weight: 500;
+            margin: 0;
+            font-size: 42px;
+            line-height: 1;
+        }
+
+        .banner p {
+            font-family: 'Gilroy', sans-serif;
+            font-weight: 500;
+            margin: 8px 0 12px;
+            color: #fff;
+            font-size: 16px;
+        }
+
+        .banner-apply {
+            width: 138px;
+            height: 46px;
+            border: 1px solid rgba(255, 174, 210, .7);
+            border-radius: 24px;
+            background: #A03163;
+            color: #fff;
+            font-size: 14px;
+            font-weight: 800;
+            letter-spacing: .3px;
+            cursor: pointer;
+            box-shadow: 0 0 16px rgba(160, 49, 99, .45);
+            transition: transform .25s ease, background .25s ease, box-shadow .25s ease;
+        }
+
+        .banner-apply:hover {
+            background: #b63a72;
+            transform: translateY(-2px) scale(1.03);
+            box-shadow: 0 0 25px rgba(160, 49, 99, .7);
+        }
+
+        .banner-apply:active {
+            transform: scale(.97);
+        }
+
+        /* КАЛЬКУЛЯТОР */
+
+        .calculator-section {
+            padding: 110px 10%;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            gap: 80px;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    #0b0b0d 0%,
+                    rgba(11,11,13,0.85) 55%,
+                    rgba(11,11,13,0.4) 100%
+                ),
+                url("https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/home/heroes/renders/axe.png");
+
+            background-repeat: no-repeat;
+            background-position: right center;
+            background-size: contain;
+        }
+
+        .calculator-text {
+            max-width: 550px;
+        }
+
+        .calculator-text h2 {
+            font-size: 50px;
+        }
+
+        .calculator-text p {
+            color: #999;
+            line-height: 1.7;
+            font-size: 15px;
+        }
+
+        .calculator {
+            width: 430px;
+
+            padding: 35px;
+
+            background: rgba(23,23,28,0.95);
+
+            border: 1px solid #333;
+
+            border-radius: 18px;
+        }
+
+        .calculator label {
+            display: block;
+
+            margin-top: 20px;
+            margin-bottom: 10px;
+
+            color: #aaa;
+        }
+
+        .calculator input,
+        .calculator select {
+            width: 100%;
+
+            padding: 15px;
+
+            background: #0d0d10;
+            color: white;
+
+            border: 1px solid #333;
+
+            border-radius: 8px;
+        }
+
+        .result {
+            margin-top: 30px;
+            padding-top: 20px;
+
+            border-top: 1px solid #333;
+        }
+
+        .result p {
+            color: #777;
+        }
+
+        .result h2 {
+            color: #e74c3c;
+            font-size: 38px;
+            margin: 5px 0;
+        }
+
+        .fake-button {
+            width: 100%;
+
+            padding: 17px;
+            margin-top: 20px;
+
+            background: #e74c3c;
+
+            color: white;
+
+            border: none;
+            border-radius: 8px;
+
+            font-size: 16px;
+        }
+
+
+        /* ПРЕИМУЩЕСТВА */
+
+        .features {
+            padding: 100px 10%;
+            background: #101014;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+
+            gap: 25px;
+            margin-top: 50px;
+        }
+
+        .feature {
+            overflow: hidden;
+
+            background: #17171c;
+
+            border: 1px solid #29292f;
+
+            border-radius: 15px;
+        }
+
+        .feature img {
+            width: 100%;
+            height: 200px;
+
+            object-fit: cover;
+        }
+
+        .feature-content {
+            padding: 25px;
+        }
+
+        .feature h3 {
+            font-size: 23px;
+        }
+
+        .feature p {
+            color: #999;
+            line-height: 1.6;
+        }
+
+
+        /* ОТЗЫВЫ */
+
+        .reviews {
+            padding: 100px 10%;
+        }
+
+        .reviews-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+
+            gap: 25px;
+
+            margin-top: 50px;
+        }
+
+        .review {
+            padding: 30px;
+
+            background: #17171c;
+
+            border: 1px solid #29292f;
+
+            border-radius: 15px;
+        }
+
+        .review-top {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .avatar {
+            width: 50px;
+            height: 50px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            background: #e74c3c;
+
+            border-radius: 50%;
+
+            font-weight: bold;
+        }
+
+        .review h3 {
+            margin: 0;
+        }
+
+        .review p {
+            color: #999;
+            line-height: 1.7;
+        }
+
+        .stars {
+            color: #e74c3c;
+        }
+
+
+        /* БОЛЬШОЙ БАННЕР */
+
+        .banner {
+            margin: 100px 10%;
+
+            min-height: 300px;
+
+            padding: 60px;
+
+            display: flex;
+            align-items: center;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    #17171c 0%,
+                    rgba(23,23,28,0.8) 45%,
+                    rgba(23,23,28,0.1) 100%
+                ),
+                url("https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/home/heroes/renders/juggernaut.png");
+
+            background-repeat: no-repeat;
+            background-position: right center;
+            background-size: contain;
+
+            border: 1px solid #29292f;
+
+            border-radius: 20px;
+        }
+
+        .banner h2 {
+            font-size: 42px;
+        }
+
+        .banner p {
+            color: #aaa;
+        }
+
+
+        /* ПОДВАЛ */
+
+        footer {
+            padding: 50px 10%;
+
+            display: flex;
+            justify-content: space-between;
+
+            background: #080809;
+
+            border-top: 1px solid #29292f;
+        }
+
+        footer p {
+            color: #777;
+        }
+
+        footer a {
+            display: block;
+
+            margin-bottom: 10px;
+
+            color: #888;
+            text-decoration: none;
+        }
+
+
+        /* АДАПТАЦИЯ */
+
+        @media (max-width: 1000px) {
+
+            nav {
+                display: none;
+            }
+
+            .hero h1 {
+                font-size: 55px;
+            }
+
+            .services-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .calculator-section {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .reviews-grid {
+                grid-template-columns: 1fr;
+            }
+
+        }
+
+
+        @media (max-width: 650px) {
+
+            .services-grid {
+                grid-template-columns: 1fr;
+                gap: 22px;
+            }
+
+            .service-card {
+                max-width: 346px;
+                width: 100%;
+                margin: 0 auto;
+            }
+
+            .services .section-title {
+                font-size: 36px;
+            }
+
+            .banner {
+                margin: 45px 7%;
+                min-height: 179px;
+            }
+
+            .banner-content {
+                justify-content: flex-end;
+                padding: 15px 7%;
+            }
+
+            .banner h2 {
+                font-size: 30px;
+            }
+
+            .banner p {
+                font-size: 13px;
+            }
+
+            .banner-apply {
+            width: 138px;
+            height: 46px;
+            border: 1px solid rgba(255, 174, 210, .7);
+            border-radius: 24px;
+            background: #A03163;
+            color: #fff;
+            font-size: 14px;
+            font-weight: 800;
+            letter-spacing: .3px;
+            cursor: pointer;
+            box-shadow: 0 0 16px rgba(160, 49, 99, .45);
+            transition: transform .25s ease, background .25s ease, box-shadow .25s ease;
+        }
+
+        .banner-apply:hover {
+            background: #b63a72;
+            transform: translateY(-2px) scale(1.03);
+            box-shadow: 0 0 25px rgba(160, 49, 99, .7);
+        }
+
+        .banner-apply:active {
+            transform: scale(.97);
+        }
+
+
+
+            .header-buttons {
+                display: none;
+            }
+
+            .hero {
+                padding: 60px 7%;
+                background-size: 90%;
+                background-position: center bottom;
+            }
+
+            .hero h1 {
+                font-size: 42px;
+            }
+
+            .hero-text {
+                padding-bottom: 300px;
+            }
+
+            .stats {
+                gap: 20px;
+            }
+
+            .services,
+            .features,
+            .reviews {
+                padding: 70px 7%;
+            }
+
+            .services-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .popular {
+                transform: none;
+            }
+
+            .calculator-section {
+                padding: 70px 7%;
+            }
+
+            .calculator {
+                width: 100%;
+            }
+
+            .section-title {
+                font-size: 34px;
+            }
+
+            .calculator-text h2 {
+                font-size: 38px;
+            }
+
+            .banner {
+                margin: 60px 7%;
+                padding: 35px;
+                background-size: 100%;
+                background-position: center bottom;
+            }
+
+            .banner h2 {
+                font-size: 32px;
+            }
+
+            footer {
+                flex-direction: column;
+                gap: 25px;
+            }
+
+        }
+
+
+/* КНОПКА ПРИМЕНИТЬ */
+
+.banner-apply {
+    display: inline-block;
+    position: relative;
+
+    width: 155px;
+    height: 50px;
+
+    margin-top: 10px;
+    margin-left: 70px;
+
+    padding: 0;
+    border: none;
+    background: transparent;
+
+    cursor: pointer;
+    line-height: 0;
+
+    transition: transform 0.2s ease;
+}
+
+
+/* Картинка кнопки */
+
+.banner-apply img {
+    width: 155px;
+    height: 50px;
+
+    display: block;
+
+    object-fit: fill;
+
+    transition:
+        transform 0.2s ease,
+        filter 0.2s ease;
+}
+
+
+/* Текст ПРИМЕНИТЬ */
+
+.banner-apply span {
+    position: absolute;
+
+    top: 0;
+    left: 0;
+
+    width: 155px;
+    height: 50px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    color: white;
+
+    font-size: 14px;
+    font-weight: 800;
+
+    pointer-events: none;
+}
+
+
+/* Наведение */
+
+.banner-apply:hover img {
+    transform: scale(1.06);
+    filter: brightness(1.15);
+}
+
+
+/* Нажатие */
+
+.banner-apply:active img {
+    transform: scale(0.94);
+}
+.discount-text {
+    transform: none;
+}
+
+.discount-title {
+    transform: translateX(100px);
+    
+}
+
+.discount-subtitle {
+    transform: translateX(70px);
+}
+
+
+        /* Единый шрифт для остальных текстовых элементов */
+        .calculator,
+        .calculator-section,
+        .features,
+        .reviews,
+        footer {
+            font-family: 'Gilroy', sans-serif;
+        }
+
+        .calculator input,
+        .calculator select,
+        .calculator button,
+        .fake-button {
+            font-family: 'Gilroy', sans-serif;
+        }
+
+        .fake-button {
+            font-weight: 700;
+        }
+
+        .feature h3,
+        .review h3 {
+            font-family: 'Gilroy', sans-serif;
+            font-weight: 700;
+        }
+/* ============================= */
+/* ВЫПАДАЮЩЕЕ МЕНЮ УСЛУГ */
+/* ============================= */
+
+.services-menu {
+    position: relative;
+}
+
+
+/* КНОПКА УСЛУГ */
+
+.services-button {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+
+    padding: 10px 0;
+
+    background: transparent;
+    border: none;
+
+    color: #aaa;
+
+    font-family: inherit;
+    font-size: 15px;
+
+    cursor: pointer;
+
+    transition: color .2s ease;
+}
+
+.services-button:hover {
+    color: #fff;
+}
+
+
+/* СТРЕЛКА */
+
+.services-arrow {
+    display: inline-block;
+
+    font-size: 8px;
+
+    transition:
+        transform .25s ease,
+        color .2s ease;
+}
+
+
+/* ============================= */
+/* ВЫПАДАЮЩЕЕ ОКНО */
+/* ============================= */
+
+.services-dropdown {
+    position: absolute;
+
+    top: calc(100% + 8px);
+    left: -18px;
+
+    width: 220px;
+
+    padding: 8px 0;
+
+    background: rgba(16, 18, 28, 0.98);
+
+    border: 1px solid rgba(120, 125, 150, .22);
+
+    border-radius: 14px;
+
+    box-shadow:
+        0 20px 45px rgba(0, 0, 0, .45),
+        0 0 25px rgba(120, 70, 255, .08);
+
+    z-index: 9999;
+
+    /* Скрытое состояние */
+
+    opacity: 0;
+    visibility: hidden;
+
+    transform:
+        translateY(-10px)
+        scale(.97);
+
+    transform-origin: top center;
+
+    transition:
+        opacity .22s ease,
+        transform .22s ease,
+        visibility .22s ease;
+}
+
+
+/* Открытое меню */
+
+.services-menu.open .services-dropdown {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0) scale(1);
+}
+
+.services-menu.open .services-arrow {
+    transform: rotate(180deg);
+}
+
+
+/* ============================= */
+/* ПУНКТЫ МЕНЮ */
+/* ============================= */
+
+.services-dropdown a {
+    display: flex;
+    align-items: center;
+
+    gap: 12px;
+
+    height: 38px;
+
+    padding: 0 18px;
+
+    color: #aaa;
+
+    text-decoration: none;
+
+    font-size: 14px;
+
+    white-space: nowrap;
+
+    border-radius: 8px;
+
+    margin: 2px 7px;
+
+    transition:
+        color .18s ease,
+        background .18s ease,
+        transform .18s ease;
+}
+
+
+/* НАВЕДЕНИЕ */
+
+.services-dropdown a:hover {
+    color: #fff;
+
+    background: rgba(130, 75, 255, .10);
+
+    transform: translateX(2px);
+}
+
+
+/* ============================= */
+/* ИКОНКИ */
+/* ============================= */
+
+.service-icon {
+    width: 18px;
+    min-width: 18px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    color: #8b4cff;
+
+    font-size: 15px;
+
+    transition:
+        color .18s ease,
+        transform .18s ease;
+}
+
+
+.services-dropdown a:hover .service-icon {
+    color: #a66cff;
+
+    transform: scale(1.08);
+}
+
+        /* Gilroy-Medium_0.ttf только для пунктов верхнего меню */
+        nav a,
+        .services-button {
+            font-family: "GilroyMenu", sans-serif;
+            font-weight: 500;
+        }
+
+    
+
+/* ==============================
+   ФИНАЛЬНАЯ НАСТРОЙКА БАННЕРА
+   ============================== */
+
+.discount-text {
+    transform: none !important;
+}
+
+.discount-title {
+    transform: translateX(70px) !important;
+}
+
+.discount-subtitle {
+    transform: translateX(70px) !important;
+}
+
+.banner-apply,
+.banner-apply:focus,
+.banner-apply:focus-visible,
+.banner-apply:active {
+    border: none !important;
+    outline: none !important;
+    box-shadow: none !important;
+}
+
+.banner-apply img {
+    border: none !important;
+    outline: none !important;
+}
+</style>
+
+
+<style id="final-style1-merge">
+/* =========================================================
+   ФИНАЛЬНАЯ НАСТРОЙКА ИЗ index1.html + style1.css
+   Исходный остальной код index.html НЕ УДАЛЯЕМ.
+   ========================================================= */
+
+@font-face {
+    font-family: "MullerRegular";
+    src: url("{{ url_for('static', filename='fonts/Fontfabric - MullerRegular.otf') }}") format("opentype");
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "AAvanteBsExtraBold";
+    src: url("{{ url_for('static', filename='fonts/AAvanteBsExtraBold.ttf') }}") format("truetype");
+    font-weight: 800;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "Naston";
+    src: url("{{ url_for('static', filename='fonts/Naston-Regular.ttf.ttf') }}") format("truetype");
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "Gilroy";
+    src: url("{{ url_for('static', filename='fonts/Gilroy-Regular_0.ttf') }}") format("truetype");
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "Gilroy";
+    src: url("{{ url_for('static', filename='fonts/Gilroy-Bold_0.ttf') }}") format("truetype");
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+}
+
+/* ФОН */
+body {
+    background-color: #0b0914;
+}
+
+.hero {
+    min-height: calc(100vh - 56px) !important;
+    padding-left: 222px !important;
+    padding-top: 180px !important;
+    padding-bottom: 95px !important;
+    padding-right: 0 !important;
+    align-items: flex-start !important;
+    background-image: url("{{ url_for('static', filename='img/bg.png') }}") !important;
+    background-repeat: no-repeat !important;
+    background-position: center top !important;
+    background-size: cover !important;
+}
+
+.hero-text {
+    width: auto !important;
+    max-width: 1000px !important;
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+.about-text {
+    font-family: "Gilroy", sans-serif !important;
+    font-weight: 400 !important;
+    font-size: 22px !important;
+    line-height: 1 !important;
+    color: #fff !important;
+    margin: 0 0 37px 0 !important;
+    opacity: .8 !important;
+}
+
+.hero .hero-title {
+    font-family: "AAvanteBsExtraBold", sans-serif !important;
+    font-weight: 800 !important;
+    font-size: 78px !important;
+    line-height: 82px !important;
+    letter-spacing: 0 !important;
+    color: #fff !important;
+    margin: 0 0 44px 0 !important;
+    white-space: nowrap !important;
+}
+
+.hero .hero-title .highlight-mmr {
+    display: inline-block !important;
+    font-family: "Naston", sans-serif !important;
+    font-weight: 400 !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0 !important;
+    line-height: .9 !important;
+    position: relative !important;
+    top: 3px !important;
+}
+
+.hero .hero-description {
+    font-family: "Gilroy", sans-serif !important;
+    font-weight: 400 !important;
+    font-size: 25px !important;
+    line-height: 31px !important;
+    letter-spacing: -.01em !important;
+    color: #fff !important;
+    margin: 0 0 44px 0 !important;
+    max-width: 850px !important;
+}
+
+.hero .button-group {
+    display: flex !important;
+    align-items: center !important;
+    gap: 0 !important;
+    margin-bottom: 30px !important;
+}
+
+.hero .button-group .btn-img {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    text-decoration: none !important;
+    font-family: "Gilroy", sans-serif !important;
+    font-weight: 700 !important;
+    font-size: 21px !important;
+    color: #fff !important;
+    background-size: contain !important;
+    background-repeat: no-repeat !important;
+    background-position: center !important;
+    box-sizing: border-box !important;
+}
+
+.hero .btn-boost {
+    width: 238px !important;
+    height: 78px !important;
+    margin-right: 7px !important;
+    background-image: url("{{ url_for('static', filename='img/btn-boost.png') }}") !important;
+}
+
+.hero .btn-egirl {
+    width: 238px !important;
+    height: 78px !important;
+    margin-right: 15px !important;
+    background-image: url("{{ url_for('static', filename='img/btn-egirl.png') }}") !important;
+}
+
+.hero .btn-services {
+    width: 154px !important;
+    height: 62px !important;
+    background-image: url("{{ url_for('static', filename='img/btn-services.png') }}") !important;
+}
+
+/* Мягкое свечение кнопок при наведении */
+.hero .btn-img {
+    transition: filter .3s ease, transform .3s ease !important;
+}
+
+.hero .btn-img:hover {
+    filter: drop-shadow(0 0 8px rgba(150, 80, 255, .45));
+}
+
+.hero .btn-img span {
+    margin-right: 21px !important;
+}
+
+.hero .btn-services span {
+    margin-right: 0 !important;
+    position: relative; 
+    top: -2px;
+}
+
+.hero .arrow-box {
+    position: relative !important;
+    width: 24px !important;
+    height: 24px !important;
+    display: inline-block !important;
+    flex: 0 0 24px !important;
+}
+
+.hero .arrow-icon {
+    width: 24px !important;
+    height: 24px !important;
+    display: block !important;
+    position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
+    transform-origin: center center !important;
+    transition: opacity .25s ease, transform .25s ease !important;
+}
+
+.hero .arrow-default {
+    opacity: 1 !important;
+    transform: rotate(0deg) !important;
+}
+
+.hero .arrow-hover {
+    opacity: 0 !important;
+    transform: rotate(0deg) !important;
+}
+
+.hero .btn-img:hover .arrow-default {
+    opacity: 0 !important;и 
+    transform: rotate(-20deg) !important;
+}
+
+.hero .btn-img:hover .arrow-hover {
+    opacity: 1 !important;
+    transform: rotate(-20deg) !important;
+}
+
+.hero .security-note {
+    display: flex !important;
+    align-items: center !important;
+    gap: 10px !important;
+    font-family: "Gilroy", sans-serif !important;
+    font-weight: 400 !important;
+    font-size: 17px !important;
+    color: rgba(255,255,255,.85) !important;
+}
+
+.hero .shield-icon {
+    width: 19px !important;
+    height: 21px !important;
+    display: block !important;
+}
+
+@media (max-width: 1000px) {
+    .hero {
+        padding-left: 40px !important;
+        padding-top: 100px !important;
+        padding-bottom: 60px !important;
+        padding-right: 30px !important;
+    }
+
+    .hero .hero-title {
+        font-size: 60px !important;
+        line-height: 64px !important;
+    }
+
+    .hero .hero-title {
+        white-space: normal !important;
+    }
+}
+
+@media (max-width: 650px) {
+    .hero {
+        padding-left: 24px !important;
+        padding-top: 80px !important;
+    }
+
+    .hero .hero-title {
+        font-size: 48px !important;
+        line-height: 52px !important;
+    }
+
+    .hero .button-group {
+        flex-wrap: wrap !important;
+    }
+}
+</style>
+
+
+<style id="why-us-style">
+/* ==============================
+   БЛОК «ПОЧЕМУ МЫ?»
+   ============================== */
+.features.why-us {
+    padding: 88px 5.8% 105px;
+    background: #090711;
+}
+
+.features.why-us .section-small-title {
+    text-align: center;
+    color: #a66cff;
+    font-size: 14px;
+    letter-spacing: 0;
+    text-transform: none;
+    margin-bottom: 6px;
+}
+
+.features.why-us .section-title {
+    margin: 0;
+    text-align: center;
+    font-size: 48px;
+    line-height: 1.05;
+    color: #fff;
+}
+
+.why-us-subtitle {
+    margin: 16px auto 0;
+    text-align: center;
+    color: #8f899f;
+    font-family: "Gilroy", sans-serif;
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+.why-us-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 297px);
+    gap: 18px;
+    justify-content: center;
+    margin: 34px auto 0;
+}
+
+.features.why-us .why-card {
+    position: relative;
+    width: 297px;
+    height: 356px;
+    min-height: 356px;
+    padding: 0;
+    overflow: hidden;
+    border: 0;
+    border-radius: 15px;
+    background: #151027;
+    box-shadow: 0 15px 35px rgba(0,0,0,.16);
+    transition: transform .3s ease, box-shadow .3s ease;
+}
+
+.features.why-us .why-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 18px 45px rgba(88,45,160,.25);
+}
+
+.features.why-us .why-card > .why-bg {
+    position: absolute;
+    inset: 0;
+    width: 297px;
+    height: 356px;
+    display: block;
+    object-fit: fill;
+    z-index: 0;
+    pointer-events: none;
+}
+
+.why-number {
+    position: absolute;
+    top: 21px;
+    right: 22px;
+    z-index: 2;
+    color: #8c849d;
+    font-family: "Gilroy", sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.features.why-us .why-card .feature-content {
+    position: absolute;
+    left: 39px !important;
+    right: 36px !important;
+    top: 162px !important;
+    z-index: 2;
+    padding: 0;
+}
+
+.features.why-us .why-card h3 {
+    margin: 0 0 10px;
+    color: #fff;
+    text-align: center;
+    font-family: "Gilroy", sans-serif;
+    font-size: 28px !important;
+    font-weight: bold;
+    line-height: 36px;
+}
+
+.features.why-us .why-card p {
+    margin: 0;
+    color: #b9b0cd;
+    font-family: "MullerRegular", sans-serif;
+    font-size: 16px !important;
+    font-weight: 400;
+    line-height: 24px;
+}
+
+@media (max-width: 1300px) {
+    .why-us-grid {
+        grid-template-columns: repeat(2, 297px);
+    }
+}
+
+@media (max-width: 700px) {
+    .features.why-us {
+        padding: 70px 7% 80px;
+    }
+
+    .features.why-us .section-title {
+        font-size: 36px;
+    }
+
+    .why-us-grid {
+        grid-template-columns: 297px;
+        gap: 18px;
+    }
+}
+</style>
+
+<style id="logo-shift-right">
+/* Только немного двигаем логотип + название вправо */
+header .logo {
+    transform: translateX(110px) !important;
+}
+</style>
+
+
+<style id="nav-closer-to-logo">
+/* Немного двигаем верхнее меню ближе к логотипу */
+header nav {
+    transform: translateX(-35px) !important;
+}
+</style>
+
+
+<style id="services-8-grid-only">
+/* 8 услуг: 4 карточки в первом ряду + 4 во втором.
+   Размеры .service-card НЕ меняем. */
+.services-grid {
+    grid-template-columns: repeat(4, 346px) !important;
+    gap: 52px !important;
+    justify-content: center !important;
+}
+
+@media (max-width: 1500px) {
+    .services-grid {
+        grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+    }
+}
+
+@media (max-width: 1000px) {
+    .services-grid {
+        grid-template-columns: repeat(2, 1fr) !important;
+    }
+}
+
+@media (max-width: 650px) {
+    .services-grid {
+        grid-template-columns: 1fr !important;
+    }
+}
+
+/* Фон двух новых карточек, без изменения их размеров */
+.service-card-extra .service-placeholder {
+    background:
+        radial-gradient(circle at 70% 30%, rgba(140, 92, 255, .34), transparent 34%),
+        linear-gradient(135deg, #1b1234 0%, #100d20 68%, #0b0917 100%);
+}
+
+.service-card-extra .battle-art::after {
+    content: "⚔";
+    position: absolute;
+    right: 30px;
+    top: 52px;
+    color: rgba(177, 132, 255, .45);
+    font-size: 95px;
+    filter: drop-shadow(0 0 20px rgba(139, 92, 246, .3));
+}
+
+.service-card-extra .calibration-art::after {
+    content: "◉";
+    position: absolute;
+    right: 36px;
+    top: 48px;
+    color: rgba(177, 132, 255, .42);
+    font-size: 100px;
+    filter: drop-shadow(0 0 20px rgba(139, 92, 246, .3));
+}
+</style>
+
+
+<style id="services-screen-layout">
+/* =========================================================
+   БЛОК «НАШИ УСЛУГИ» — расположение как на скрине
+   Размеры самих карточек НЕ меняем: 346 × 276px.
+   ========================================================= */
+
+.services {
+    padding-top: 92px !important;
+    padding-bottom: 85px !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+}
+
+.services .section-small-title {
+    font-size: 13px !important;
+    letter-spacing: 2px !important;
+    margin: 0 !important;
+    text-align: center !important;
+}
+
+.services .section-title {
+    margin: 8px 0 0 !important;
+    font-size: 45px !important;
+    line-height: 1.05 !important;
+    text-align: center !important;
+}
+
+.services > div[style] {
+    margin-top: 12px !important;
+    font-size: 24px !important;
+}
+
+.services-grid {
+    display: grid !important;
+    grid-template-columns: repeat(4, 346px) !important;
+    column-gap: 20px !important;
+    row-gap: 30px !important;
+
+    width: max-content !important;
+    margin-top: 52px !important;
+    margin-left: 9.2vw !important;
+    margin-right: 0 !important;
+
+    justify-content: start !important;
+}
+
+/* Карточки оставляем прежнего размера */
+.service-card {
+    width: 346px !important;
+    min-width: 346px !important;
+    max-width: 346px !important;
+
+    height: 276px !important;
+    min-height: 276px !important;
+    max-height: 276px !important;
+}
+
+.service-card .service-content {
+    width: 346px !important;
+    height: 276px !important;
+}
+
+.service-card .service-art {
+    width: 346px !important;
+    height: 276px !important;
+    object-fit: cover !important;
+}
+
+@media (max-width: 1600px) {
+    .services-grid {
+        margin-left: 5.8vw !important;
+        column-gap: 20px !important;
+    }
+}
+
+@media (max-width: 1250px) {
+    .services-grid {
+        width: auto !important;
+        margin-left: 5.8vw !important;
+        margin-right: 5.8vw !important;
+        grid-template-columns: repeat(2, 346px) !important;
+        justify-content: center !important;
+    }
+}
+
+@media (max-width: 750px) {
+    .services-grid {
+        grid-template-columns: 346px !important;
+        margin-left: auto !important;
+        margin-right: auto !important;
+        justify-content: center !important;
+    }
+}
+</style>
+
+
+<style id="services-shift-right-30-final">
+/* Сдвиг всего блока «Наши услуги» вправо на 30px */
+.services > .section-small-title,
+.services > .section-title,
+.services > div[style],
+.services > .services-grid {
+    transform: translateX(58px) !important;
+}
+</style>
+
+
+<style id="services-heading-like-screen">
+/* Только заголовок над карточками услуг.
+   «Наши услуги» не меняем. */
+
+.services .section-small-title {
+    margin: 0 !important;
+    color: #a16cff !important;
+    font-size: 13px !important;
+    line-height: 18px !important;
+    letter-spacing: 0 !important;
+    text-align: center !important;
+    text-transform: none !important;
+}
+
+.services .section-title {
+    margin: 6px 0 0 !important;
+    font-size: 45px !important;
+    line-height: 1.05 !important;
+    text-align: center !important;
+}
+
+.services-subtitle {
+    margin: 16px 0 0 !important;
+    color: #8f899f !important;
+    font-family: "Gilroy", sans-serif !important;
+    font-size: 14px !important;
+    line-height: 21px !important;
+    text-align: center !important;
+}
+</style>
+
+
+<style id="services-heading-centered-final">
+/* === Заголовок услуг: всё строго по центру === */
+
+.services > .section-small-title,
+.services > .section-title,
+.services > .services-subtitle {
+    transform: none !important;
+    position: relative !important;
+    left: 0 !important;
+    right: auto !important;
+    width: 100% !important;
+    text-align: center !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+}
+
+/* «Что предоставляем» */
+.services > .section-small-title {
+    margin-top: 0 !important;
+    margin-bottom: 6px !important;
+}
+
+/* «Наши услуги» — размер оставляем прежним */
+.services > .section-title {
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+}
+
+/* Подзаголовок */
+.services > .services-subtitle {
+    display: block !important;
+    margin-top: 16px !important;
+    color: #8f899f !important;
+    font-family: "Gilroy", sans-serif !important;
+    font-size: 14px !important;
+    line-height: 21px !important;
+}
+</style>
+
+
+<style id="why-us-scale-20px-final">
+/* =========================================================
+   ПОЧЕМУ МЫ? — увеличить карточки примерно на 20px.
+   Исходный функционал и остальной проект не изменяются.
+   Было: 297px × 356px
+   Стало визуально: примерно 343px × 411px
+   ========================================================= */
+
+.why-us-grid {
+    transform: scale(1.155) !important;
+    transform-origin: center top !important;
+}
+
+@media (max-width: 1300px) {
+    .why-us-grid {
+        transform: scale(1.155) !important;
+    }
+}
+
+@media (max-width: 700px) {
+    .why-us-grid {
+        transform: scale(1) !important;
+    }
+}
+</style>
+
+
+<style id="why-us-subtitle-screen-width">
+/* Подзаголовок «Почему мы?»:
+   увеличиваем текст и растягиваем его от левого края
+   карточки «Анонимность» до правого края «Безопасность». */
+
+.why-us-subtitle {
+    width: 699px !important;
+    max-width: 699px !important;
+    margin: 16px auto 0 !important;
+    padding: 0 !important;
+    text-align: center !important;
+    font-size: 18px !important;
+    line-height: 26px !important;
+    white-space: nowrap !important;
+}
+
+@media (max-width: 900px) {
+    .why-us-subtitle {
+        width: calc(100% - 40px) !important;
+        max-width: calc(100% - 40px) !important;
+        white-space: normal !important;
+        font-size: 17px !important;
+        line-height: 24px !important;
+    }
+}
+</style>
+
+
+<style id="why-us-heading-text-only-plus-3">
+/* Только три текста в верхней части блока «Почему мы?» +3px.
+   Текст внутри карточек НЕ меняем. */
+
+/* быстро & надежно: 14px → 17px */
+.features.why-us > .section-small-title {
+    font-size: 17px !important;
+}
+
+/* Почему мы?: 48px → 51px */
+.features.why-us > .section-title {
+    font-size: 51px !important;
+}
+
+/* Подзаголовок: 18px → 21px */
+.features.why-us > .why-us-subtitle {
+    font-size: 21px !important;
+    line-height: 29px !important;
+}
+</style>
+
+
+<style id="only-why-us-title-plus-4">
+/* Только заголовок «Почему мы?» */
+.features.why-us > .section-title {
+    font-size: 52px !important;
+}
+</style>
+
+
+<style id="why-us-title-and-small-title-plus-5">
+/* Только два текста: «Почему мы?» и «быстро & надежно» */
+.features.why-us > .section-title {
+    font-size: 57px !important;
+}
+
+.features.why-us > .section-small-title {
+    font-size: 22px !important;
+}
+</style>
+
+
+<style id="why-us-top-text-move-up-4px">
+/* Поднимаем только три верхних текста блока «Почему мы?» на 4px */
+.features.why-us > .section-small-title,
+.features.why-us > .section-title,
+.features.why-us > .why-us-subtitle {
+    transform: translateY(-4px) !important;
+}
+</style>
+
+
+<style id="why-us-top-text-move-up-another-5px">
+/* Поднимаем ещё на 5px вверх только три верхних текста блока */
+.features.why-us > .section-small-title,
+.features.why-us > .section-title,
+.features.why-us > .why-us-subtitle {
+    transform: translateY(-9px) !important;
+}
+</style>
+
+
+<style id="header-content-shift-final">
+/* Только сдвигаем содержимое верхней плашки вправо на 10px.
+   Фон шапки остаётся на всю ширину. */
+header .logo {
+    transform: translateX(120px) !important;
+}
+
+header nav {
+    transform: translateX(-25px) !important;
+}
+
+header .header-buttons {
+    transform: translateX(10px) !important;
+}
+</style>
+
+<style id="final-horizontal-overflow-fix">
+/* Убираем только горизонтальное переполнение, не двигая и не уменьшая элементы. */
+html, body {
+    overflow-x: clip !important;
+}
+
+header {
+    overflow-x: clip !important;
+}
+</style>
+
+
+<style id="calculator-layout-text-adjustments">
+/* Точечные правки калькулятора: центрируем заголовки и заменяем кнопку доп. опций текстом. */
+#calculator .calculator-heading {
+    max-width: 1460px !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    text-align: center !important;
+}
+#calculator .calculator-heading .section-small-title {
+    display: flex !important;
+    justify-content: center !important;
+    width: 100% !important;
+    text-align: center !important;
+}
+#calculator .calculator-heading .section-small-title::before {
+    display: none !important;
+}
+#calculator .calculator-title-row {
+    display: flex !important;
+    justify-content: center !important;
+    width: 100% !important;
+    text-align: center !important;
+}
+#calculator .calculator-title-row h2 {
+    width: 100% !important;
+    text-align: center !important;
+}
+#calculator .options-field > .field-head {
+    position: relative !important;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    min-height: 28px !important;
+    text-align: center !important;
+}
+#calculator .options-field > .field-head > span {
+    display: block !important;
+    width: 100% !important;
+    text-align: center !important;
+}
+#calculator #optionsCount {
+    position: absolute !important;
+    right: 0 !important;
+    top: 50% !important;
+    transform: translateY(-50%) !important;
+}
+#calculator .more-options-title {
+    display: block !important;
+    width: 100% !important;
+    margin: 16px 0 10px !important;
+    padding: 0 !important;
+    border: 0 !important;
+    background: transparent !important;
+    color: #a16cff !important;
+    font-family: 'Gilroy', sans-serif !important;
+    font-size: 12px !important;
+    font-weight: 700 !important;
+    letter-spacing: 1.5px !important;
+    text-align: center !important;
+    text-transform: uppercase !important;
+    cursor: default !important;
+}
+#calculator .more-options { display: none !important; }
+#calculator #extraOptionsGrid,
+#calculator #extraOptionsGrid.is-collapsed {
+    display: grid !important;
+    margin-top: 0 !important;
+}
+@media (max-width: 700px) {
+    #calculator .calculator-heading { text-align: center !important; }
+    #calculator .calculator-title-row h2 { text-align: center !important; }
+}
+</style>
+
+<style id="calculator-final-heading-adjustment">
+#calculator .calculator-heading,
+#calculator .calculator-title-row,
+#calculator .calculator-title-row h2 {
+    text-align: center !important;
+    justify-content: center !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+}
+#calculator .calculator-title-row h2 { width: 100% !important; }
+#calculator .options-field > .more-options-title {
+    display: block !important;
+    width: 100% !important;
+    margin: 0 0 14px !important;
+    padding: 0 !important;
+    text-align: center !important;
+    color: #a16cff !important;
+    background: transparent !important;
+    border: 0 !important;
+    font-family: 'Gilroy', sans-serif !important;
+    font-size: 13px !important;
+    font-weight: 700 !important;
+    letter-spacing: 1.2px !important;
+    text-transform: uppercase !important;
+    cursor: default !important;
+}
+#calculator .options-field > .field-head {
+    min-height: 0 !important;
+    margin: 0 0 12px !important;
+    padding: 0 !important;
+    border: 0 !important;
+    justify-content: flex-end !important;
+}
+#calculator .options-field > .field-head > span { display: none !important; }
+#calculator #optionsCount { position: static !important; transform: none !important; }
+</style>
+
+
+
+<style id="calculator-mode-text-cleanup">
+/* Убираем декоративные квадраты перед пунктами режима; сохраняем кнопки и обработчики. */
+#calculator .mode-field .mode-button::before,
+#calculator .mode-field .mode-button::after {
+    content: none !important;
+    display: none !important;
+}
+#calculator .mode-field .mode-button {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: flex-start !important;
+    gap: 0 !important;
+    padding: 0 14px !important;
+    font-family: "Gilroy", sans-serif !important;
+    font-size: 12px !important;
+    font-weight: 500 !important;
+    line-height: 1.35 !important;
+    letter-spacing: 0 !important;
+    white-space: normal !important;
+    text-align: left !important;
+}
+#calculator .mode-field .mode-button.active {
+    color: #f5efff !important;
+}
+@media (max-width: 700px) {
+    #calculator .mode-field .mode-button { font-size: 12px !important; }
+}
+</style>
+
+
+<style id="behavior-tier-colored-borders">
+/* Только цвета активной обводки порядочности: зелёный, жёлтый, красный. */
+#calculator .behavior-field .behavior.active:nth-child(1) {
+    border-color: #28b85a !important;
+    box-shadow: 0 0 0 1px rgba(40, 184, 90, .12) !important;
+    background: rgba(40, 184, 90, .07) !important;
+}
+#calculator .behavior-field .behavior.active:nth-child(2) {
+    border-color: #c7c52b !important;
+    box-shadow: 0 0 0 1px rgba(199, 197, 43, .12) !important;
+    background: rgba(199, 197, 43, .07) !important;
+}
+#calculator .behavior-field .behavior.active:nth-child(3) {
+    border-color: #e23c46 !important;
+    box-shadow: 0 0 0 1px rgba(226, 60, 70, .12) !important;
+    background: rgba(226, 60, 70, .07) !important;
+}
+</style>
+
+<style id="rank-stars-animation">
+/* Медаль и звёзды остаются строго внутри квадратной рамки */
+#calculator .rank-icon {
+    position: relative !important;
+    width: 54px !important;
+    min-width: 54px !important;
+    height: 54px !important;
+    flex: 0 0 54px !important;
+    overflow: hidden !important;
+    isolation: isolate;
+}
+#calculator .rank-icon img#currentRankIcon,
+#calculator .rank-icon img#desiredRankIcon {
+    position: absolute !important;
+    left: 50% !important;
+    bottom: 1px !important;
+    z-index: 1 !important;
+    width: 39px !important;
+    height: 39px !important;
+    max-width: 39px !important;
+    max-height: 39px !important;
+    object-fit: contain !important;
+    transform: translateX(-50%) !important;
+    margin: 0 !important;
+}
+#calculator .rank-icon img.rank-stars {
+    position: absolute !important;
+    z-index: 2 !important;
+    left: 50% !important;
+    top: 3px !important;
+    width: 43px !important;
+    height: 11px !important;
+    max-width: 43px !important;
+    max-height: 11px !important;
+    object-fit: contain !important;
+    transform: translateX(-50%) scale(.72) !important;
+    transform-origin: center center !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+    opacity: 0;
+    filter: brightness(1.2) drop-shadow(0 0 0 rgba(255, 196, 70, 0));
+    pointer-events: none !important;
+    margin: 0 !important;
+}
+#calculator .rank-icon img.rank-stars.rank-stars-animate {
+    animation: rankStarsReveal 1.05s cubic-bezier(.16,1,.3,1) both;
+}
+@keyframes rankStarsReveal {
+    0% {
+        opacity: 0;
+        transform: translateX(-50%) translateY(4px) scale(.35);
+        filter: brightness(1) drop-shadow(0 0 0 rgba(255,196,70,0));
+    }
+    45% {
+        opacity: 1;
+        transform: translateX(-50%) translateY(-1px) scale(1.2);
+        filter: brightness(2.1) drop-shadow(0 0 8px rgba(255,190,45,1)) drop-shadow(0 0 15px rgba(255,155,30,.9));
+    }
+    70% {
+        opacity: 1;
+        transform: translateX(-50%) scale(.94);
+        filter: brightness(1.8) drop-shadow(0 0 6px rgba(255,190,45,.95));
+    }
+    100% {
+        opacity: 1;
+        transform: translateX(-50%) scale(1);
+        filter: brightness(1.35) drop-shadow(0 0 4px rgba(255,190,45,.85));
+    }
+}
+@media (prefers-reduced-motion: reduce) {
+    #calculator .rank-icon img.rank-stars.rank-stars-animate { animation-duration: .01ms; }
+}
+</style>
+
+
+
+<style id="rank-icon-medal-stars-corrected">
+/* Коррекция только медали и звёзд: карточки, текст и функционал не меняются */
+#calculator .rank-icon {
+    position: relative !important;
+    width: 58px !important;
+    height: 58px !important;
+    min-width: 58px !important;
+    min-height: 58px !important;
+    overflow: hidden !important;
+    border-radius: 12px !important;
+}
+#calculator .rank-icon > img:not(.rank-stars) {
+    display: block !important;
+    position: absolute !important;
+    left: 50% !important;
+    bottom: 2px !important;
+    transform: translateX(-50%) !important;
+    width: 48px !important;
+    height: 43px !important;
+    max-width: calc(100% - 6px) !important;
+    max-height: calc(100% - 12px) !important;
+    object-fit: contain !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+}
+#calculator .rank-icon img.rank-stars {
+    position: absolute !important;
+    z-index: 3 !important;
+    left: 50% !important;
+    top: 4px !important;
+    bottom: auto !important;
+    transform: translateX(-50%) scale(.72) !important;
+    transform-origin: center center !important;
+    width: 43px !important;
+    height: 11px !important;
+    max-width: calc(100% - 8px) !important;
+    object-fit: contain !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+    pointer-events: none !important;
+}
+#calculator .rank-icon img.rank-stars.rank-stars-animate {
+    animation: rankStarsReveal .72s cubic-bezier(.2,.8,.2,1) forwards !important;
+}
+</style>
+
+
+<style id="rank-info-separated-layout">
+/* Иконка ранга слева, название и MMR в отдельной области справа */
+#calculator .rank-info {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    gap: 12px !important;
+    min-width: 0 !important;
+}
+#calculator .rank-info > .rank-icon {
+    position: relative !important;
+    flex: 0 0 58px !important;
+    width: 58px !important;
+    min-width: 58px !important;
+    height: 58px !important;
+    min-height: 58px !important;
+    margin: 0 !important;
+}
+#calculator .rank-info > div:not(.rank-icon) {
+    position: relative !important;
+    display: block !important;
+    flex: 1 1 auto !important;
+    min-width: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    z-index: 4 !important;
+}
+#calculator .rank-info > div:not(.rank-icon) strong,
+#calculator .rank-info > div:not(.rank-icon) small {
+    position: static !important;
+    display: block !important;
+    max-width: 100% !important;
+    white-space: normal !important;
+    overflow-wrap: anywhere !important;
+    transform: none !important;
+}
+</style>
+
+
+<style id="rank-icon-text-slightly-larger">
+/* Незначительно увеличиваем только иконки ранга и подписи рядом */
+#calculator .rank-info > .rank-icon {
+    flex-basis: 62px !important;
+    width: 62px !important;
+    min-width: 62px !important;
+    height: 62px !important;
+    min-height: 62px !important;
+}
+#calculator .rank-info > .rank-icon > img:not(.rank-stars) {
+    width: 52px !important;
+    height: 47px !important;
+}
+#calculator .rank-info > .rank-icon img.rank-stars {
+    width: 46px !important;
+    height: 12px !important;
+}
+#calculator .rank-info > div:not(.rank-icon) strong {
+    font-size: 16px !important;
+}
+#calculator .rank-info > div:not(.rank-icon) small {
+    font-size: 13px !important;
+}
+</style>
+
+
+<style id="rank-icon-text-plus-six">
+#calculator .rank-info > .rank-icon {
+    flex-basis: 68px !important;
+    width: 68px !important;
+    min-width: 68px !important;
+    height: 68px !important;
+    min-height: 68px !important;
+}
+#calculator .rank-info > .rank-icon > img:not(.rank-stars) {
+    width: 58px !important;
+    height: 53px !important;
+}
+#calculator .rank-info > .rank-icon img.rank-stars {
+    width: 50px !important;
+    height: 13px !important;
+}
+#calculator .rank-info > div:not(.rank-icon) strong {
+    font-size: 18px !important;
+}
+#calculator .rank-info > div:not(.rank-icon) small {
+    font-size: 15px !important;
+}
+</style>
+
+
+<style id="rank-icons-centered">
+/* Центрируем только иконки медалей внутри их области */
+#calculator .rank-info > .rank-icon {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+}
+#calculator .rank-info > .rank-icon > img:not(.rank-stars) {
+    left: 50% !important;
+    top: 50% !important;
+    bottom: auto !important;
+    transform: translate(-50%, -50%) !important;
+}
+</style>
+
+
+<style id="rank-icon-position-only-final">
+#calculator .rank-info {
+    align-items: center !important;
+}
+#calculator .rank-info > .rank-icon {
+    align-self: center !important;
+    margin: 0 0 0 6px !important;
+    transform: translateY(0) !important;
+}
+</style>
+
+
+<style id="rank-medal-centered-inside-square">
+#calculator .rank-info > .rank-icon {
+    position: relative !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    overflow: hidden !important;
+}
+#calculator .rank-info > .rank-icon > img:not(.rank-stars) {
+    position: absolute !important;
+    left: 50% !important;
+    top: 50% !important;
+    bottom: auto !important;
+    width: 58px !important;
+    height: 58px !important;
+    max-width: 100% !important;
+    max-height: 100% !important;
+    object-fit: contain !important;
+    transform: translate(-50%, -50%) !important;
+    margin: 0 !important;
+}
+#calculator .rank-info > .rank-icon > img.rank-stars {
+    top: 3px !important;
+}
+</style>
+
+
+<style id="rank-medal-raised-only">
+/* Поднимаем только изображение медали внутри существующего квадрата */
+#calculator .rank-info > .rank-icon > img:not(.rank-stars) {
+    top: calc(50% - 8px) !important;
+    transform: translate(-50%, -50%) !important;
+}
+</style>
+
+
+<style id="rank-medal-raised-another-8px">
+#calculator .rank-info > .rank-icon > img:not(.rank-stars) {
+    top: calc(50% - 16px) !important;
+    transform: translate(-50%, -50%) !important;
+}
+</style>
+
+
+<style id="rank-medal-image-size-increased">
+/* Увеличиваем только сами изображения медалей, не меняя их положение */
+#calculator .rank-info > .rank-icon > img:not(.rank-stars) {
+    width: 66px !important;
+    height: 66px !important;
+    max-width: 100% !important;
+    max-height: 100% !important;
+    object-fit: contain !important;
+}
+</style>
+
+<style id="reviews-matching-faq">
+#reviews.reviews {
+    width: min(100% - 48px, 1455px);
+    margin: 0 auto;
+    padding: 54px 0 52px;
+    color: #fff;
+    font-family: 'Gilroy', 'GilroyMenu', Arial, sans-serif;
+}
+#reviews .reviews-eyebrow { text-align:center; color:#b99af5; font-size:12px; margin-bottom:2px; }
+#reviews .reviews-title { margin:0 0 38px; text-align:center; color:#fff; font-size:clamp(28px,4vw,42px); line-height:1.2; font-weight:800; }
+#reviews .reviews-cards { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:17px; }
+#reviews .review-card { min-width:0; min-height:225px; padding:20px 22px 15px; display:flex; flex-direction:column; background:linear-gradient(105deg,#151124,#171126); border:1px solid #342747; border-radius:18px; }
+#reviews .review-stars { color:#8650d8; font-size:14px; letter-spacing:1px; margin-bottom:16px; }
+#reviews .review-card p { margin:0; color:#e4deec; font-size:12px; line-height:1.38; flex:1; }
+#reviews .review-user { display:flex; align-items:center; gap:9px; border-top:1px dashed #342747; margin-top:15px; padding-top:9px; min-width:0; }
+#reviews .review-avatar { width:28px; height:28px; border-radius:50%; flex:0 0 28px; display:flex; align-items:center; justify-content:center; color:#fff; font-size:16px; font-weight:700; }
+#reviews .avatar-orange { background:#d87832; } #reviews .avatar-pink { background:#b32d91; } #reviews .avatar-green { background:#2da84b; }
+#reviews .review-user-info { display:flex; flex-direction:column; gap:2px; min-width:0; color:#fff; font-size:10px; }
+#reviews .review-user-info small { color:#9b91aa; font-size:9px; }
+#reviews .review-service { margin-left:auto; color:#8d829e; font-size:9px; white-space:nowrap; }
+#reviews .reviews-more {
+    text-align: center;
+    margin-top: 23px;
+}
+
+#reviews .reviews-more-btn {
+    padding: 0;
+    border: none;
+    background: none;
+    color: #b99af5;
+    font-family: inherit;
+    font-size: 13px;
+    cursor: pointer;
+    transition: color 0.2s ease;
+}
+
+#reviews .reviews-more-btn:hover {
+    color: #fff;
+}
+@media(max-width:800px) { #reviews .reviews-cards { grid-template-columns:1fr; } #reviews .review-card { min-height:0; } }
+@media(max-width:600px) { #reviews.reviews { width:calc(100% - 32px); padding:36px 0; } #reviews .reviews-title { margin-bottom:25px; } }
+</style>
+
+</head>
+
+
+<body>
+
+
+<header>
+
+<a href="{{ url_for('index') }}" class="logo">
+
+    <img
+        src="{{ url_for('static', filename='img/лого.png') }}"
+        alt="DotaFresh"
+    >
+
+    <div class="logo-text">
+
+        <div class="logo-name">
+            DotaFresh
+        </div>
+
+        <div class="logo-subtitle">
+            dota2 boost
+        </div>
+
+    </div>
+
+</a>
+
+    <nav>
+        <div class="services-menu active">
+    <button class="services-button" type="button" aria-expanded="false" aria-controls="services-dropdown">
+        Услуги <span class="services-arrow">▼</span>
+    </button>
+
+    <div class="services-dropdown" id="services-dropdown">
+
+        <a href="#boost">
+            <span class="service-icon">⚡</span>
+            Буст рейтинга
+        </a>
+
+        <a href="#calibration">
+            <span class="service-icon">♜</span>
+            Калибровка
+        </a>
+
+        <a href="#training">
+            <span class="service-icon">◉</span>
+            Обучение
+        </a>
+
+        <a href="#accounts">
+            <span class="service-icon">🛒</span>
+            Покупка аккаунта
+        </a>
+
+        <a href="#rent">
+            <span class="service-icon">♧</span>
+            Аренда аккаунта
+        </a>
+
+        <a href="#lp">
+            <span class="service-icon">⟳</span>
+            Отмыв ЛП
+        </a>
+
+        <a href="#behavior">
+            <span class="service-icon">♢</span>
+            Отмыв порядочности
+        </a>
+
+        <a href="#battle">
+            <span class="service-icon">◇</span>
+            Боевой кубок
+        </a>
+
+        <a href="#egirl">
+            <span class="service-icon">✦</span>
+            E-Girl в пати
+        </a>
+
+        <a href="#steam">
+            <span class="service-icon">▣</span>
+            Пополнение Steam
+        </a>
+
+        <a href="#all-services">
+            <span class="service-icon">▦</span>
+            Все услуги
+        </a>
+
+    </div>
+</div>
+        <a href="{{ url_for('index') }}#egirl">E-Girl</a>
+        <a href="{{ url_for('contact') }}">Контакты</a>
+        <a href="{{ url_for('job') }}">Работа</a>
+        <a href="{{ url_for('index') }}#guides">Гайды</a>
+        <a href="{{ url_for('about') }}">О нас</a>
+    </nav>
+
+    <div class="header-buttons">
+        <a href="#" class="header-button booster-button">
+            Бустер
+        </a>
+
+        <a href="{{ url_for('cabinet') }}" class="header-button cabinet-button">
+            Личный кабинет</a>
+    </div>
+
+</header>
+
+
+
+<section class="hero"
+         style="background-image: url('{{ url_for('static', filename='img/bg.png') }}');">
+
+    <div class="hero-text">
+
+    <p class="about-text">/ о нас</p>
+
+    <h1 class="hero-title">
+      Свежий вдох<br>
+      для твоего <span class="highlight-mmr">MMR</span>
+    </h1>
+
+        <p class="hero-description">
+            Закроем калибровку, поднимем рейтинг или обучим играть.<br>
+            Поиграй в пати с милыми E-Girl, арендуй или продай аккаунт.<br>
+            100% анонимность и безопасность.
+        </p>
+
+    <!-- Кнопки с анимированной стрелочкой -->
+    <div class="button-group">
+      <a href="#" class="btn-img btn-boost">
+        <span>Начать буст</span>
+        <div class="arrow-box">
+          <img src="{{ url_for('static', filename='img/arrow-icon.png') }}" alt="" class="arrow-icon arrow-default">
+          <img src="{{ url_for('static', filename='img/arrow-icon2.png') }}" alt="" class="arrow-icon arrow-hover">
+        </div>
+      </a>
+
+      <a href="#" class="btn-img btn-egirl">
+        <span>Пати с E-Girl</span>
+        <div class="arrow-box">
+          <img src="{{ url_for('static', filename='img/arrow-icon.png') }}" alt="" class="arrow-icon arrow-default">
+          <img src="{{ url_for('static', filename='img/arrow-icon2.png') }}" alt="" class="arrow-icon arrow-hover">
+        </div>
+      </a>
+
+      <a href="#" class="btn-img btn-services">
+        <span>К услугам</span>
+      </a>
+    </div>
+
+    <!-- Гарантия со щитком -->
+    <div class="security-note">
+      <img src="{{ url_for('static', filename='img/shield-icon.png') }}" alt="" class="shield-icon">
+      <span>Деньги защищены. Лежат на сайте до окончания заказа</span>
+    </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+<!-- Едущая полоса -->
+<div class="moving-strip">
+    <div class="moving-strip-track">
+        <img src="{{ url_for('static', filename='img/Едущая полоса.png') }}" alt="">
+        <img src="{{ url_for('static', filename='img/Едущая полоса.png') }}" alt="">
+    </div>
+</div>
+
+<section class="services" id="services">
+
+    <div class="section-small-title">
+        ЧТО ПРЕДОСТАВЛЯЕМ
+    </div>
+
+    <h2 class="section-title">
+        Наши услуги
+    </h2>
+
+    <p class="services-subtitle">
+        Прокачка, обучение или хорошая компания — выбери то, что нужно тебе.
+    </p>
+
+
+    <div class="services-grid">
+
+        <!-- 1. Буст рейтинга -->
+        <div class="service-card">
+            <img class="service-art" src="{{ url_for('static', filename='img/плашка буст рейтинга.png') }}" alt="Буст рейтинга">
+            <div class="service-content">
+                <h3>Буст рейтинга</h3>
+                <p>Поможем выбраться со дна<br>до 1000+ ммр за 3 дня</p>
+                <div class="price">от 1500 ₽</div>
+                <div class="service-arrow">→</div>
+            </div>
+        </div>
+
+        <!-- 2. E-Girl -->
+        <div class="service-card popular">
+            <img class="service-art" src="{{ url_for('static', filename='img/egirl.png') }}" alt="E-Girl в пати">
+            <div class="service-content">
+                <h3>E-Girl в пати</h3>
+                <p>Играй с милой девушкой,<br>никаких потных мужиков!</p>
+                <div class="price">от 300 ₽/час</div>
+                <div class="service-arrow">→</div>
+            </div>
+        </div>
+
+        <!-- 3. Боевой Кубок -->
+        <div class="service-card">
+            <div class="service-art service-art-placeholder battle-art" aria-hidden="true"></div>
+            <div class="service-content">
+                <h3>Боевой Кубок</h3>
+                <p>Участие в боевом кубке<br>и помощь с подготовкой.</p>
+                <div class="price">от 500 ₽</div>
+                <div class="service-arrow">→</div>
+            </div>
+        </div>
+
+        <!-- 4. Аренда аккаунтов -->
+        <div class="service-card">
+            <img class="service-art" src="{{ url_for('static', filename='img/плашка аренда аккаунтов.png') }}" alt="Аренда аккаунтов">
+            <div class="service-content">
+                <h3>Аренда аккаунтов</h3>
+                <p>Сдадим аккаунт в аренду,<br>проверь свои силы!</p>
+                <div class="price">от 80 ₽/час</div>
+                <div class="service-arrow">→</div>
+            </div>
+        </div>
+
+        <!-- 5. Калибровка -->
+        <div class="service-card">
+            <div class="service-art service-art-placeholder calibration-art" aria-hidden="true"></div>
+            <div class="service-content">
+                <h3>Калибровка</h3>
+                <p>Помощь с прохождением<br>калибровочных игр.</p>
+                <div class="price">от 1800 ₽</div>
+                <div class="service-arrow">→</div>
+            </div>
+        </div>
+
+        <!-- 6. E-Boy -->
+        <div class="service-card">
+            <img class="service-art" src="{{ url_for('static', filename='img/4 Ебой.png') }}" alt="E-Boy в пати">
+            <div class="service-content">
+                <h3>E-Boy в пати</h3>
+                <p>Приятный компаньон для<br>мужской дружбы!</p>
+                <div class="price">от 300 ₽/час</div>
+                <div class="service-arrow">→</div>
+            </div>
+        </div>
+
+        <!-- 7. Обучение -->
+        <div class="service-card popular">
+            <img class="service-art" src="{{ url_for('static', filename='img/5 Тренер.png') }}" alt="Обучение">
+            <div class="service-content">
+                <h3>Обучение</h3>
+                <p>Тренировка с бустера,<br>рост с первого занятия.</p>
+                <div class="price">от 500 ₽/час</div>
+                <div class="service-arrow">→</div>
+            </div>
+        </div>
+
+        <!-- 8. Покупка аккаунта -->
+        <div class="service-card">
+            <img class="service-art" src="{{ url_for('static', filename='img/6 Покупка аков.png') }}" alt="Покупка аккаунта">
+            <div class="service-content">
+                <h3>Покупка аккаунта</h3>
+                <p>Продадим аккаунты на любой<br>вкус и цвет.</p>
+                <div class="price">от 800 ₽</div>
+                <div class="service-arrow">→</div>
+            </div>
+        </div>
+
+    </div>
+
+</section>
+
+<section class="features why-us" id="features">
+
+    <div class="section-small-title">
+        быстро & надежно
+    </div>
+
+    <h2 class="section-title">
+        Почему мы?
+    </h2>
+
+    <p class="why-us-subtitle">
+        Не даем пустых обещаний — просто качественно делаем свою работу.
+    </p>
+
+    <div class="features-grid why-us-grid">
+
+        <div class="feature why-card">
+            <img class="why-bg" src="{{ url_for('static', filename='img/1 Поддержка.png') }}" alt="Поддержка">
+            <div class="why-number">01</div>
+            <div class="feature-content">
+                <h3>Поддержка 12 ч</h3>
+                <p>Наши менеджеры онлайн с 10:00 до 22:00 по МСК. Они ответят на все вопросы и помогут решить проблему.</p>
+            </div>
+        </div>
+
+        <div class="feature why-card">
+            <img class="why-bg" src="{{ url_for('static', filename='img/2 Аноним.png') }}" alt="Анонимность">
+            <div class="why-number">02</div>
+            <div class="feature-content">
+                <h3>Анонимность</h3>
+                <p>При выполнении заказа бустер играет в невидимке, все проходящее строго конфиденциально.</p>
+            </div>
+        </div>
+
+        <div class="feature why-card">
+            <img class="why-bg" src="{{ url_for('static', filename='img/3 Безопа.png') }}" alt="Безопасность">
+            <div class="why-number">03</div>
+            <div class="feature-content">
+                <h3>Безопасность</h3>
+                <p>Платеж проходит через платежного провайдера; данные банковской карты у нас не хранятся.</p>
+            </div>
+        </div>
+
+        <div class="feature why-card">
+            <img class="why-bg" src="{{ url_for('static', filename='img/4 Дружба.png') }}" alt="Дружелюбие">
+            <div class="why-number">04</div>
+            <div class="feature-content">
+                <h3>Дружелюбие</h3>
+                <p>Каждый работник проходит проверку. Если вам нагрубил бустер/e-girl/e-boy, то мы вернем деньги.</p>
+            </div>
+        </div>
+
+    </div>
+
+</section>
+
+<section class="calculator-section" id="calculator">
+
+    <div class="calculator-heading">
+        <div class="section-small-title">рассчитай стоимость заказа</div>
+
+        <div class="calculator-title-row">
+            <h2>Калькулятор рейтинга</h2>
+        </div>
+    </div>
+
+    <div class="calculator-layout">
+
+        <div class="calculator-panel">
+            <h3>Параметры заказа</h3>
+
+            <div class="calculator-tabs">
+                <button type="button" class="calc-tab active">Буст рейтинга</button>
+                <button type="button" class="calc-tab">Калибровка</button>
+                <button type="button" class="calc-tab">Обучение</button>
+                <button type="button" class="calc-tab">Аккаунт</button>
+                <button type="button" class="calc-tab">Аренда</button>
+            </div>
+
+            <div class="rank-row">
+                <div class="rank-card">
+                    <div class="rank-label">ТЕКУЩИЙ РАНГ</div>
+                    <div class="rank-info">
+                        <div class="rank-icon"><img class="rank-stars" id="currentRankStars" src="{{ url_for('static', filename='img/Stars/1 звезда.png') }}" alt="" aria-hidden="true"><img id="currentRankIcon" src="https://d1u5p3l4wpay3k.cloudfront.net/dota2_gamepedia/thumb/8/85/SeasonalRank1-1.png/180px-SeasonalRank1-1.png?version=505bd1023d7b47faaa390b14171a70a7" alt="Ранг"></div>
+                        <div>
+                            <strong>Страж II</strong>
+                            <small id="currentRankText">1 000 MMR</small>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="rank-arrow">→</div>
+
+                <div class="rank-card">
+                    <div class="rank-label">ЖЕЛАЕМЫЙ РАНГ</div>
+                    <div class="rank-info">
+                        <div class="rank-icon desired"><img class="rank-stars" id="desiredRankStars" src="{{ url_for('static', filename='img/Stars/1 звезда.png') }}" alt="" aria-hidden="true"><img id="desiredRankIcon" src="https://d1u5p3l4wpay3k.cloudfront.net/dota2_gamepedia/thumb/8/85/SeasonalRank1-1.png/180px-SeasonalRank1-1.png?version=505bd1023d7b47faaa390b14171a70a7" alt="Ранг"></div>
+                        <div>
+                            <strong>Рыцарь III</strong>
+                            <small id="desiredRankText">2 000 MMR</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="range-block">
+                <div class="range-head">
+                    <span>ТЕКУЩИЙ MMR</span>
+                    <b id="currentValue">1 000</b>
+                </div>
+                <input id="currentMmr" type="range" min="0" max="8000" step="25" value="1000">
+
+                <div class="range-head desired-head">
+                    <span>ЖЕЛАЕМЫЙ MMR</span>
+                    <b id="desiredValue">2 000</b>
+                </div>
+                <input id="desiredMmr" type="range" min="100" max="8000" step="25" value="2000">
+            </div>
+
+            <div class="behavior-mode-row">
+
+                <div class="calc-field behavior-field">
+                    <div class="field-head">
+                        <span>Порядочность</span>
+                        <b>9000+</b>
+                    </div>
+
+                    <div class="behavior-row">
+                        <button type="button" class="behavior active" data-percent="0"><i></i>9000+ <span>0%</span></button>
+                        <button type="button" class="behavior" data-percent="15"><i></i>6000–9000 <span>+15%</span></button>
+                        <button type="button" class="behavior" data-percent="30"><i></i>3000–6000 <span>+30%</span></button>
+                    </div>
+                </div>
+
+                <div class="calc-field mode-field">
+                    <div class="field-head">
+                        <span>Режим</span>
+                        <b id="modeLabel">Передача аккаунта бустеру</b>
+                    </div>
+
+                    <div class="mode-switch">
+                        <button type="button" class="mode-button active" data-mode="Передача аккаунта бустеру">Передача аккаунта бустеру</button>
+                        <button type="button" class="mode-button" data-mode="Пати с бустером на саппах (+40%)">Пати с бустером на саппах (+40%)</button>
+                        <button type="button" class="mode-button" data-mode="Пати с бустером на коррах (+80%)">Пати с бустером на коррах (+80%)</button>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="calc-field options-field">
+                <div class="more-options-title" aria-hidden="true">Дополнительные условия</div>
+                <div class="field-head">
+                    <b id="optionsCount">0</b>
+                </div>
+
+                <div class="options-grid">
+                    <label class="option-card">
+                        <input type="checkbox" data-price="25">
+                        <span class="fake-check"></span>
+                        <span class="option-text"><strong>Двойные жетоны</strong><small>Снижает цену и ускоряет срок</small></span>
+                        <em>цена −25%, срок −40%</em>
+                    </label>
+
+                    <label class="option-card">
+                        <input type="checkbox" data-price="30">
+                        <span class="fake-check"></span>
+                        <span class="option-text"><strong>Смотреть на стриме</strong><small>Общайся с бустером, смотри онлайн в ЛК</small></span>
+                        <em>цена +30%</em>
+                    </label>
+
+                    <label class="option-card">
+                        <input type="checkbox" data-price="30">
+                        <span class="fake-check"></span>
+                        <span class="option-text"><strong>Ускорение</strong><small>Приоритетное выполнение</small></span>
+                        <em>цена +30%, срок −30%</em>
+                    </label>
+
+                    <label class="option-card">
+                        <input type="checkbox" data-price="30">
+                        <span class="fake-check"></span>
+                        <span class="option-text"><strong>Смурф-пул</strong><small>Менее 1000 матчей</small></span>
+                        <em>цена +30%</em>
+                    </label>
+
+                    <label class="option-card">
+                        <input type="checkbox" data-price="10">
+                        <span class="fake-check"></span>
+                        <span class="option-text"><strong>Приоритетный запуск</strong><small>Старт в течение 15 мин.</small></span>
+                        <em>цена +10%</em>
+                    </label>
+
+                    <label class="option-card">
+                        <input type="checkbox" data-price="30">
+                        <span class="fake-check"></span>
+                        <span class="option-text"><strong>Выбрать героев</strong><small>Конкретный пул бустера</small></span>
+                        <em>цена +30%</em>
+                    </label>
+                </div>
+
+                <div class="extra-options-grid" id="extraOptionsGrid">
+                    <label class="option-card">
+                        <input type="checkbox" data-price="30">
+                        <span class="fake-check"></span>
+                        <span class="option-text">
+                            <strong>Выбрать роль</strong>
+                            <small>Carry, mid, support...</small>
+                        </span>
+                        <em>цена +30%</em>
+                    </label>
+
+                    <label class="option-card">
+                        <input type="checkbox" data-price="0">
+                        <span class="fake-check"></span>
+                        <span class="option-text">
+                            <strong>Режим невидимки</strong>
+                            <small>Бустер играет в offline-режиме</small>
+                        </span>
+                        <em class="free-option">Бесплатно</em>
+                    </label>
+                </div>
+            </div>
+        </div>
+
+        <aside class="calculator-summary">
+            <div class="summary-label"><span></span> ИТОГ К ОПЛАТЕ</div>
+            <div class="summary-price"><span id="totalPrice">2 530</span> <small>₽</small></div>
+
+            <div class="summary-line"><span>Услуга</span><b>Буст рейтинга</b></div>
+            <div class="summary-line"><span>Прогресс</span><b id="progressText">+1 000 MMR</b></div>
+            <div class="summary-line"><span>Режим</span><b id="summaryMode">Передача аккаунта</b></div>
+            <div class="summary-line"><span>Порядочность</span><b>9000+</b></div>
+            <div class="summary-line"><span>Срок</span><b id="deadlineText">≈3 дня 20 часов</b></div>
+
+            <div class="summary-options-list" id="summaryOptionsList" hidden>
+                <div class="summary-options-heading">Дополнительные условия</div>
+                <div class="summary-option-row"><span>Двойные жетоны</span><b>Нет</b></div>
+                <div class="summary-option-row"><span>Смотреть на стриме</span><b>Нет</b></div>
+                <div class="summary-option-row"><span>Ускорение</span><b>Нет</b></div>
+                <div class="summary-option-row"><span>Смурф-пул</span><b>Нет</b></div>
+                <div class="summary-option-row"><span>Приоритетный запуск</span><b>Нет</b></div>
+                <div class="summary-option-row"><span>Выбрать героев</span><b>Нет</b></div>
+                <div class="summary-option-row"><span>Выбрать роль</span><b>Нет</b></div>
+                <div class="summary-option-row"><span>Режим невидимки</span><b>Нет</b></div>
+            </div>
+
+            <button type="button" class="summary-order">Заказать · <span id="orderPrice">2 530</span> ₽ →</button>
+            <button type="button" class="summary-question">Задать вопрос менеджеру</button>
+
+            <div class="summary-safe">✓ &nbsp; Безопасная сделка · возврат до 100%</div>
+        </aside>
+
+    </div>
+</section>
+
+
+<section class="faq-section" id="faq">
+    <div class="faq-eyebrow">ВСЁ, ЧТО НУЖНО ЗНАТЬ</div>
+    <h2 class="faq-title">Частые вопросы</h2>
+
+    <div class="faq-list">
+
+        <div class="faq-entry">
+            <button type="button" class="faq-item" aria-expanded="false">
+                <span>1. Мой аккаунт не забанят за буст?</span>
+                <span class="faq-icon" aria-hidden="true"></span>
+            </button>
+            <div class="faq-answer">
+                <div class="faq-answer-inner">
+                    Бустинг может нарушать правила игры. Полностью исключить риск санкций со стороны Valve нельзя.
+                </div>
+            </div>
+        </div>
+
+        <div class="faq-entry">
+            <button type="button" class="faq-item" aria-expanded="false">
+                <span>2. Как проходит игра в пати с E-Girl / E-Boy?</span>
+                <span class="faq-icon" aria-hidden="true"></span>
+            </button>
+            <div class="faq-answer">
+                <div class="faq-answer-inner">
+                    Вы согласовываете время, выбираете услугу и играете вместе в группе. Все детали обсуждаются перед заказом.
+                </div>
+            </div>
+        </div>
+
+        <div class="faq-entry">
+            <button type="button" class="faq-item" aria-expanded="false">
+                <span>3. Как происходит аренда или покупка аккаунтов?</span>
+                <span class="faq-icon" aria-hidden="true"></span>
+            </button>
+            <div class="faq-answer">
+                <div class="faq-answer-inner">
+                    Стоимость, условия и порядок предоставления доступа согласовываются перед заказом. Учитывайте правила игры относительно передачи аккаунтов.
+                </div>
+            </div>
+        </div>
+
+        <div class="faq-entry">
+            <button type="button" class="faq-item" aria-expanded="false">
+                <span>4. Какие гарантии безопасности моих денег вы даёте?</span>
+                <span class="faq-icon" aria-hidden="true"></span>
+            </button>
+            <div class="faq-answer">
+                <div class="faq-answer-inner">
+                    Перед оплатой ознакомьтесь с условиями заказа, порядком выполнения услуги и правилами возврата.
+                </div>
+            </div>
+        </div>
+
+        <div class="faq-entry">
+            <button type="button" class="faq-item" aria-expanded="false">
+                <span>5. Как быстро приступить к работе бустер или E-Girl/E-Boy?</span>
+                <span class="faq-icon" aria-hidden="true"></span>
+            </button>
+            <div class="faq-answer">
+                <div class="faq-answer-inner">
+                    Срок зависит от проверки заявки, согласования условий и наличия заказов. Точное время уточняется индивидуально.
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<style>
+#faq.faq-section {
+    width: min(calc(100% - 48px), 1455px);
+    margin: 0 auto;
+    padding: 8px 0 28px;
+    color: #fff;
+    font-family: 'Gilroy', 'GilroyMenu', Arial, sans-serif;
+    box-sizing: border-box;
+}
+
+#faq .faq-eyebrow {
+    text-align: center;
+    color: #b99af5;
+    font-size: 12px;
+    letter-spacing: .2px;
+    margin-bottom: 2px;
+}
+
+#faq .faq-title {
+    margin: 0 0 38px;
+    text-align: center;
+    color: #fff;
+    font-size: clamp(28px, 4vw, 42px);
+    line-height: 1.2;
+    font-weight: 800;
+}
+
+#faq .faq-list {
+    display: flex;
+    flex-direction: column;
+    gap: 17px;
+    width: 100%;
+}
+
+#faq .faq-entry {
+    width: 100%;
+    box-sizing: border-box;
+    border: 1px solid #342747;
+    border-radius: 17px;
+    overflow: hidden;
+    background: linear-gradient(105deg, #151124, #171126);
+}
+
+#faq .faq-item {
+    width: 100%;
+    min-height: 64px;
+    padding: 10px 16px 10px 21px;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    border: none;
+    outline: none;
+    background: transparent;
+    color: #e4deec;
+    text-align: left;
+    font-family: inherit;
+    font-size: 12px;
+    cursor: pointer;
+}
+
+#faq .faq-item > span:first-child {
+    line-height: 1.5;
+}
+
+/* Квадратная кнопка 40×40 */
+#faq .faq-icon {
+    width: 40px;
+    height: 40px;
+    flex: 0 0 40px;
+    box-sizing: border-box;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border: 1px solid #342747;
+    border-radius: 7px;
+    background: linear-gradient(105deg, #151124, #171126);
+    color: #ffffff;
+
+    transition: background .2s ease, border-color .2s ease;
+}
+
+/* Плюс состоит из двух линий */
+#faq .faq-icon::before,
+#faq .faq-icon::after {
+    content: "";
+    position: absolute;
+    width: 14px;
+    height: 2px;
+    border-radius: 2px;
+    background: #ffffff;
+    transition: transform .25s ease;
+}
+
+#faq .faq-icon::before {
+    transform: rotate(0deg);
+}
+
+#faq .faq-icon::after {
+    transform: rotate(90deg);
+}
+
+/* При наведении меняется только фон */
+#faq .faq-item:hover .faq-icon {
+    background: #35205a;
+    border-color: #8650d8;
+}
+
+/* Открытый вопрос: плюс превращается в минус */
+#faq .faq-entry.is-open .faq-icon {
+    background: linear-gradient(105deg, #151124, #171126);
+    border-color: #342747;
+}
+
+#faq .faq-entry.is-open .faq-icon::after {
+    transform: rotate(0deg);
+}
+
+/* Открытый значок тоже подсвечивается только фоном при наведении */
+#faq .faq-entry.is-open .faq-item:hover .faq-icon {
+    background: #35205a;
+    border-color: #8650d8;
+}
+
+/* Раскрытие ответа */
+#faq .faq-answer {
+    display: grid;
+    grid-template-rows: 0fr;
+    opacity: 0;
+    transition: grid-template-rows .3s ease, opacity .2s ease;
+}
+
+#faq .faq-answer-inner {
+    min-height: 0;
+    overflow: hidden;
+    padding: 0 21px;
+    color: #a99eb9;
+    font-size: 12px;
+    line-height: 1.7;
+    transition: padding .3s ease;
+}
+
+#faq .faq-entry.is-open .faq-answer {
+    grid-template-rows: 1fr;
+    opacity: 1;
+}
+
+#faq .faq-entry.is-open .faq-answer-inner {
+    padding: 0 21px 18px;
+}
+
+#faq .faq-item:focus-visible {
+    outline: 1px solid #b99af5;
+    outline-offset: -3px;
+}
+
+@media (max-width: 600px) {
+    #faq.faq-section {
+        width: calc(100% - 32px);
+        padding-top: 10px;
+    }
+
+    #faq .faq-title {
+        margin-bottom: 25px;
+    }
+
+    #faq .faq-list {
+        gap: 12px;
+    }
+
+    #faq .faq-entry {
+        border-radius: 14px;
+    }
+
+    #faq .faq-item {
+        min-height: 60px;
+        padding: 10px 12px 10px 14px;
+    }
+
+    #faq .faq-answer-inner {
+        padding-left: 14px;
+        padding-right: 14px;
+    }
+
+    #faq .faq-entry.is-open .faq-answer-inner {
+        padding: 0 14px 16px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    #faq .faq-icon::before,
+    #faq .faq-icon::after,
+    #faq .faq-answer,
+    #faq .faq-answer-inner {
+        transition: none;
+    }
+}
+</style>
+
+<script>
+(function () {
+    function initFAQ() {
+        const faq = document.getElementById('faq');
+
+        if (!faq || faq.dataset.faqReady === 'true') {
+            return;
+        }
+
+        faq.dataset.faqReady = 'true';
+
+        faq.querySelectorAll('.faq-item').forEach(function (button) {
+            button.addEventListener('click', function () {
+                const entry = button.closest('.faq-entry');
+
+                if (!entry) return;
+
+                const wasOpen = entry.classList.contains('is-open');
+
+                faq.querySelectorAll('.faq-entry').forEach(function (item) {
+                    item.classList.remove('is-open');
+                    item.querySelector('.faq-item')
+                        .setAttribute('aria-expanded', 'false');
+                });
+
+                if (!wasOpen) {
+                    entry.classList.add('is-open');
+                    button.setAttribute('aria-expanded', 'true');
+                }
+            });
+        });
+    }
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initFAQ);
+    } else {
+        initFAQ();
+    }
+})();
+</script>
+
+
+<section class="reviews" id="reviews">
+    <div class="reviews-eyebrow">ЧТО О НАС ГОВОРЯТ</div>
+    <h2 class="reviews-title">Отзывы игроков</h2>
+    <div class="reviews-cards">
+        <article class="review-card">
+            <div class="review-stars">★★★★★</div>
+            <p>Мне апнули 1300 ПТС за три дня практически без поражений, винрейт огромный! Бустер в стиме поставил невидимку, а друзья даже ничего не прочухали). Респект, ребят, буду обращаться некст за калибровкой!</p>
+            <div class="review-user"><span class="review-avatar avatar-orange">D</span><span class="review-user-info"><strong>d***k</strong><small>3 200 + 4 500 MMR</small></span><span class="review-service">Бустер Антон</span></div>
+        </article>
+        <article class="review-card">
+            <div class="review-stars">★★★★★</div>
+            <p>Девушка на ТА вынесла карту 16/1, я даже не потел, играл на 4, на чиле) При этом в голосовом чате куча смешных шуток и никакой душноты. Приятно, когда девушка и тащит, и создает тёплую атмосферу.</p>
+            <div class="review-user"><span class="review-avatar avatar-pink">R</span><span class="review-user-info"><strong>R***n</strong><small>E-girl</small></span><span class="review-service">E-girl Лера</span></div>
+        </article>
+        <article class="review-card">
+            <div class="review-stars">★★★★★</div>
+            <p>Парень играл на Даззле и Оракуле, сейвил меня из таких безнадежных замесов, где я уже прощался с жизнью. Вардинг идеальный, сатки делает по кд. Очень спокойный, вежливый и надежный тиммейт. Спасибо бро</p>
+            <div class="review-user"><span class="review-avatar avatar-green">N</span><span class="review-user-info"><strong>n***1</strong><small>E-boy</small></span><span class="review-service">E-boy Дима</span></div>
+        </article>
+    </div>
+    <div class="reviews-more">
+    <button class="reviews-more-btn" type="button">Смотреть все отзывы →</button>
+</div>
+</section>
+
+
+
+
+
+
+<footer class="dotafresh-footer">
+    <div class="footer-brand">
+        <a href="#top" class="footer-logo">
+            <img src="{{ url_for('static', filename='img/лого.png') }}" alt="DotaFresh">
+            <span class="footer-logo-text">
+                <strong>DotaFresh</strong>
+                <small>dota2 boost</small>
+            </span>
+        </a>
+
+        <p>
+            Прокачка рейтинга, игр с E-Girl,<br>
+            обучение и продажа аккаунтов Dota 2.<br>
+            Бустеры 8k+ MMR, старт за 30 минут,<br>
+            поддержка 10:00–22:00 МСК.
+        </p>
+
+        <div class="footer-socials">
+            <a href="#" aria-label="Telegram">
+                <img src="{{ url_for('static', filename='img/telegram-icon.png') }}" alt="Telegram">
+            </a>
+            <a href="#" aria-label="VK">
+                <img src="{{ url_for('static', filename='img/vk-icon.png') }}" alt="VK">
+            </a>
+            <a href="#" aria-label="Discord">
+                <img src="{{ url_for('static', filename='img/discord-icon.svg') }}" alt="Discord">
+            </a>
+        </div>
+    </div>
+
+    <div class="footer-column">
+        <h3>Услуги</h3>
+        <a href="#">Покупка аккаунта</a>
+        <a href="#">Аренда аккаунта</a>
+        <a href="#">Буст рейтинга</a>
+        <a href="#">Обучение</a>
+        <a href="#">E-Boy</a>
+        <a href="#">E-Girl</a>
+    </div>
+
+    <div class="footer-column">
+        <h3>Информация</h3>
+        <a href="#">Личный кабинет</a>
+        <a href="#">Мониторинг</a>
+        <a href="#">Бустеры</a>
+        <a href="#">Гарантии</a>
+        <a href="#">Оплата</a>
+    </div>
+
+    <div class="footer-column">
+        <h3>Тех. поддержка</h3>
+        <a href="#">Тех. поддержка</a>
+        <a href="#">Частые вопросы</a>
+        <a href="#">О компании</a>
+        <a href="#">Правила</a>
+        <a href="#">Работа</a>
+    </div>
+</footer>
+
+<style id="dotafresh-footer-new-design">
+.dotafresh-footer {
+    display: grid !important;
+    grid-template-columns: 1.2fr 1fr 1fr .9fr !important;
+    gap: 30px !important;
+    padding: 28px 5% 38px !important;
+    min-height: 185px;
+    box-sizing: border-box;
+    background: #10101f !important;
+    border-top: 1px solid #302044 !important;
+    color: #f4f0ff;
+    font-family: inherit;
+}
+
+.dotafresh-footer .footer-brand {
+    min-width: 0;
+}
+
+.dotafresh-footer .footer-logo {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    margin: 0 0 10px;
+    color: #fff;
+    text-decoration: none;
+}
+
+.dotafresh-footer .footer-logo img {
+    width: 24px;
+    height: 27px;
+    object-fit: contain;
+}
+
+.dotafresh-footer .footer-logo-text {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.05;
+}
+
+.dotafresh-footer .footer-logo-text strong {
+    font-size: 19px;
+    font-weight: 700;
+}
+
+.dotafresh-footer .footer-logo-text small {
+    margin-top: 3px;
+    color: #aaa2bd;
+    font-size: 13px;
+    letter-spacing: .5px;
+}
+
+.dotafresh-footer .footer-brand p {
+    color: #aaa6b8;
+    font-size: 15px;
+    line-height: 1.5;
+    margin: 0 0 14px;
+}
+
+.dotafresh-footer .footer-socials {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+}
+
+.dotafresh-footer .footer-socials a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    flex-shrink: 0;
+    border-radius: 8px;
+    background: #211831;
+    border: 1px solid #392653;
+    text-decoration: none;
+    transition: background .2s ease, border-color .2s ease;
+}
+
+.dotafresh-footer .footer-socials a:hover {
+    background: #8650d9;
+    border-color: #a878f3;
+}
+
+.dotafresh-footer .footer-socials img {
+    display: block;
+    width: 19px;
+    height: 19px;
+    object-fit: contain;
+}
+
+.dotafresh-footer .footer-column {
+    min-width: 0;
+}
+
+.dotafresh-footer .footer-column h3 {
+    margin: 0 0 9px;
+    color: #f7f4ff;
+    font-size: 17px;
+    font-weight: 700;
+}
+
+.dotafresh-footer .footer-column a {
+    display: block;
+    width: fit-content;
+    max-width: 100%;
+    margin: 0 0 6px;
+    color: #aaa6b8;
+    font-size: 15px;
+    line-height: 1.4;
+    text-decoration: none;
+    transition: color .2s ease;
+}
+
+.dotafresh-footer .footer-column a:hover {
+    color: #c19aff;
+}
+
+@media (max-width: 700px) {
+    .dotafresh-footer {
+        grid-template-columns: 1fr 1fr !important;
+        gap: 26px 20px !important;
+        padding: 28px 5% !important;
+    }
+}
+
+@media (max-width: 420px) {
+    .dotafresh-footer {
+        grid-template-columns: 1fr 1fr !important;
+        gap: 24px 14px !important;
+    }
+
+    .dotafresh-footer .footer-brand {
+        grid-column: 1 / -1;
+    }
+
+    .dotafresh-footer .footer-column h3 {
+        font-size: 15px;
+    }
+
+    .dotafresh-footer .footer-column a {
+        font-size: 13px;
+    }
+}
+</style>
+
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const servicesMenu = document.querySelector('.services-menu');
+    const servicesButton = document.querySelector('.services-button');
+    const servicesDropdown = document.querySelector('.services-dropdown');
+
+    if (!servicesMenu || !servicesButton || !servicesDropdown) return;
+
+    function closeServices() {
+        servicesMenu.classList.remove('open');
+        servicesButton.setAttribute('aria-expanded', 'false');
+    }
+
+    function toggleServices(event) {
+        event.preventDefault();
+        event.stopPropagation();
+
+        const isOpen = servicesMenu.classList.toggle('open');
+        servicesButton.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+    }
+
+    servicesButton.addEventListener('click', toggleServices);
+
+    document.addEventListener('click', function (event) {
+        if (!servicesMenu.contains(event.target)) {
+            closeServices();
+        }
+    });
+
+    servicesDropdown.addEventListener('click', function (event) {
+        event.stopPropagation();
+    });
+
+    document.addEventListener('keydown', function (event) {
+        if (event.key === 'Escape') {
+            closeServices();
+        }
+    });
+});
+</script>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    const path = window.location.pathname;
+    const links = document.querySelectorAll("nav > a");
+    const servicesMenu = document.querySelector(".services-menu");
+
+    links.forEach(link => link.classList.remove("active"));
+
+    if (path === "/contact") {
+        const link = [...links].find(a => a.textContent.trim() === "Контакты");
+        if (link) link.classList.add("active");
+    } else if (path === "/job") {
+        const link = [...links].find(a => a.textContent.trim() === "Работа");
+        if (link) link.classList.add("active");
+    } else if (path === "/about") {
+        const link = [...links].find(a => a.textContent.trim() === "О нас");
+        if (link) link.classList.add("active");
+    } else if (path === "/" && servicesMenu) {
+        servicesMenu.classList.add("active");
+    }
+});
+</script>
+
+<style id="behavior-mode-two-columns">
+/* ===== Только расположение кнопок + новый режим ===== */
+
+.behavior-mode-row {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    gap: 30px !important;
+    margin-top: 18px !important;
+    width: 100% !important;
+    align-items: start !important;
+}
+
+.behavior-mode-row .calc-field {
+    margin-top: 0 !important;
+}
+
+.behavior-mode-row .field-head {
+    margin: 0 0 10px !important;
+    min-height: 17px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+}
+
+.behavior-mode-row .field-head span {
+    font-size: 12px !important;
+    line-height: 17px !important;
+    color: #eae5f1 !important;
+}
+
+.behavior-mode-row .field-head b {
+    display: none !important;
+}
+
+/* Порядочность — 3 кнопки вертикально */
+.behavior-field .behavior-row {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 8px !important;
+}
+
+.behavior-field .behavior {
+    width: 100% !important;
+    height: 37px !important;
+    min-height: 37px !important;
+    border: 0 !important;
+    border-radius: 8px !important;
+    padding: 0 12px !important;
+    background: #08070f !important;
+    text-align: left !important;
+    font-size: 10px !important;
+}
+
+.behavior-field .behavior.active {
+    outline: 0 !important;
+    background: #08070f !important;
+}
+
+/* Режим — 3 кнопки вертикально */
+.mode-field .mode-switch {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 8px !important;
+    background: transparent !important;
+    overflow: visible !important;
+}
+
+.mode-field .mode-button {
+    width: 100% !important;
+    height: 37px !important;
+    min-height: 37px !important;
+    border: 0 !important;
+    border-radius: 8px !important;
+    padding: 0 12px !important;
+    background: #08070f !important;
+    color: #c7bfce !important;
+    text-align: left !important;
+    font-size: 10px !important;
+}
+
+.mode-field .mode-button.active {
+    background: #08070f !important;
+    color: #cfc7dc !important;
+    box-shadow: none !important;
+}
+
+/* Дополнительные условия ниже, на всю ширину панели */
+.options-field {
+    margin-top: 24px !important;
+}
+
+@media (max-width: 700px) {
+    .behavior-mode-row {
+        grid-template-columns: 1fr !important;
+        gap: 20px !important;
+    }
+}
+</style>
+
+
+<style id="calculator-align-with-why-us-cards">
+/* Дополнительное увеличение: основная панель ещё +50px, правая ещё +20px.
+   Выравнивание по карточке «Поддержка 12 ч» сохранено. */
+@media (min-width: 1051px) {
+    .calculator-section .calculator-layout {
+        grid-template-columns: minmax(0, 1450px) 550px !important;
+        width: 100% !important;
+        max-width: 1720px !important;
+        position: relative !important;
+        left: 30px !important;
+        margin-left: auto !important;
+        margin-right: auto !important;
+        gap: 20px !important;
+    }
+}
+</style>
+
+
+<style id="calculator-dark-dota2-redesign">
+/* DOTA 2 RATING CALCULATOR — DARK REDESIGN
+   Scoped strictly to #calculator; markup and JavaScript functionality are untouched. */
+#calculator.calculator-section {
+    box-sizing: border-box !important;
+    width: 100% !important;
+    padding: 78px clamp(22px, 5vw, 88px) 112px !important;
+    background:
+        radial-gradient(ellipse at 12% 12%, rgba(123, 28, 24, .18), transparent 34%),
+        radial-gradient(ellipse at 88% 68%, rgba(166, 111, 42, .08), transparent 30%),
+        #090a0c !important;
+    color: #f4f0e9 !important;
+    overflow: clip;
+}
+
+#calculator .calculator-heading {
+    width: 100% !important;
+    max-width: 1460px !important;
+    margin: 0 auto 34px !important;
+    text-align: left !important;
+}
+#calculator .calculator-heading .section-small-title {
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 10px !important;
+    margin: 0 0 12px !important;
+    color: #c77c55 !important;
+    font-size: 11px !important;
+    font-weight: 800 !important;
+    letter-spacing: 3px !important;
+    text-transform: uppercase !important;
+}
+#calculator .calculator-heading .section-small-title::before {
+    content: "";
+    display: block;
+    width: 28px;
+    height: 2px;
+    background: #a9342d;
+}
+#calculator .calculator-title-row {
+    display: block !important;
+    text-align: left !important;
+}
+#calculator .calculator-title-row h2 {
+    margin: 0 !important;
+    color: #f5f0e8 !important;
+    font-size: clamp(32px, 4vw, 54px) !important;
+    line-height: 1.02 !important;
+    letter-spacing: -1.5px !important;
+    text-align: left !important;
+    text-transform: uppercase !important;
+    text-shadow: 0 5px 24px rgba(0,0,0,.45) !important;
+}
+
+#calculator .calculator-layout {
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr) 340px !important;
+    gap: 22px !important;
+    align-items: start !important;
+    width: 100% !important;
+    max-width: 1460px !important;
+    margin: 0 auto !important;
+    position: relative !important;
+    left: 0 !important;
+}
+#calculator .calculator-panel,
+#calculator .calculator-summary {
+    box-sizing: border-box !important;
+    min-width: 0 !important;
+    border: 1px solid rgba(190, 74, 53, .25) !important;
+    border-radius: 15px !important;
+    background: linear-gradient(145deg, #171719 0%, #101012 70%, #151111 100%) !important;
+    box-shadow: 0 22px 60px rgba(0,0,0,.28), inset 0 1px rgba(255,255,255,.025) !important;
+}
+#calculator .calculator-panel {
+    padding: clamp(18px, 2.1vw, 32px) !important;
+    position: relative !important;
+    overflow: hidden !important;
+}
+#calculator .calculator-panel::before {
+    content: "";
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, #7f201d, #d49a54 45%, transparent 100%);
+}
+#calculator .calculator-panel > h3 {
+    margin: 0 0 20px !important;
+    color: #f1ece4 !important;
+    font-size: 17px !important;
+    font-weight: 800 !important;
+    letter-spacing: .2px !important;
+}
+#calculator .calculator-tabs {
+    display: grid !important;
+    grid-template-columns: repeat(5, minmax(0, 1fr)) !important;
+    gap: 5px !important;
+    padding: 5px !important;
+    margin: 0 0 20px !important;
+    border: 1px solid #303033 !important;
+    border-radius: 10px !important;
+    background: #0b0b0d !important;
+}
+#calculator .calc-tab {
+    min-width: 0 !important;
+    height: 39px !important;
+    padding: 0 7px !important;
+    border: 1px solid transparent !important;
+    border-radius: 7px !important;
+    background: transparent !important;
+    color: #969194 !important;
+    font-size: 12px !important;
+    font-weight: 700 !important;
+    line-height: 1.15 !important;
+    cursor: pointer !important;
+    transition: background .18s ease, color .18s ease, border-color .18s ease !important;
+}
+#calculator .calc-tab:hover { color: #fff !important; background: #242022 !important; }
+#calculator .calc-tab.active {
+    color: #fff5e8 !important;
+    border-color: rgba(210, 148, 81, .28) !important;
+    background: linear-gradient(135deg, #76231f, #451817) !important;
+    box-shadow: inset 0 1px rgba(255,255,255,.08), 0 4px 12px rgba(75,18,16,.25) !important;
+}
+
+#calculator .rank-row {
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr) 34px minmax(0, 1fr) !important;
+    gap: 10px !important;
+    align-items: stretch !important;
+}
+#calculator .rank-card {
+    min-width: 0 !important;
+    min-height: 112px !important;
+    padding: 15px !important;
+    border: 1px solid #333033 !important;
+    border-radius: 10px !important;
+    background: linear-gradient(145deg, #0b0b0d, #151214) !important;
+}
+#calculator .rank-label {
+    margin-bottom: 13px !important;
+    color: #8f8989 !important;
+    font-size: 9px !important;
+    font-weight: 800 !important;
+    letter-spacing: 1.8px !important;
+}
+#calculator .rank-info { display: flex !important; align-items: center !important; gap: 12px !important; min-width: 0 !important; }
+#calculator .rank-icon {
+    display: grid !important;
+    flex: 0 0 54px !important;
+    width: 54px !important;
+    height: 54px !important;
+    place-items: center !important;
+    border: 1px solid rgba(196, 135, 68, .25) !important;
+    border-radius: 9px !important;
+    background: radial-gradient(circle, rgba(133, 78, 38, .2), #09090a 70%) !important;
+}
+#calculator .rank-icon img { width: 48px !important; height: 48px !important; object-fit: contain !important; }
+#calculator .rank-info strong { display: block !important; color: #f4eee5 !important; font-size: 16px !important; line-height: 1.2 !important; }
+#calculator .rank-info small { display: block !important; margin-top: 5px !important; color: #c58a55 !important; font-size: 12px !important; font-weight: 700 !important; }
+#calculator .rank-arrow {
+    display: grid !important;
+    place-items: center !important;
+    color: #c17b4a !important;
+    font-size: 25px !important;
+    font-weight: 400 !important;
+}
+
+#calculator .range-block {
+    margin-top: 22px !important;
+    padding: 18px 18px 4px !important;
+    border: 1px solid #2d2b2c !important;
+    border-radius: 10px !important;
+    background: #0c0c0e !important;
+}
+#calculator .range-head {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    gap: 12px !important;
+    margin: 0 0 8px !important;
+    color: #9b9492 !important;
+    font-size: 10px !important;
+    font-weight: 800 !important;
+    letter-spacing: 1.3px !important;
+}
+#calculator .range-head b { color: #f2e8dc !important; font-size: 15px !important; letter-spacing: 0 !important; }
+#calculator .range-block input[type="range"] {
+    display: block !important;
+    width: 100% !important;
+    height: 5px !important;
+    margin: 0 0 18px !important;
+    accent-color: #b74632 !important;
+    cursor: pointer !important;
+}
+#calculator .desired-head { margin-top: 5px !important; }
+
+#calculator .behavior-mode-row {
+    display: grid !important;
+    grid-template-columns: minmax(0, .8fr) minmax(0, 1.2fr) !important;
+    gap: 16px !important;
+    margin-top: 20px !important;
+    align-items: start !important;
+}
+#calculator .calc-field { min-width: 0 !important; margin-top: 0 !important; }
+#calculator .field-head {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    gap: 10px !important;
+    margin: 0 0 10px !important;
+}
+#calculator .field-head span { color: #e4dcd4 !important; font-size: 12px !important; font-weight: 800 !important; }
+#calculator .field-head b { color: #c58a55 !important; font-size: 11px !important; }
+#calculator .behavior-field .behavior-row { display: flex !important; flex-direction: column !important; gap: 7px !important; }
+#calculator .behavior {
+    display: flex !important;
+    align-items: center !important;
+    gap: 9px !important;
+    width: 100% !important;
+    min-height: 39px !important;
+    padding: 8px 10px !important;
+    border: 1px solid #302d2e !important;
+    border-radius: 8px !important;
+    background: #101012 !important;
+    color: #c1b8b4 !important;
+    text-align: left !important;
+    font-size: 11px !important;
+    cursor: pointer !important;
+}
+#calculator .behavior i { width: 8px !important; height: 8px !important; flex: 0 0 8px !important; border-radius: 50% !important; background: #575153 !important; }
+#calculator .behavior span { margin-left: auto !important; color: #a39a95 !important; }
+#calculator .behavior.active { border-color: rgba(193, 72, 49, .75) !important; background: #2a1413 !important; color: #fff0e6 !important; }
+#calculator .behavior.active i { background: #df6847 !important; box-shadow: 0 0 9px rgba(223,104,71,.45) !important; }
+#calculator .mode-switch { display: grid !important; gap: 7px !important; }
+#calculator .mode-button {
+    width: 100% !important;
+    min-height: 39px !important;
+    padding: 9px 11px !important;
+    border: 1px solid #302d2e !important;
+    border-radius: 8px !important;
+    background: #101012 !important;
+    color: #bcb3ae !important;
+    text-align: left !important;
+    font-size: 11px !important;
+    line-height: 1.35 !important;
+    cursor: pointer !important;
+}
+#calculator .mode-button.active { border-color: rgba(193,72,49,.75) !important; background: linear-gradient(90deg,#2b1514,#191112) !important; color: #fff0e6 !important; }
+
+#calculator .options-field { margin-top: 22px !important; padding-top: 20px !important; border-top: 1px solid #302d2e !important; }
+#calculator .options-field > .field-head { margin-bottom: 12px !important; }
+#calculator #optionsCount { display: inline-grid !important; place-items: center !important; min-width: 25px !important; height: 25px !important; border: 1px solid #403231 !important; border-radius: 6px !important; background: #1d1112 !important; }
+#calculator .options-grid,
+#calculator .extra-options-grid { display: grid !important; grid-template-columns: repeat(2, minmax(0, 1fr)) !important; gap: 9px !important; }
+#calculator .option-card {
+    display: flex !important;
+    align-items: flex-start !important;
+    gap: 10px !important;
+    min-width: 0 !important;
+    min-height: 68px !important;
+    padding: 12px !important;
+    border: 1px solid #302d2e !important;
+    border-radius: 9px !important;
+    background: #101012 !important;
+    cursor: pointer !important;
+    transition: border-color .18s ease, background .18s ease, transform .18s ease !important;
+}
+#calculator .option-card:hover { border-color: #65403a !important; background: #171112 !important; transform: translateY(-1px) !important; }
+#calculator .option-card:has(input:checked) { border-color: rgba(199, 91, 57, .85) !important; background: linear-gradient(135deg, #271615, #151011) !important; }
+#calculator .option-card input { position: absolute !important; opacity: 0 !important; pointer-events: none !important; }
+#calculator .fake-check { display: grid !important; flex: 0 0 17px !important; width: 17px !important; height: 17px !important; margin-top: 1px !important; place-items: center !important; border: 1px solid #655653 !important; border-radius: 4px !important; background: #09090a !important; }
+#calculator .option-card:has(input:checked) .fake-check { border-color: #c44e37 !important; background: #a9342d !important; }
+#calculator .option-card:has(input:checked) .fake-check::after { content: "✓"; color: white; font-size: 12px; font-weight: 800; }
+#calculator .option-text { display: block !important; min-width: 0 !important; flex: 1 !important; }
+#calculator .option-text strong { display: block !important; color: #eee5dc !important; font-size: 12px !important; line-height: 1.3 !important; }
+#calculator .option-text small { display: block !important; margin-top: 5px !important; color: #8f8581 !important; font-size: 10px !important; line-height: 1.35 !important; }
+#calculator .option-card em { align-self: flex-start !important; flex: 0 0 auto !important; max-width: 92px !important; color: #d49b67 !important; font-size: 9px !important; font-style: normal !important; font-weight: 700 !important; line-height: 1.35 !important; text-align: right !important; }
+#calculator .option-card em.free-option { color: #8dbb88 !important; }
+#calculator .more-options {
+    display: block !important;
+    width: 100% !important;
+    margin: 12px 0 0 !important;
+    padding: 12px !important;
+    border: 1px dashed #463635 !important;
+    border-radius: 8px !important;
+    background: #0c0c0e !important;
+    color: #c58a67 !important;
+    font-size: 10px !important;
+    font-weight: 800 !important;
+    letter-spacing: 1px !important;
+    cursor: pointer !important;
+}
+#calculator #extraOptionsGrid { margin-top: 10px !important; }
+#calculator #extraOptionsGrid.is-collapsed { display: none !important; }
+
+#calculator .calculator-summary {
+    position: sticky !important;
+    top: 28px !important;
+    padding: 25px !important;
+    overflow: hidden !important;
+    background:
+        radial-gradient(ellipse at 100% 0%, rgba(145, 41, 32, .22), transparent 45%),
+        linear-gradient(155deg, #1a1717, #100f10 75%) !important;
+    border-color: rgba(197, 113, 68, .34) !important;
+}
+#calculator .calculator-summary::before { content: ""; display: block; width: 42px; height: 3px; margin: 0 0 20px; background: linear-gradient(90deg,#9c2d27,#d9a15d); }
+#calculator .summary-label { color: #a49a94 !important; font-size: 10px !important; font-weight: 800 !important; letter-spacing: 2px !important; }
+#calculator .summary-label span { display: none !important; }
+#calculator .summary-price { display: flex !important; align-items: baseline !important; gap: 7px !important; margin: 9px 0 22px !important; padding-bottom: 21px !important; border-bottom: 1px solid #3a2a28 !important; }
+#calculator .summary-price span { color: #f7eee4 !important; font-size: clamp(32px, 3vw, 43px) !important; font-weight: 800 !important; line-height: 1 !important; letter-spacing: -1.5px !important; overflow-wrap: anywhere !important; }
+#calculator .summary-price small { color: #d59b64 !important; font-size: 18px !important; font-weight: 700 !important; }
+#calculator .summary-line { display: flex !important; align-items: flex-start !important; justify-content: space-between !important; gap: 14px !important; margin: 0 0 15px !important; }
+#calculator .summary-line span { color: #8e8582 !important; font-size: 11px !important; }
+#calculator .summary-line b { max-width: 58% !important; color: #e9e0d8 !important; font-size: 11px !important; font-weight: 700 !important; text-align: right !important; overflow-wrap: anywhere !important; }
+#calculator .summary-order {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 5px !important;
+    width: 100% !important;
+    min-height: 50px !important;
+    margin-top: 23px !important;
+    padding: 12px 14px !important;
+    border: 1px solid #d16b48 !important;
+    border-radius: 8px !important;
+    background: linear-gradient(135deg, #a83b2e, #74251f) !important;
+    box-shadow: 0 8px 22px rgba(114,37,31,.24), inset 0 1px rgba(255,255,255,.12) !important;
+    color: #fff5eb !important;
+    font-size: 12px !important;
+    font-weight: 800 !important;
+    cursor: pointer !important;
+    transition: transform .18s ease, filter .18s ease !important;
+}
+#calculator .summary-order:hover { transform: translateY(-2px) !important; filter: brightness(1.12) !important; }
+#calculator .summary-order span { color: inherit !important; }
+#calculator .summary-question {
+    width: 100% !important;
+    min-height: 43px !important;
+    margin-top: 9px !important;
+    padding: 10px !important;
+    border: 1px solid #3a3434 !important;
+    border-radius: 8px !important;
+    background: #111012 !important;
+    color: #c8bdb6 !important;
+    font-size: 11px !important;
+    font-weight: 700 !important;
+    cursor: pointer !important;
+    transition: background .18s ease, border-color .18s ease !important;
+}
+#calculator .summary-question:hover { background: #1c1515 !important; border-color: #62403a !important; }
+#calculator .summary-safe { margin-top: 17px !important; color: #8b9c7d !important; font-size: 9px !important; line-height: 1.5 !important; text-align: center !important; }
+
+@media (max-width: 1150px) {
+    #calculator .calculator-layout { grid-template-columns: minmax(0, 1fr) 300px !important; gap: 15px !important; }
+    #calculator .calculator-summary { padding: 20px !important; }
+    #calculator .behavior-mode-row { grid-template-columns: 1fr !important; }
+    #calculator .behavior-field .behavior-row { display: grid !important; grid-template-columns: repeat(3, minmax(0,1fr)) !important; }
+    #calculator .behavior { justify-content: center !important; flex-wrap: wrap !important; }
+    #calculator .behavior span { margin-left: 0 !important; }
+}
+@media (max-width: 850px) {
+    #calculator.calculator-section { padding: 62px 22px 82px !important; }
+    #calculator .calculator-layout { grid-template-columns: minmax(0, 1fr) !important; max-width: 720px !important; }
+    #calculator .calculator-summary { position: static !important; }
+    #calculator .calculator-heading { max-width: 720px !important; }
+    #calculator .summary-price span { font-size: 42px !important; }
+}
+@media (max-width: 560px) {
+    #calculator.calculator-section { padding: 48px 13px 65px !important; }
+    #calculator .calculator-panel { padding: 15px !important; }
+    #calculator .calculator-tabs { grid-template-columns: repeat(2, minmax(0,1fr)) !important; }
+    #calculator .calc-tab:last-child { grid-column: 1 / -1 !important; }
+    #calculator .rank-row { grid-template-columns: minmax(0,1fr) 22px minmax(0,1fr) !important; gap: 5px !important; }
+    #calculator .rank-card { padding: 10px !important; min-height: 102px !important; }
+    #calculator .rank-info { gap: 7px !important; }
+    #calculator .rank-icon { flex-basis: 38px !important; width: 38px !important; height: 38px !important; }
+    #calculator .rank-icon img { width: 34px !important; height: 34px !important; }
+    #calculator .rank-info strong { font-size: 12px !important; }
+    #calculator .rank-info small { font-size: 10px !important; }
+    #calculator .rank-label { font-size: 8px !important; letter-spacing: .8px !important; }
+    #calculator .range-block { padding: 14px 12px 2px !important; }
+    #calculator .behavior-mode-row { grid-template-columns: minmax(0,1fr) !important; }
+    #calculator .behavior-field .behavior-row { grid-template-columns: minmax(0,1fr) !important; }
+    #calculator .behavior { justify-content: flex-start !important; }
+    #calculator .behavior span { margin-left: auto !important; }
+    #calculator .options-grid, #calculator .extra-options-grid { grid-template-columns: minmax(0,1fr) !important; }
+    #calculator .option-card { min-height: 62px !important; }
+    #calculator .calculator-title-row h2 { font-size: 34px !important; letter-spacing: -.8px !important; }
+}
+
+</style>
+
+
+<style id="calculator-panels-reduced-10px">
+/* На 10px уменьшаем обе панели калькулятора на широких экранах. Остальные блоки и функционал не меняем. */
+@media (min-width: 1051px) {
+    #calculator .calculator-layout {
+        max-width: 1420px !important; /* было 1460px: общая ширина меньше на 20px */       
+        grid-template-columns: minmax(0, 1fr) 430px !important; /* правая панель: 340px → 330px */
+    }
+}
+</style>
+
+
+<style id="calculator-title-center-and-additional-conditions-label">
+/* Центрируем заголовок относительно всей секции, не меняя панели и функционал. */
+#calculator .calculator-heading {
+    width: 100% !important;
+    max-width: none !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    text-align: center !important;
+}
+#calculator .calculator-title-row {
+    display: flex !important;
+    justify-content: center !important;
+    width: 100% !important;
+    text-align: center !important;
+}
+#calculator .calculator-title-row h2 {
+    width: 100% !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    text-align: center !important;
+}
+#calculator .more-options-title {
+    text-align: center !important;
+}
+</style>
+
+
+<style id="center-payment-summary">
+/* Центрируем содержимое карточки «Итог к оплате», не затрагивая расчёты. */
+#calculator .calculator-summary .summary-label {
+    text-align: center !important;
+    justify-content: center !important;
+}
+#calculator .calculator-summary .summary-price {
+    display: flex !important;
+    justify-content: center !important;
+    align-items: baseline !important;
+    text-align: center !important;
+}
+#calculator .calculator-summary .summary-price span {
+    text-align: center !important;
+}
+#calculator .calculator-summary::before {
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+}
+</style>
+
+
+
+<style id="center-summary-gradient-line">
+/* Центрируем градиентную декоративную черту в карточке «Итог к оплате». */
+#calculator .calculator-summary::before {
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+}
+</style>
+
+
+
+<style id="center-behavior-and-mode-headings-final">
+/* Только центрирование заголовков «Порядочность» и «Режим». */
+.behavior-mode-row .behavior-field > .field-head,
+.behavior-mode-row .mode-field > .field-head {
+    justify-content: center !important;
+    text-align: center !important;
+}
+.behavior-mode-row .behavior-field > .field-head > span,
+.behavior-mode-row .mode-field > .field-head > span {
+    display: block !important;
+    width: 100% !important;
+    text-align: center !important;
+}
+</style>
+
+
+
+<style id="fix-summary-gradient-line-centering-final">
+/* Исправляем только градиентную черту в панели «Итог к оплате». */
+#calculator .calculator-summary::before {
+    display: block !important;
+    position: static !important;
+    left: auto !important;
+    transform: none !important;
+    margin: 0 auto 20px !important;
+}
+</style>
+
+</body>
+</html>
+<style id="cabinet-button-no-arrow">
+/* Личный кабинет — картинка кнопки без стрелки */
+.cabinet-button,
+.account-button {
+    background-image: url("{{ url_for('static', filename='img/КНОПКА РЕГИСТРАЦИЯ.png') }}") !important;
+    background-size: 100% 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+.cabinet-button span,
+.account-button span {
+    display: none !important;
+}
+</style>
+
+<style id="cabinet-no-arrow-final">
+.cabinet-button .cabinet-arrow,
+.cabinet-button span {
+    display: none !important;
+}
+</style>
+
+<style id="cabinet-full-image-size">
+.cabinet-button,
+.account-button {
+    width: 124px !important;
+    min-width: 124px !important;
+    height: 60px !important;
+    min-height: 60px !important;
+    padding: 0 !important;
+    border: 0 !important;
+    background-image: url("{{ url_for('static', filename='img/КНОПКА РЕГИСТРАЦИЯ.png') }}") !important;
+    background-size: 100% 100% !important;
+    background-position: center !important;
+    background-repeat: no-repeat !important;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+.cabinet-button img,
+.account-button img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: fill !important;
+}
+.cabinet-button .cabinet-arrow,
+.cabinet-button span,
+.account-button .cabinet-arrow,
+.account-button span {
+    display: none !important;
+}
+</style>
+
+<style id="hero-buttons-gilroy-bold">
+.hero-buttons .main-button,
+.hero-buttons .secondary-button {
+    font-family: "Gilroy", sans-serif !important;
+    font-weight: 700 !important;
+}
+</style>
+
+<style id="security-shield-icon">
+.security-icon {
+    width: 20px;
+    height: 20px;
+    object-fit: contain;
+    display: block;
+    flex: 0 0 20px;
+}
+
+.security-icon + span {
+    display: inline-block;
+}
+</style>
+
+<style id="shield-text-order">
+.hero-security {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.hero-security .security-icon {
+    width: 20px;
+    height: 20px;
+    object-fit: contain;
+    display: block;
+    flex: 0 0 20px;
+}
+</style>
+
+<style id="calculator-screenshot-style">
+.calculator-section {
+    padding: 70px 10% 120px;
+    display: block;
+    background: #050509;
+}
+
+.calculator-heading {
+    max-width: 1130px;
+    margin: 0 auto 32px;
+}
+
+.calculator-title-row {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 60px;
+}
+
+.calculator-title-row h2 {
+    margin: 8px 0 0;
+    font-size: 54px;
+    line-height: .98;
+    letter-spacing: -2px;
+    font-family: "AAvanteBsExtraBold", sans-serif;
+}
+
+.calculator-title-row h2 span {
+    color: #9b68ff;
+}
+
+.calculator-title-row p {
+    max-width: 440px;
+    margin: 0 0 6px;
+    color: #9995a9;
+    font-family: "Gilroy", sans-serif;
+    font-size: 15px;
+    line-height: 1.5;
+}
+
+.calculator-layout {
+    max-width: 1130px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: minmax(0, 680px) 430px;
+    gap: 18px;
+    align-items: start;
+}
+
+.calculator-panel,
+.calculator-summary {
+    background: linear-gradient(145deg, #19182d, #10101b);
+    border: 1px solid rgba(153, 104, 255, .24);
+    border-radius: 20px;
+    box-shadow: 0 20px 60px rgba(0,0,0,.28);
+}
+
+.calculator-panel {
+    padding: 26px;
+}
+
+.calculator-panel > h3 {
+    margin: 0 0 22px;
+    font-size: 19px;
+    font-family: "Gilroy", sans-serif;
+    font-weight: 700;
+}
+
+.calculator-tabs {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    background: #030305;
+    padding: 4px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+
+.calc-tab {
+    border: 0;
+    border-radius: 8px;
+    background: transparent;
+    color: #aaa7b7;
+    height: 38px;
+    font-family: "Gilroy", sans-serif;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.calc-tab.active {
+    background: #292442;
+    color: #fff;
+    box-shadow: 0 0 18px rgba(145, 93, 255, .2);
+}
+
+.rank-row {
+    display: grid;
+    grid-template-columns: 1fr 34px 1fr;
+    gap: 10px;
+    align-items: center;
+}
+
+.rank-card {
+    min-height: 108px;
+    background: #030305;
+    border-radius: 12px;
+    padding: 15px;
+}
+
+.rank-label,
+.field-head span {
+    color: #8f8b9d;
+    font-size: 10px;
+    letter-spacing: 1px;
+    font-family: "Gilroy", sans-serif;
+    font-weight: 700;
+}
+
+.rank-info {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-top: 12px;
+}
+
+.rank-icon {
+    width: 58px;
+    height: 58px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    border: none;
+    background: transparent;
+    border-radius: 0;
+}
+
+.rank-icon img {
+    width: 58px;
+    height: 58px;
+    object-fit: contain;
+    display: block;
+    filter: drop-shadow(0 3px 7px rgba(0,0,0,.35));
+}
+
+.rank-icon.desired img {
+    filter: drop-shadow(0 3px 8px rgba(101,213,233,.28));
+}
+
+.rank-info strong {
+    display: block;
+    font-size: 17px;
+    font-family: "Gilroy", sans-serif;
+    font-weight: 700;
+}
+
+.rank-info small {
+    display: block;
+    margin-top: 3px;
+    color: #a5a0b0;
+    font-size: 11px;
+}
+
+.rank-arrow {
+    color: #a87cff;
+    font-size: 24px;
+    text-align: center;
+}
+
+.range-block {
+    margin-top: 20px;
+}
+
+.range-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: #9c98a9;
+    font-size: 11px;
+    font-weight: 700;
+    margin-bottom: 8px;
+}
+
+.range-head b {
+    color: #fff;
+    background: #030305;
+    padding: 4px 12px;
+    border-radius: 6px;
+    font-family: monospace;
+    font-size: 12px;
+}
+
+.range-block input[type="range"] {
+    width: 100%;
+    accent-color: #9b5cff;
+    margin: 0 0 16px;
+    cursor: pointer;
+}
+
+.desired-head {
+    margin-top: 2px;
+}
+
+.calc-field {
+    margin-top: 4px;
+}
+
+.field-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 8px 0;
+}
+
+.field-head b {
+    color: #aaa6b6;
+    font-size: 10px;
+}
+
+.mode-switch {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    background: #030305;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.mode-button {
+    border: 0;
+    height: 36px;
+    color: #b6b2c1;
+    background: transparent;
+    font-family: "Gilroy", sans-serif;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.mode-button.active {
+    background: #24133e;
+    color: #a981ff;
+}
+
+.behavior-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 6px;
+}
+
+.behavior {
+    border: 1px solid transparent;
+    background: #030305;
+    color: #a5a1b1;
+    border-radius: 7px;
+    height: 34px;
+    font-size: 11px;
+    cursor: pointer;
+}
+
+.behavior.active {
+    border-color: #7e4dca;
+    background: #292040;
+    color: #aa82ff;
+}
+
+.behavior i {
+    display: inline-block;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #19c784;
+    margin-right: 4px;
+}
+
+.behavior:nth-child(2) i { background: #f0b400; }
+.behavior:nth-child(3) i { background: #ee5960; }
+
+.behavior span {
+    color: #777385;
+}
+
+.options-field {
+    margin-top: 12px;
+}
+
+.options-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+}
+
+.option-card {
+    min-height: 56px;
+    position: relative;
+    display: flex;
+    align-items: flex-start;
+    gap: 9px;
+    padding: 10px 9px;
+    border-radius: 8px;
+    background: #030305;
+    cursor: pointer;
+}
+
+.option-card input {
+    position: absolute;
+    opacity: 0;
+}
+
+.fake-check {
+    width: 14px;
+    height: 14px;
+    border: 1px solid #85808f;
+    border-radius: 4px;
+    flex: 0 0 14px;
+    margin-top: 1px;
+}
+
+.option-card input:checked + .fake-check {
+    background: #8d55e9;
+    border-color: #a675ff;
+    box-shadow: inset 0 0 0 3px #030305;
+}
+
+.option-text {
+    min-width: 0;
+}
+
+.option-text strong {
+    display: block;
+    color: #e8e5ef;
+    font-size: 12px;
+}
+
+.option-text small {
+    display: block;
+    margin-top: 4px;
+    color: #777385;
+    font-size: 9px;
+}
+
+.option-card em {
+    margin-left: auto;
+    color: #9f75f4;
+    font-size: 8px;
+    font-style: normal;
+    white-space: nowrap;
+}
+
+.more-options {
+    width: 100%;
+    min-height: 36px;
+    padding: 0 10px;
+    margin-top: 13px;
+    border: 1px solid #8d55e9;
+    border-radius: 9px;
+    background: transparent;
+    text-align: center;
+    color: #9b93aa;
+    font-family: "Gilroy", sans-serif;
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: .4px;
+    cursor: pointer;
+    transition: .2s ease;
+}
+
+.more-options:hover {
+    color: #fff;
+    background: rgba(141,85,233,.08);
+}
+
+.extra-options-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    margin-top: 8px;
+}
+
+.extra-options-grid.is-collapsed {
+    display: none;
+}
+
+.free-option {
+    color: #19c784 !important;
+}
+
+.calculator-summary {
+    padding: 29px;
+    position: sticky;
+    top: 85px;
+}
+
+.summary-label {
+    color: #9992ad;
+    font-size: 10px;
+    letter-spacing: 2px;
+    font-family: monospace;
+}
+
+.summary-label span {
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #995cff;
+    box-shadow: 0 0 12px #995cff;
+    margin-right: 7px;
+}
+
+.summary-price {
+    margin: 12px 0 15px;
+    font-size: 58px;
+    line-height: 1;
+    font-family: "AAvanteBsExtraBold", sans-serif;
+    color: #fff;
+    position: relative;
+    left: 5px;
+}
+
+.summary-price small {
+    font-size: 15px;
+    color: #aaa4b4;
+}
+
+.summary-line {
+    display: flex;
+    justify-content: space-between;
+    gap: 15px;
+    padding: 10px 0;
+    border-top: 1px solid rgba(255,255,255,.07);
+    color: #777383;
+    font-size: 12px;
+}
+
+.summary-line b {
+    color: #ddd9e5;
+    text-align: right;
+}
+
+.summary-order,
+.summary-question {
+    width: 100%;
+    height: 54px;
+    border-radius: 12px;
+    cursor: pointer;
+    font-family: "Gilroy", sans-serif;
+    font-weight: 700;
+}
+
+.summary-order {
+    margin-top: 14px;
+    border: 0;
+    background: #8550e7;
+    color: #fff;
+    box-shadow: 0 8px 25px rgba(133,80,231,.28);
+    font-size: 15px;
+}
+
+.summary-question {
+    margin-top: 8px;
+    border: 1px solid rgba(255,255,255,.08);
+    background: #11101b;
+    color: #e8e4ed;
+    font-size: 14px;
+}
+
+.summary-safe {
+    margin-top: 17px;
+    text-align: center;
+    color: #777384;
+    font-size: 10px;
+}
+
+.summary-safe:first-letter {
+    color: #21d69a;
+}
+
+@media (max-width: 1050px) {
+    .calculator-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .calculator-summary {
+        position: static;
+    }
+
+    .calculator-title-row {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 20px;
+    }
+}
+
+@media (max-width: 700px) {
+    .calculator-section {
+        padding: 60px 5% 90px;
+    }
+
+    .calculator-title-row h2 {
+        font-size: 40px;
+    }
+
+    .calculator-tabs {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .rank-row {
+        grid-template-columns: 1fr;
+    }
+
+    .rank-arrow {
+        transform: rotate(90deg);
+    }
+
+    .options-grid,
+    .behavior-row {
+        grid-template-columns: 1fr;
+    }
+}
+</style>
+
+<script id="calculator-interaction">
+document.addEventListener('DOMContentLoaded', function () {
+    const current = document.getElementById('currentMmr');
+    const desired = document.getElementById('desiredMmr');
+    if (!current || !desired) return;
+
+    const $ = id => document.getElementById(id);
+    const format = value => Number(value).toLocaleString('ru-RU');
+
+    const serviceBase = {
+        'Буст рейтинга': 0,
+        'Калибровка': 1990,
+        'Обучение': 1200,
+        'Аккаунт': 990,
+        'Аренда': 700
+    };
+
+    // Ставка за 100 MMR внутри каждого ранга.
+    // Ползунок работает по 25 MMR, поэтому расчёт идёт по четверти сотни.
+    const boostRates = [
+        { min: 0,    max: 770,  rate: 253 },
+        { min: 770,  max: 1540, rate: 253 },
+        { min: 1540, max: 2310, rate: 253 },
+        { min: 2310, max: 3080, rate: 304 },
+        { min: 3080, max: 3850, rate: 374 },
+        { min: 3850, max: 4620, rate: 506 },
+        { min: 4620, max: 5620, rate: 668 },
+        { min: 5620, max: Infinity, rate: 1417 }
+    ];
+
+    function calculateBoostPrice(from, to) {
+        if (to <= from) return 0;
+
+        let total = 0;
+        let cursor = from;
+
+        for (const tier of boostRates) {
+            if (cursor >= tier.max) continue;
+            if (to <= tier.min) continue;
+
+            const start = Math.max(cursor, tier.min);
+            const end = Math.min(to, tier.max);
+            if (end > start) {
+                total += ((end - start) / 100) * tier.rate;
+            }
+            cursor = end;
+            if (cursor >= to) break;
+        }
+
+        return total;
+    }
+
+    // Пороги рангов из таблицы на скриншоте.
+    // Так как ползунок идёт по 25 MMR, первое доступное значение
+    // после порога 770 — это 775, после 1540 — 1550 и т.д.
+    function rankName(mmr) {
+        if (mmr < 770) return 'Рекрут';
+        if (mmr < 1540) return 'Страж';
+        if (mmr < 2310) return 'Рыцарь';
+        if (mmr < 3080) return 'Герой';
+        if (mmr < 3850) return 'Легенда';
+        if (mmr < 4620) return 'Властелин';
+        if (mmr < 5625) return 'Божество';
+        return 'Титан';
+    }
+
+    // Настоящие изображения медалей. Для каждой группы берём первую звезду.
+    // 5625+ показывает медаль Титана.
+    const rankImages = {
+        'Рекрут': 'static/img/ranks/Рекрут.png',
+        'Страж': 'static/img/ranks/Страж.png',
+        'Рыцарь': 'static/img/ranks/Рыцарь.png',
+        'Герой': 'static/img/ranks/Герой.png',
+        'Легенда': 'static/img/ranks/Легенда.png',
+        'Властелин': 'static/img/ranks/Властелин.png',
+        'Божество': 'static/img/ranks/Бомжество.png',
+        'Титан': 'static/img/ranks/Титян.png'
+    };
+
+    function updateRankImages(from, to) {
+        const currentIcon = document.getElementById('currentRankIcon');
+        const desiredIcon = document.getElementById('desiredRankIcon');
+
+        if (currentIcon) currentIcon.src = rankImages[rankName(from)];
+        if (desiredIcon) desiredIcon.src = rankImages[rankName(to)];
+
+        // Количество звёзд строго по таблице MMR со скриншота.
+        // У первых шести рангов шаг между звёздами — 154 MMR,
+        // у Божества — 200 MMR: 4620 / 4820 / 5020 / 5220 / 5420.
+        const getStarCount = (mmr) => {
+            const value = Math.max(0, Number(mmr) || 0);
+            const thresholds = [
+                { start: 0,    step: 154 },
+                { start: 770,  step: 154 },
+                { start: 1540, step: 154 },
+                { start: 2310, step: 154 },
+                { start: 3080, step: 154 },
+                { start: 3850, step: 154 },
+                { start: 4620, step: 200 }
+            ];
+            if (value >= 5625) return 5;
+            let rank = thresholds[0];
+            for (const item of thresholds) {
+                if (value >= item.start) rank = item;
+                else break;
+            }
+            return Math.min(5, Math.max(1, Math.floor((value - rank.start) / rank.step) + 1));
+        };
+
+        const starFiles = {
+            1: "{{ url_for('static', filename='img/Stars/1 звезда.png') }}",
+            2: "{{ url_for('static', filename='img/Stars/2 звезды.png') }}",
+            3: "{{ url_for('static', filename='img/Stars/3 звезды.png') }}",
+            4: "{{ url_for('static', filename='img/Stars/4 звезды.png') }}",
+            5: "{{ url_for('static', filename='img/Stars/5 звезд.png') }}"
+        };
+
+        const animateStars = (id, mmr) => {
+            const el = document.getElementById(id);
+            if (!el) return;
+
+            // У Титана звёзды не показываем.
+            if (mmr >= 5625) {
+                el.classList.remove('rank-stars-animate');
+                el.style.display = 'none';
+                el.removeAttribute('src');
+                return;
+            }
+
+            el.style.display = '';
+            const count = getStarCount(mmr);
+            el.src = starFiles[count];
+            el.classList.remove('rank-stars-animate');
+            void el.offsetWidth;
+            el.classList.add('rank-stars-animate');
+        };
+        animateStars('currentRankStars', from);
+        animateStars('desiredRankStars', to);
+    }
+
+    function getService() {
+        return document.querySelector('.calc-tab.active')?.textContent.trim() || 'Буст рейтинга';
+    }
+
+    function getBehavior() {
+        const active = document.querySelector('.behavior.active');
+
+        if (!active) {
+            return { percent: 0, text: '9000+' };
+        }
+
+        const percent = Number(active.dataset.percent || 0);
+        const text = active.textContent
+            .replace(/\s+/g, ' ')
+            .trim()
+            .replace(/\s*0%|\s*\+15%|\s*\+30%/g, '')
+            .trim();
+
+        return {
+            percent: percent,
+            text: text
+        };
+    }
+
+    function getOptions() {
+        let percent = 0;
+        let count = 0;
+        let doubleTokens = false;
+        let speed = false;
+        const names = [];
+
+        document.querySelectorAll('.option-card input:checked').forEach(input => {
+            count++;
+            const card = input.closest('.option-card');
+            const title = card?.querySelector('.option-text strong')?.textContent.trim() || '';
+            names.push(title);
+
+            if (title === 'Двойные жетоны') {
+                doubleTokens = true;
+            } else {
+                percent += Number(input.dataset.price || 0);
+            }
+
+            if (title === 'Ускорение') speed = true;
+        });
+
+        return { percent, count, doubleTokens, speed, names };
+    }
+
+    function recalc() {
+        let from = Number(current.value);
+        let to = Number(desired.value);
+
+        // Желаемый MMR не может быть ниже текущего.
+        // Равный текущему MMR разрешён.
+        if (to < from) {
+            to = from;
+            desired.value = to;
+        }
+        const diff = Math.max(0, to - from);
+        const service = getService();
+        const behavior = getBehavior();
+        const options = getOptions();
+
+        $('currentValue').textContent = format(from);
+        $('desiredValue').textContent = format(to);
+        $('currentRankText').textContent = format(from) + ' MMR';
+        $('desiredRankText').textContent = format(to) + ' MMR';
+        $('progressText').textContent = '+' + format(diff) + ' MMR';
+
+        const rankNames = document.querySelectorAll('.rank-info strong');
+        if (rankNames[0]) rankNames[0].textContent = rankName(from);
+        if (rankNames[1]) rankNames[1].textContent = rankName(to);
+
+        updateRankImages(from, to);
+
+        let price;
+
+        if (service === 'Буст рейтинга') {
+            // Основная цена теперь зависит от того, через какие ранги проходит буст.
+            // При 1000 → 2000 MMR получается 2 530 ₽, как в публичном калькуляторе.
+            price = calculateBoostPrice(from, to);
+        } else if (service === 'Калибровка') {
+            price = serviceBase[service] + Math.ceil(diff / 500) * 150;
+        } else {
+            price = serviceBase[service];
+        }
+
+        const activeMode = document.querySelector('.mode-button.active');
+        const mode = activeMode?.dataset.mode || 'Передача аккаунта';
+
+        if (mode.includes('+80%')) {
+            price *= 1.8;
+        } else if (mode.includes('+40%')) {
+            price *= 1.4;
+        }
+
+        // Порядочность:
+        // 9000+ = 0%
+        // 6000–9000 = +15%
+        // 3000–6000 = +30%
+        price = price * (1 + behavior.percent / 100);
+
+        // Дополнительные условия применяются после порядочности.
+        if (options.doubleTokens) price *= 0.75;
+        price = price * (1 + options.percent / 100);
+
+        if (service === 'Буст рейтинга' && diff === 0) {
+            price = 0;
+        } else {
+            price = Math.max(100, Math.round(price / 10) * 10);
+        }
+
+        $('totalPrice').textContent = format(price);
+        $('orderPrice').textContent = format(price);
+        $('optionsCount').textContent = options.count;
+        $('modeLabel').textContent = mode;
+        $('summaryMode').textContent = mode;
+
+        const summaryService = document.querySelector('.summary-line b');
+        if (summaryService) summaryService.textContent = service;
+
+        let hours = Math.max(24, Math.round(44 + diff * 0.048));
+        if (options.doubleTokens) hours *= 0.60;
+        if (options.speed) hours *= 0.70;
+        hours = Math.max(8, Math.round(hours));
+
+        const days = Math.floor(hours / 24);
+        const rest = hours % 24;
+        $('deadlineText').textContent = '≈' + days + ' дня ' + rest + ' часов';
+
+        window.dotaCalculatorState = {
+            service: service,
+            currentMMR: from,
+            desiredMMR: to,
+            progress: diff,
+            mode: mode,
+            behavior: behavior.text,
+            options: options.names,
+            behaviorPercent: behavior.percent,
+            price: price,
+            deadline: $('deadlineText').textContent
+        };
+    }
+
+    current.addEventListener('input', function () {
+        const from = Number(current.value);
+        const target = Number(desired.value);
+
+        // Желаемый MMR не прилипает к текущему.
+        // Он меняется только в момент, когда текущий MMR дошёл до
+        // прежнего желаемого значения: тогда цель становится +25 MMR.
+        if (from >= target) {
+            desired.value = Math.min(from + 25, Number(desired.max));
+        }
+
+        recalc();
+    });
+
+    desired.addEventListener('input', function () {
+        const from = Number(current.value);
+
+        if (Number(desired.value) < from) {
+            desired.value = from;
+        }
+
+        recalc();
+    });
+
+    document.querySelectorAll('.calc-tab').forEach(button => {
+        button.addEventListener('click', function () {
+            document.querySelectorAll('.calc-tab').forEach(item => item.classList.remove('active'));
+            this.classList.add('active');
+            recalc();
+        });
+    });
+
+    document.querySelectorAll('.mode-button').forEach(button => {
+        button.addEventListener('click', function () {
+            document.querySelectorAll('.mode-button').forEach(item => item.classList.remove('active'));
+            this.classList.add('active');
+            recalc();
+        });
+    });
+
+    document.querySelectorAll('.behavior').forEach(button => {
+        button.addEventListener('click', function () {
+            document.querySelectorAll('.behavior').forEach(item => item.classList.remove('active'));
+            this.classList.add('active');
+            recalc();
+        });
+    });
+
+    document.querySelectorAll('.option-card input').forEach(input => {
+        input.addEventListener('change', function () {
+            recalc();
+            updateSummaryOptions();
+        });
+    });
+
+    function updateSummaryOptions() {
+        const list = document.getElementById('summaryOptionsList');
+        if (!list) return;
+        const rows = list.querySelectorAll('.summary-option-row');
+        const inputs = Array.from(document.querySelectorAll('#calculator .option-card input'));
+        const hasSelectedOption = inputs.some(input => input.checked);
+
+        // Показываем блок справа, когда выбрана хотя бы одна дополнительная услуга.
+        list.hidden = !hasSelectedOption;
+
+        rows.forEach(row => {
+            const name = row.querySelector('span')?.textContent.trim();
+            const input = inputs.find(item => item.closest('.option-card')?.querySelector('.option-text strong')?.textContent.trim() === name);
+            const selected = Boolean(input?.checked);
+            const value = row.querySelector('b');
+
+            // В правой плашке показываем только выбранные условия: «Название — Да».
+            row.hidden = !selected;
+            if (value) {
+                value.textContent = 'Да';
+                value.classList.toggle('is-yes', selected);
+            }
+        });
+    }
+
+    updateSummaryOptions();
+
+    // Дополнительные опции: кнопка на скриншоте открывает/скрывает
+    // только два дополнительных варианта, не меняя ползунки MMR.
+    const moreOptionsButton = document.getElementById('moreOptionsButton');
+    const extraOptionsGrid = document.getElementById('extraOptionsGrid');
+
+    if (moreOptionsButton && extraOptionsGrid) {
+        moreOptionsButton.addEventListener('click', function () {
+            const collapsed = extraOptionsGrid.classList.toggle('is-collapsed');
+            const opened = !collapsed;
+
+            moreOptionsButton.setAttribute('aria-expanded', String(opened));
+            // Список справа зависит от выбранных дополнительных услуг, а не от раскрытия списка опций.
+            updateSummaryOptions();
+            moreOptionsButton.innerHTML = opened
+                ? '⌃ &nbsp; ДОПОЛНИТЕЛЬНЫЕ ОПЦИИ'
+                : '⌄ &nbsp; ДОПОЛНИТЕЛЬНЫЕ ОПЦИИ';
+        });
+    }
+
+    document.querySelector('.summary-order')?.addEventListener('click', function () {
+        const state = window.dotaCalculatorState || {};
+        sessionStorage.setItem('dotaCalculatorOrder', JSON.stringify(state));
+
+        alert(
+            'Заказ сформирован!\n\n' +
+            'Услуга: ' + state.service + '\n' +
+            'MMR: ' + format(state.currentMMR) + ' → ' + format(state.desiredMMR) + '\n' +
+            'Режим: ' + state.mode + '\n' +
+            'Порядочность: ' + state.behavior + '\n' +
+            'Опции: ' + (state.options.length ? state.options.join(', ') : 'нет') + '\n' +
+            'Срок: ' + state.deadline + '\n' +
+            'Цена: ' + format(state.price) + ' ₽'
+        );
+    });
+
+    recalc();
+});
+</script>
+
+<style id="calculator-final-functional">
+.calculator-section {
+    padding: 65px 10% 120px !important;
+    display: block !important;
+    background: #050509 !important;
+}
+
+.calculator-heading {
+    max-width: 1130px !important;
+    margin: 0 auto 30px !important;
+}
+
+.calculator-title-row {
+    display: flex !important;
+    align-items: flex-end !important;
+    justify-content: space-between !important;
+    gap: 60px !important;
+}
+
+.calculator-title-row h2 {
+    margin: 8px 0 0 !important;
+    font-size: 54px !important;
+    line-height: .98 !important;
+    letter-spacing: -2px !important;
+}
+
+.calculator-title-row h2 span {
+    color: #9b68ff !important;
+}
+
+.calculator-title-row p {
+    max-width: 440px !important;
+    margin: 0 0 6px !important;
+    color: #9995a9 !important;
+    font-size: 15px !important;
+    line-height: 1.5 !important;
+}
+
+.calculator-layout {
+    max-width: 1130px !important;
+    margin: 0 auto !important;
+    display: grid !important;
+    grid-template-columns: minmax(0, 680px) 430px !important;
+    gap: 18px !important;
+    align-items: start !important;
+}
+
+.calculator-panel,
+.calculator-summary {
+    background: linear-gradient(145deg, #19182d, #10101b) !important;
+    border: 1px solid rgba(153,104,255,.24) !important;
+    border-radius: 20px !important;
+    box-shadow: 0 20px 60px rgba(0,0,0,.28) !important;
+}
+
+.calculator-panel {
+    padding: 26px !important;
+}
+
+.calculator-summary {
+    padding: 29px !important;
+    position: sticky !important;
+    top: 85px !important;
+}
+
+.calc-tab {
+    font-family: "Gilroy", sans-serif !important;
+    font-weight: 700 !important;
+    cursor: pointer !important;
+    transition: .2s ease !important;
+}
+
+.calc-tab:hover {
+    color: #fff !important;
+}
+
+.calc-tab.active {
+    background: #292442 !important;
+    color: #fff !important;
+}
+
+.rank-card {
+    background: #030305 !important;
+}
+
+.rank-info strong {
+    font-family: "Gilroy", sans-serif !important;
+    font-weight: 700 !important;
+}
+
+.range-block input[type="range"] {
+    cursor: pointer !important;
+}
+
+.mode-button,
+.behavior {
+    font-family: "Gilroy", sans-serif !important;
+    font-weight: 700 !important;
+    cursor: pointer !important;
+}
+
+.option-card {
+    cursor: pointer !important;
+    transition: .18s ease !important;
+}
+
+.option-card:hover {
+    transform: translateY(-1px) !important;
+    background: #08080d !important;
+}
+
+.summary-order,
+.summary-question {
+    font-family: "Gilroy", sans-serif !important;
+    font-weight: 700 !important;
+    cursor: pointer !important;
+}
+
+.summary-order:hover {
+    transform: translateY(-2px) !important;
+}
+
+@media (max-width: 1050px) {
+    .calculator-title-row {
+        flex-direction: column !important;
+        align-items: flex-start !important;
+        gap: 20px !important;
+    }
+
+    .calculator-layout {
+        grid-template-columns: 1fr !important;
+    }
+
+    .calculator-summary {
+        position: static !important;
+    }
+}
+
+@media (max-width: 700px) {
+    .calculator-section {
+        padding: 60px 5% 90px !important;
+    }
+
+    .calculator-title-row h2 {
+        font-size: 40px !important;
+    }
+
+    .calculator-tabs {
+        grid-template-columns: 1fr 1fr !important;
+    }
+
+    .rank-row {
+        grid-template-columns: 1fr !important;
+    }
+
+    .rank-arrow {
+        transform: rotate(90deg) !important;
+    }
+
+    .options-grid,
+    .behavior-row {
+        grid-template-columns: 1fr !important;
+    }
+}
+</style>
+<!-- =========================================================
+     ФИНАЛЬНАЯ НАСТРОЙКА БАННЕРА СКИДКИ
+     Эти правила находятся в самом конце, поэтому перекрывают
+     предыдущие настройки баннера.
+     ========================================================= -->
+<style id="discount-banner-final-fix">
+
+/* Сам блок с текстами не двигаем */
+.banner .discount-text {
+    transform: none !important;
+}
+
+/* 20% СКИДКА — отдельно двигаем вправо */
+.banner .discount-title {
+    position: relative !important;
+    left: 100px !important;
+    transform: none !important;
+    margin: 0 !important;
+}
+
+/* НОВЫМ КЛИЕНТАМ — оставляем отдельно от заголовка */
+.banner .discount-subtitle {
+    position: relative !important;
+    left: 90px !important;
+    transform: none !important;
+}
+
+/* КНОПКА ПРИМЕНИТЬ — отдельно двигаем вправо */
+.banner .banner-apply {
+    position: relative !important;
+    left: 75px !important;
+    margin-left: 70px !important;
+
+    border: none !important;
+    outline: none !important;
+    box-shadow: none !important;
+    background: transparent !important;
+}
+
+/* Полностью убираем рамку у картинки кнопки */
+.banner .banner-apply img {
+    border: none !important;
+    outline: none !important;
+}
+
+/* И при фокусе/нажатии рамка не появляется */
+.banner .banner-apply:focus,
+.banner .banner-apply:focus-visible,
+.banner .banner-apply:active {
+    border: none !important;
+    outline: none !important;
+    box-shadow: none !important;
+}
+
+
+
+/* ==============================
+   ЕДУЩАЯ ПОЛОСА
+   ============================== */
+.moving-strip {
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+    background: #08080d;
+    line-height: 0;
+    white-space: nowrap;
+}
+
+.moving-strip-track {
+    display: flex;
+    width: max-content;
+    animation: movingStrip 18s linear infinite;
+    will-change: transform;
+}
+
+.moving-strip img {
+    display: block;
+    width: auto;
+    height: auto;
+    max-width: none;
+    flex: 0 0 auto;
+}
+
+@keyframes movingStrip {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .moving-strip-track { animation: none; }
+}
+</style> 
+
+
+<style id="calculator-requested-final-override">
+/* =========================================
+   ИЗМЕНЕНИЯ ПО ПОСЛЕДНЕМУ ЗАПРОСУ
+   ========================================= */
+
+/* Заголовки калькулятора — по центру */
+.calculator-section .calculator-heading {
+    text-align: center !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+}
+
+.calculator-section .calculator-heading .section-small-title {
+    display: block !important;
+    text-align: center !important;
+}
+
+.calculator-section .calculator-title-row {
+    display: block !important;
+    text-align: center !important;
+}
+
+.calculator-section .calculator-title-row h2 {
+    width: 100% !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    text-align: center !important;
+}
+
+.calculator-section .calculator-title-row h2 span,
+.calculator-section .calculator-title-row p {
+    display: none !important;
+}
+
+/* Основная панель калькулятора: 680px → 710px (+30px).
+   Правую панель и остальной функционал не меняем. */
+.calculator-section .calculator-layout {
+    grid-template-columns: minmax(0, 680px) 430px !important;
+}
+
+/* Адаптив */
+@media (max-width: 1050px) {
+    .calculator-section .calculator-layout {
+        grid-template-columns: 1fr !important;
+    }
+}
+</style>
+
+
+
+
+<style id="calculator-move-up-20px">
+/* Весь блок калькулятора поднят ещё на 20px вверх.
+   Функциональность, размеры и расчёты не меняем. */
+.calculator-section {
+    position: relative !important;
+    top: -20px !important;
+}
+</style>
+
+
+
+
+<style id="why-us-spacing-and-screen-gamma-final">
+.features.why-us .why-us-grid {
+    display: grid !important;
+    grid-template-columns: repeat(4, 297px) !important;
+    column-gap: 18px !important;
+    row-gap: 18px !important;
+    justify-content: center !important;
+    align-items: start !important;
+}
+
+/* Одинаковая позиция текста внутри каждой карточки */
+.features.why-us .why-card .feature-content {
+    top: 162px !important;
+    left: 39px !important;
+    right: 36px !important;
+    padding: 0 !important;
+}
+
+.features.why-us .why-card h3 {
+    height: 36px !important;
+    min-height: 36px !important;
+    margin: 0 0 10px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    text-align: center !important;
+}
+
+/* Абзацы начинаются на одинаковой высоте */
+.features.why-us .why-card p {
+    min-height: 72px !important;
+    margin: 0 !important;
+}
+
+/* Гамма секции — темный фиолетово-черный фон как на скрине */
+.features.why-us {
+    background: #0b0713 !important;
+}
+
+.calculator-section {
+    background: #0b0713 !important;
+}
+
+.calculator-panel,
+.calculator-summary {
+    background: linear-gradient(
+        145deg,
+        #181427 0%,
+        #121021 100%
+    ) !important;
+    border-color: rgba(151, 107, 225, .24) !important;
+}
+
+.calculator-panel > h3,
+.calculator-title-row h2 {
+    color: #fff !important;
+}
+
+.calculator-heading .section-small-title {
+    color: #9064c9 !important;
+}
+
+@media (max-width: 1300px) {
+    .features.why-us .why-us-grid {
+        grid-template-columns: repeat(2, 297px) !important;
+    }
+}
+
+@media (max-width: 700px) {
+    .features.why-us .why-us-grid {
+        grid-template-columns: 297px !important;
+    }
+}
+</style>
+
+ 
+
+<style id="calculator-brand-colors">
+#calculator.calculator-section {
+    background:
+        radial-gradient(ellipse at 12% 12%, rgba(145, 76, 255, .16), transparent 34%),
+        radial-gradient(ellipse at 88% 68%, rgba(160, 49, 99, .10), transparent 30%),
+        #090711 !important;
+    color: #f5f0ff !important;
+}
+#calculator .calculator-heading .section-small-title { color: #a16cff !important; }
+#calculator .calculator-heading .section-small-title::before { background: #a16cff !important; }
+#calculator .calculator-title-row h2 { color: #fff !important; }
+#calculator .calculator-panel,
+#calculator .calculator-summary {
+    border-color: rgba(170, 118, 255, .28) !important;
+    background: linear-gradient(145deg, #171326 0%, #100d20 70%, #151020 100%) !important;
+}
+#calculator .calculator-panel::before {
+    background: linear-gradient(90deg, #914cff, #a03163 48%, transparent 100%) !important;
+}
+#calculator .calculator-panel > h3 { color: #f5f0ff !important; }
+#calculator .calculator-tabs { border-color: #30263e !important; background: #0b0914 !important; }
+#calculator .calc-tab { color: #a79ab9 !important; }
+#calculator .calc-tab:hover { color: #fff !important; background: #21182f !important; }
+#calculator .calc-tab.active {
+    color: #fff !important;
+    border-color: rgba(161, 108, 255, .45) !important;
+    background: linear-gradient(135deg, #914cff, #642b9b) !important;
+    box-shadow: inset 0 1px rgba(255,255,255,.08), 0 4px 12px rgba(100,43,155,.24) !important;
+}
+#calculator .rank-card { border-color: #30263e !important; background: linear-gradient(145deg, #0b0914, #171020) !important; }
+#calculator .rank-label { color: #a79ab9 !important; }
+#calculator .rank-icon { border-color: rgba(161,108,255,.28) !important; background: radial-gradient(circle, rgba(145,76,255,.20), #090711 70%) !important; }
+#calculator .rank-info strong { color: #f5f0ff !important; }
+#calculator .rank-info small,
+#calculator .field-head b { color: #c39aff !important; }
+#calculator .rank-arrow { color: #a16cff !important; }
+#calculator .range-block { border-color: #30263e !important; background: #0c0915 !important; }
+#calculator .range-head { color: #a79ab9 !important; }
+#calculator .range-head b { color: #f5f0ff !important; }
+#calculator .range-block input[type="range"] { accent-color: #a16cff !important; }
+#calculator .field-head span { color: #e9e0f5 !important; }
+#calculator .behavior,
+#calculator .mode-button { border-color: #30263e !important; background: #100d1b !important; color: #c9bdd9 !important; }
+#calculator .behavior i { background: #665678 !important; }
+#calculator .behavior span { color: #a79ab9 !important; }
+#calculator .behavior.active { border-color: rgba(161,108,255,.78) !important; background: #21152f !important; color: #fff !important; }
+#calculator .behavior.active i { background: #a16cff !important; box-shadow: 0 0 9px rgba(161,108,255,.45) !important; }
+#calculator .mode-button.active { border-color: rgba(161,108,255,.78) !important; background: linear-gradient(90deg,#261638,#171020) !important; color: #fff !important; }
+#calculator .options-field { border-top-color: #30263e !important; }
+#calculator #optionsCount { border-color: #40304f !important; background: #1b1128 !important; }
+#calculator .option-card { border-color: #30263e !important; background: #100d1b !important; }
+#calculator .option-card:hover { border-color: #7549a8 !important; background: #171020 !important; }
+#calculator .option-card:has(input:checked) { border-color: rgba(161,108,255,.85) !important; background: linear-gradient(135deg, #241535, #15101f) !important; }
+#calculator .fake-check { border-color: #655678 !important; background: #090711 !important; }
+#calculator .option-card:has(input:checked) .fake-check { border-color: #a16cff !important; background: #914cff !important; }
+#calculator .option-text strong { color: #f1eafa !important; }
+#calculator .option-text small { color: #a79ab9 !important; }
+#calculator .option-card em { color: #c39aff !important; }
+#calculator .option-card em.free-option { color: #9bd6ad !important; }
+#calculator .more-options { border-color: #463354 !important; background: #0c0915 !important; color: #c39aff !important; }
+#calculator .calculator-summary {
+    background:
+        radial-gradient(ellipse at 100% 0%, rgba(145,76,255,.18), transparent 45%),
+        linear-gradient(155deg, #1a1427, #100d1b 75%) !important;
+    border-color: rgba(161,108,255,.34) !important;
+}
+#calculator .calculator-summary::before { background: linear-gradient(90deg,#914cff,#a03163) !important; }
+#calculator .summary-label { color: #a79ab9 !important; }
+#calculator .summary-price { border-bottom-color: #3a2b4b !important; }
+#calculator .summary-price span { color: #fff !important; }
+#calculator .summary-price small { color: #c39aff !important; }
+#calculator .summary-line span { color: #a79ab9 !important; }
+#calculator .summary-line b { color: #e9e0f5 !important; }
+#calculator .summary-order {
+    border-color: #b65a91 !important;
+    background: linear-gradient(135deg, #a03163, #71234c) !important;
+    box-shadow: 0 8px 22px rgba(160,49,99,.24), inset 0 1px rgba(255,255,255,.12) !important;
+    color: #fff !important;
+}
+#calculator .summary-question { border-color: #3a3048 !important; background: #11101a !important; color: #d1c4e2 !important; }
+#calculator .summary-question:hover { background: #1c1527 !important; border-color: #7549a8 !important; }
+#calculator .summary-safe { color: #9bd6ad !important; }
+</style>
+
+
+
+<style id="calculator-button-layout-only">
+#calculator .behavior-mode-row {
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) !important;
+    gap: 34px !important;
+    align-items: start !important;
+}
+#calculator .behavior-field .behavior-row,
+#calculator .mode-field .mode-switch {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 7px !important;
+    width: 100% !important;
+}
+#calculator .behavior-field .behavior,
+#calculator .mode-field .mode-button {
+    width: 100% !important;
+    min-width: 0 !important;
+    height: 35px !important;
+    min-height: 35px !important;
+    margin: 0 !important;
+    padding: 0 12px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: flex-start !important;
+    text-align: left !important;
+    white-space: nowrap !important;
+    border-radius: 9px !important;
+    box-sizing: border-box !important;
+    font-size: 10px !important;
+    line-height: 1.2 !important;
+}
+/* Цветные точки в кнопках порядочности — используется существующий <i>. */
+#calculator .behavior-field .behavior i {
+    display: inline-block !important;
+    flex: 0 0 6px !important;
+    width: 6px !important;
+    height: 6px !important;
+    margin: 0 8px 0 0 !important;
+    border-radius: 50% !important;
+    background: #28b85a !important;
+}
+#calculator .behavior-field .behavior:nth-child(2) i { background: #c7c52b !important; }
+#calculator .behavior-field .behavior:nth-child(3) i { background: #e23c46 !important; }
+#calculator .behavior-field .behavior span {
+    margin-left: 4px !important;
+    font-size: 9px !important;
+}
+/* Квадратный маркер перед режимом — декоративный, сами кнопки остаются рабочими. */
+#calculator .mode-field .mode-button::before {
+    content: "□";
+    display: inline-block;
+    flex: 0 0 10px;
+    width: 10px;
+    margin-right: 5px;
+    color: #e1d8ed;
+    font-size: 11px;
+    line-height: 1;
+}
+#calculator .mode-field .mode-button.active::before {
+    content: "□";
+    color: #e1d8ed;
+}
+@media (max-width: 700px) {
+    #calculator .behavior-mode-row {
+        grid-template-columns: minmax(0, 1fr) !important;
+        gap: 18px !important;
+    }
+    #calculator .behavior-field .behavior,
+    #calculator .mode-field .mode-button {
+        white-space: normal !important;
+    }
+}
+</style>
+
+
+
+<style id="summary-additional-options">
+#calculator .summary-options-list { margin: 4px 0 17px; padding: 12px 11px; border: 1px solid rgba(161,108,255,.25); border-radius: 10px; background: rgba(25,17,38,.72); }
+#calculator .summary-options-list[hidden] { display: none !important; }
+#calculator .summary-options-heading { margin-bottom: 10px; color: #c39aff; font-size: 10px; font-weight: 800; letter-spacing: .7px; text-transform: uppercase; }
+#calculator .summary-option-row { display: flex; align-items: flex-start; justify-content: space-between; gap: 8px; padding: 5px 0; border-bottom: 1px solid rgba(255,255,255,.055); }
+#calculator .summary-option-row:last-child { border-bottom: 0; }
+#calculator .summary-option-row span { color: #aaa0b7; font-size: 10px; line-height: 1.35; }
+#calculator .summary-option-row b { flex: 0 0 auto; color: #c18b83; font-size: 10px; font-weight: 800; }
+#calculator .summary-option-row b.is-yes { color: #9bd6ad; }
+</style>
+
+<style id="summary-only-selected-options">
+#calculator .summary-option-row[hidden] { display: none !important; }
+</style>
+
+
+<style id="summary-options-match-right-panel">
+#calculator .summary-options-list {
+    margin: 0 0 10px !important;
+    padding: 0 !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+}
+#calculator .summary-options-heading { display: none !important; }
+#calculator .summary-option-row {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    gap: 8px !important;
+    min-height: 49px !important;
+    padding: 12px 0 !important;
+    border-top: 1px solid rgba(255,255,255,.08) !important;
+    border-bottom: 0 !important;
+}
+#calculator .summary-option-row span {
+    color: #aaa0b7 !important;
+    font-size: 10px !important;
+    line-height: 1.4 !important;
+}
+#calculator .summary-option-row b,
+#calculator .summary-option-row b.is-yes {
+    color: #e2d8ed !important;
+    font-size: 10px !important;
+    font-weight: 800 !important;
+}
+</style>

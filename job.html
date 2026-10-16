@@ -1,0 +1,1886 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Работа | DotaFresh</title>
+
+
+    <style>
+
+        @font-face {
+            font-family: Gilroy;
+
+            src: url(
+                "{{ url_for(
+                    'static',
+                    filename='fonts/Gilroy-Medium_0.ttf'
+                ) }}"
+            ) format("truetype");
+        }
+
+
+        @font-face {
+            font-family: GilroyBold;
+
+            src: url(
+                "{{ url_for(
+                    'static',
+                    filename='fonts/Gilroy-Bold_0.ttf'
+                ) }}"
+            ) format("truetype");
+        }
+
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+
+        body {
+            min-height: 100vh;
+
+            color: white;
+
+            font-family:
+                Gilroy,
+                Arial,
+                sans-serif;
+
+            background:
+
+                linear-gradient(
+                    rgba(7, 5, 15, .84),
+                    rgba(7, 5, 15, .97)
+                ),
+
+                url(
+                    "{{ url_for(
+                        'static',
+                        filename='img/bg.png'
+                    ) }}"
+                )
+
+                center / cover fixed no-repeat;
+        }
+
+
+        /* ==================================================
+           HEADER
+        ================================================== */
+
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+
+            width: 100%;
+            height: 75px;
+
+            display: flex;
+            align-items: center;
+
+            padding: 0 34px;
+
+            background: rgba(7, 6, 18, .92);
+            border-bottom: 1px solid rgba(255,255,255,.06);
+
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+        }
+
+
+        /* ЛОГОТИП */
+
+        .logo {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 10px;
+
+            text-decoration: none;
+        }
+
+
+        .logo img {
+
+            width: 38px;
+
+            height: 38px;
+
+            object-fit: contain;
+
+            display: block;
+        }
+
+
+        .logo-text {
+
+            display: flex;
+
+            flex-direction: column;
+
+            justify-content: center;
+
+            line-height: 1;
+        }
+
+
+        .logo-name {
+
+            color: #ffffff;
+
+            font-family:
+                GilroyBold,
+                Arial,
+                sans-serif;
+
+            font-size: 20px;
+
+            letter-spacing: -.5px;
+        }
+
+
+        .logo-subtitle {
+
+            margin-top: 4px;
+
+            color:
+                rgba(255,255,255,.55);
+
+            font-family:
+                Gilroy,
+                Arial,
+                sans-serif;
+
+            font-size: 9px;
+
+            letter-spacing: .3px;
+        }
+
+
+        nav {
+            height: 75px;
+            display: flex;
+            align-items: center;
+
+            gap: 31px;
+            margin-left: clamp(180px, 25vw, 480px);
+
+            flex-shrink: 0;
+        }
+
+
+        nav a {
+            position: relative;
+            color: rgba(240, 236, 250, 0.72);
+            text-decoration: none;
+            font-size: 15px;
+            white-space: nowrap;
+            transition:
+                color .25s ease,
+                opacity .25s ease;
+        }
+
+        nav a:hover {
+            color: #ffffff;
+        }
+
+        nav a::after {
+            content: "";
+            position: absolute;
+            left: 0;
+            bottom: -8px;
+            width: 0;
+            height: 2px;
+            border-radius: 10px;
+            background: #914cff;
+            transition: width .25s ease;
+        }
+
+        nav a:hover::after {
+            width: 100%;
+        }
+
+        nav a.active {
+            color: #ffffff;
+        }
+
+        nav a.active::after {
+            width: 100%;
+        }
+
+
+
+        .header-buttons {
+            margin-left: auto;
+            height: 75px;
+
+            display: flex;
+            align-items: center;
+
+            flex-shrink: 0;
+        }
+
+        .header-buttons .header-btn:first-child {
+            width: 80px;
+            margin-right: 12px;
+        }
+
+        .header-buttons .header-btn:last-child {
+            width: 140px;
+        }
+
+
+        .header-btn {
+
+            min-height: 40px;
+
+            padding:
+                0 18px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            border-radius: 9px;
+
+            color: #ffffff;
+
+            text-decoration: none;
+
+            font-family:
+                GilroyBold,
+                Arial,
+                sans-serif;
+
+            font-size: 13px;
+
+            border:
+                1px solid
+                rgba(164,91,255,.35);
+
+            background:
+                rgba(113,58,185,.14);
+
+            transition: .25s;
+        }
+
+
+        .header-btn:hover {
+
+            transform:
+                translateY(-1px);
+
+            box-shadow:
+                0 0 18px
+                rgba(147,75,255,.18);
+        }
+
+
+        /* ==================================================
+           PAGE
+        ================================================== */
+
+        .page {
+
+            max-width: 1180px;
+
+            margin: 0 auto;
+
+            padding:
+                80px 25px 100px;
+        }
+
+
+        /* ==================================================
+           HERO
+        ================================================== */
+
+        .hero {
+
+            text-align: center;
+
+            padding:
+                45px 0 75px;
+        }
+
+
+        .hero-label {
+
+            display: inline-block;
+
+            margin-bottom: 22px;
+
+            padding:
+                8px 15px;
+
+            border:
+                1px solid
+                rgba(153,89,255,.35);
+
+            border-radius: 999px;
+
+            color: #b98cff;
+
+            background:
+                rgba(128,65,220,.08);
+
+            font-size: 13px;
+
+            letter-spacing: 1px;
+        }
+
+
+        h1 {
+
+            font-family:
+                GilroyBold,
+                Arial,
+                sans-serif;
+
+            font-size:
+                clamp(42px, 6vw, 76px);
+
+            line-height: .98;
+
+            letter-spacing: -2px;
+
+            margin-bottom: 25px;
+        }
+
+
+        .gradient {
+
+            background:
+                linear-gradient(
+                    90deg,
+                    #ffffff,
+                    #a66cff
+                );
+
+            -webkit-background-clip:
+                text;
+
+            -webkit-text-fill-color:
+                transparent;
+        }
+
+
+        .hero p {
+
+            max-width: 720px;
+
+            margin: 0 auto;
+
+            color:
+                rgba(255,255,255,.62);
+
+            font-size: 18px;
+
+            line-height: 1.65;
+        }
+
+
+        /* ==================================================
+           SECTIONS
+        ================================================== */
+
+        .section {
+
+            margin-top: 30px;
+        }
+
+
+        .section-title {
+
+            text-align: center;
+
+            margin-bottom: 35px;
+        }
+
+
+        .section-title h2 {
+
+            font-family:
+                GilroyBold,
+                Arial,
+                sans-serif;
+
+            font-size: 34px;
+
+            margin-bottom: 10px;
+        }
+
+
+        .section-title p {
+
+            color:
+                rgba(255,255,255,.48);
+        }
+
+
+        /* ==================================================
+           CARDS
+        ================================================== */
+
+        .cards {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, 1fr);
+
+            gap: 18px;
+        }
+
+
+        .card {
+
+            min-height: 190px;
+
+            padding: 30px;
+
+            border-radius: 18px;
+
+            border:
+                1px solid
+                rgba(255,255,255,.07);
+
+            background:
+                rgba(17,13,29,.72);
+
+            box-shadow:
+                0 15px 45px
+                rgba(0,0,0,.18);
+
+            transition: .3s;
+        }
+
+
+        .card:hover {
+
+            transform:
+                translateY(-5px);
+
+            border-color:
+                rgba(157,89,255,.28);
+
+            box-shadow:
+                0 20px 55px
+                rgba(105,48,190,.14);
+        }
+
+
+        .icon {
+
+            width: 45px;
+
+            height: 45px;
+
+            margin-bottom: 20px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            border-radius: 12px;
+
+            color: #c094ff;
+
+            background:
+                rgba(142,78,230,.13);
+
+            font-size: 20px;
+        }
+
+
+        .card h3 {
+
+            font-family:
+                GilroyBold,
+                Arial,
+                sans-serif;
+
+            font-size: 19px;
+
+            margin-bottom: 10px;
+        }
+
+
+        .card p {
+
+            color:
+                rgba(255,255,255,.54);
+
+            line-height: 1.55;
+
+            font-size: 14px;
+        }
+
+
+        /* ==================================================
+           REQUIREMENTS
+        ================================================== */
+
+        .requirements {
+
+            display: grid;
+
+            grid-template-columns:
+                1fr 1fr;
+
+            gap: 15px;
+        }
+
+
+        .requirement {
+
+            padding:
+                22px 25px;
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 15px;
+
+            border-radius: 14px;
+
+            border:
+                1px solid
+                rgba(255,255,255,.07);
+
+            background:
+                rgba(17,13,29,.68);
+        }
+
+
+        .check {
+
+            width: 32px;
+
+            height: 32px;
+
+            flex:
+                0 0 32px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            border-radius: 50%;
+
+            background:
+                rgba(143,76,232,.14);
+
+            color: #bb8aff;
+        }
+
+
+        .requirement strong {
+
+            display: block;
+
+            margin-bottom: 4px;
+
+            font-family:
+                GilroyBold,
+                Arial,
+                sans-serif;
+        }
+
+
+        .requirement span {
+
+            color:
+                rgba(255,255,255,.5);
+
+            font-size: 13px;
+        }
+
+
+        /* ==================================================
+           STEPS
+        ================================================== */
+
+        .steps {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(4, 1fr);
+
+            gap: 15px;
+        }
+
+
+        .step {
+
+            padding:
+                27px 22px;
+
+            border-radius: 16px;
+
+            background:
+                rgba(17,13,29,.68);
+
+            border:
+                1px solid
+                rgba(255,255,255,.07);
+        }
+
+
+        .number {
+
+            color: #a970ff;
+
+            font-family:
+                GilroyBold,
+                Arial,
+                sans-serif;
+
+            font-size: 14px;
+
+            margin-bottom: 17px;
+        }
+
+
+        .step h3 {
+
+            font-family:
+                GilroyBold,
+                Arial,
+                sans-serif;
+
+            margin-bottom: 8px;
+        }
+
+
+        .step p {
+
+            color:
+                rgba(255,255,255,.5);
+
+            font-size: 13px;
+
+            line-height: 1.5;
+        }
+
+
+        /* ==================================================
+           FLASH
+        ================================================== */
+
+        .flash {
+
+            max-width: 820px;
+
+            margin:
+                0 auto 20px;
+
+            padding:
+                14px 18px;
+
+            text-align: center;
+
+            border-radius: 10px;
+
+            color: #d9c4ff;
+
+            background:
+                rgba(130,72,210,.12);
+
+            border:
+                1px solid
+                rgba(164,91,255,.2);
+        }
+
+
+        /* ==================================================
+           FORM
+        ================================================== */
+
+        .form-box {
+
+            max-width: 820px;
+
+            margin: 0 auto;
+
+            padding: 38px;
+
+            border-radius: 22px;
+
+            background:
+                rgba(14,10,25,.82);
+
+            border:
+                1px solid
+                rgba(164,91,255,.16);
+
+            box-shadow:
+                0 25px 70px
+                rgba(0,0,0,.25);
+        }
+
+
+        .form-grid {
+
+            display: grid;
+
+            grid-template-columns:
+                1fr 1fr;
+
+            gap: 16px;
+        }
+
+
+        .field {
+
+            display: flex;
+
+            flex-direction: column;
+
+            gap: 8px;
+        }
+
+
+        .field.full {
+
+            grid-column:
+                1 / -1;
+        }
+
+
+        label {
+
+            font-size: 13px;
+
+            color:
+                rgba(255,255,255,.65);
+        }
+
+
+        input,
+        select,
+        textarea {
+
+            width: 100%;
+
+            padding:
+                14px 15px;
+
+            outline: none;
+
+            border:
+                1px solid
+                rgba(255,255,255,.09);
+
+            border-radius: 10px;
+
+            color: #ffffff;
+
+            background:
+                rgba(255,255,255,.035);
+
+            font-family:
+                Gilroy,
+                Arial,
+                sans-serif;
+
+            transition: .25s;
+        }
+
+
+        select option {
+
+            color: #111111;
+        }
+
+
+        input:focus,
+        select:focus,
+        textarea:focus {
+
+            border-color:
+                rgba(160,91,255,.55);
+
+            box-shadow:
+                0 0 0 3px
+                rgba(143,76,232,.08);
+        }
+
+
+        textarea {
+
+            min-height: 125px;
+
+            resize: vertical;
+        }
+
+
+        .submit {
+
+            width: 100%;
+
+            margin-top: 20px;
+
+            padding: 15px;
+
+            border: 0;
+
+            border-radius: 10px;
+
+            cursor: pointer;
+
+            color: #ffffff;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    #7440b8,
+                    #9658e8
+                );
+
+            font-family:
+                GilroyBold,
+                Arial,
+                sans-serif;
+
+            font-size: 15px;
+
+            transition: .3s;
+        }
+
+
+        .submit:hover {
+
+            transform:
+                translateY(-2px);
+
+            box-shadow:
+                0 10px 30px
+                rgba(125,65,210,.25);
+        }
+
+
+        .note {
+
+            margin-top: 13px;
+
+            text-align: center;
+
+            color:
+                rgba(255,255,255,.38);
+
+            font-size: 12px;
+        }
+
+
+
+
+        /* АНИМАЦИЯ КНОПКИ */
+        .submit {
+            transition: transform .3s ease, box-shadow .3s ease, filter .3s ease;
+        }
+
+        .submit:hover {
+            transform: translateY(-2px) scale(1.01);
+            filter: brightness(1.08);
+            box-shadow: 0 10px 30px rgba(125,65,210,.35);
+        }
+
+        /* ==================================================
+           FOOTER
+        ================================================== */
+
+        footer {
+
+            padding:
+                35px 20px;
+
+            text-align: center;
+
+            border-top:
+                1px solid
+                rgba(255,255,255,.06);
+
+            color:
+                rgba(255,255,255,.35);
+
+            font-size: 13px;
+        }
+
+
+        /* ==================================================
+           ADAPTIVE
+        ================================================== */
+
+        @media (max-width: 1500px) {
+            nav {
+                margin-left: 180px;
+            }
+        }
+
+        @media (max-width: 1200px) {
+            nav {
+                margin-left: 100px;
+                gap: 20px;
+            }
+        }
+
+        @media (max-width: 1050px) {
+            nav {
+                margin-left: 50px;
+                gap: 14px;
+            }
+        }
+
+        @media (max-width: 900px) {
+
+            header {
+
+                padding:
+                    0 20px;
+            }
+
+
+            nav {
+
+                gap: 15px;
+            }
+
+
+            .header-buttons {
+
+                display: none;
+            }
+
+
+            .cards,
+            .steps {
+
+                grid-template-columns:
+                    1fr 1fr;
+            }
+
+        }
+
+
+        @media (max-width: 650px) {
+
+            header {
+
+                height: 65px;
+            }
+
+
+            .logo img {
+
+                width: 36px;
+
+                height: 36px;
+            }
+
+
+            .logo-name {
+
+                font-size: 18px;
+            }
+
+
+            .logo-subtitle {
+
+                font-size: 8px;
+            }
+
+
+            nav {
+
+                display: none;
+            }
+
+
+            .page {
+
+                padding-top: 55px;
+            }
+
+
+            .cards,
+            .requirements,
+            .steps,
+            .form-grid {
+
+                grid-template-columns:
+                    1fr;
+            }
+
+
+            .field.full {
+
+                grid-column: auto;
+            }
+
+
+            .form-box {
+
+                padding: 23px;
+            }
+
+
+            h1 {
+
+                letter-spacing: -1px;
+            }
+
+        }
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- ======================================================
+     HEADER
+====================================================== -->
+
+<header>
+
+
+    <!-- ЛОГОТИП DotaFresh -->
+
+    <a
+        href="{{ url_for('index') }}"
+        class="logo"
+    >
+
+        <img
+            src="{{ url_for(
+                'static',
+                filename='img/лого.png'
+            ) }}"
+            alt="DotaFresh"
+        >
+
+
+        <div class="logo-text">
+
+            <div class="logo-name">
+                DotaFresh
+            </div>
+
+
+            <div class="logo-subtitle">
+                dota2 boost
+            </div>
+
+        </div>
+
+    </a>
+
+
+
+    <!-- МЕНЮ -->
+
+    <nav>
+
+        <a
+            href="{{ url_for('index') }}#services"
+        >
+            Услуги
+        </a>
+
+
+        <a
+            href="{{ url_for('index') }}#egirl"
+        >
+            E-Girl
+        </a>
+
+
+        <a
+            href="{{ url_for('contact') }}"
+        >
+            Контакты
+        </a>
+
+
+        <a
+            href="{{ url_for('job') }}"
+            class="active"
+        >
+            Работа
+        </a>
+
+
+        <a
+            href="{{ url_for('index') }}#guides"
+        >
+            Гайды
+        </a>
+
+
+        <a
+            href="{{ url_for('about') }}"
+        >
+            О нас
+        </a>
+
+    </nav>
+
+
+
+    <!-- КНОПКИ -->
+
+    <div class="header-buttons">
+
+
+        <a
+            href="{{ url_for('index') }}#services"
+            class="header-btn"
+        >
+            Бустер
+        </a>
+
+
+        <a
+            href="{{ url_for('cabinet') }}"
+            class="header-btn"
+        >
+            Личный кабинет
+        </a>
+
+
+    </div>
+
+
+</header>
+
+
+
+<main class="page">
+
+
+<!-- ======================================================
+     HERO
+====================================================== -->
+
+<section class="hero">
+
+
+    <div class="hero-label">
+        DOTAFRESH BOOSTER
+    </div>
+
+
+    <h1>
+
+        Зарабатывай на<br>
+
+        <span class="gradient">
+            любимой игре
+        </span>
+
+    </h1>
+
+
+    <p>
+
+        Стань частью команды DotaFresh.
+        Получай заказы, играй в Dota 2
+        и зарабатывай на своих навыках.
+        Гибкий график и поддержка команды.
+
+    </p>
+
+
+</section>
+
+
+
+<!-- ======================================================
+     ПОЧЕМУ DOTAFRESH
+====================================================== -->
+
+<section class="section">
+
+
+    <div class="section-title">
+
+        <h2>
+            Почему DotaFresh?
+        </h2>
+
+        <p>
+            Всё необходимое для комфортной работы бустером
+        </p>
+
+    </div>
+
+
+
+    <div class="cards">
+
+
+        <div class="card">
+
+            <div class="icon">
+                ₽
+            </div>
+
+            <h3>
+                Честные выплаты
+            </h3>
+
+            <p>
+                Получай оплату за выполненные
+                заказы на прозрачных условиях.
+            </p>
+
+        </div>
+
+
+
+        <div class="card">
+
+            <div class="icon">
+                ⌁
+            </div>
+
+            <h3>
+                Стабильные заказы
+            </h3>
+
+            <p>
+                Работай тогда, когда удобно,
+                и получай доступ к новым заказам.
+            </p>
+
+        </div>
+
+
+
+        <div class="card">
+
+            <div class="icon">
+                ◈
+            </div>
+
+            <h3>
+                Поддержка
+            </h3>
+
+            <p>
+                Команда DotaFresh поможет
+                разобраться с рабочими вопросами.
+            </p>
+
+        </div>
+
+
+
+        <div class="card">
+
+            <div class="icon">
+                ★
+            </div>
+
+            <h3>
+                Бонусы за скорость
+            </h3>
+
+            <p>
+                Выполняй заказы качественно
+                и быстро и получай дополнительные бонусы.
+            </p>
+
+        </div>
+
+
+
+        <div class="card">
+
+            <div class="icon">
+                ◷
+            </div>
+
+            <h3>
+                Свободный график
+            </h3>
+
+            <p>
+                Сам выбирай удобное время
+                для игры и выполнения заказов.
+            </p>
+
+        </div>
+
+
+
+        <div class="card">
+
+            <div class="icon">
+                ♙
+            </div>
+
+            <h3>
+                Комьюнити
+            </h3>
+
+            <p>
+                Общайся с другими бустерами
+                и развивайся вместе с командой.
+            </p>
+
+        </div>
+
+
+    </div>
+
+
+</section>
+
+
+
+<!-- ======================================================
+     ТРЕБОВАНИЯ
+====================================================== -->
+
+<section class="section">
+
+
+    <div class="section-title">
+
+        <h2>
+            Требования
+        </h2>
+
+        <p>
+            Что нужно для начала работы
+        </p>
+
+    </div>
+
+
+
+    <div class="requirements">
+
+
+        <div class="requirement">
+
+            <div class="check">
+                ✓
+            </div>
+
+            <div>
+
+                <strong>
+                    Высокий MMR
+                </strong>
+
+                <span>
+                    От 8000 MMR
+                </span>
+
+            </div>
+
+        </div>
+
+
+
+        <div class="requirement">
+
+            <div class="check">
+                ✓
+            </div>
+
+            <div>
+
+                <strong>
+                    Высокий Winrate
+                </strong>
+
+                <span>
+                    Стабильная положительная статистика
+                </span>
+
+            </div>
+
+        </div>
+
+
+
+        <div class="requirement">
+
+            <div class="check">
+                ✓
+            </div>
+
+            <div>
+
+                <strong>
+                    Хорошая порядочность
+                </strong>
+
+                <span>
+                    Высокий показатель поведения
+                </span>
+
+            </div>
+
+        </div>
+
+
+
+        <div class="requirement">
+
+            <div class="check">
+                ✓
+            </div>
+
+            <div>
+
+                <strong>
+                    Стабильный интернет
+                </strong>
+
+                <span>
+                    Надёжное подключение для игр
+                </span>
+
+            </div>
+
+        </div>
+
+
+
+        <div class="requirement">
+
+            <div class="check">
+                ✓
+            </div>
+
+            <div>
+
+                <strong>
+                    Коммуникация
+                </strong>
+
+                <span>
+                    Умение общаться с клиентами и командой
+                </span>
+
+            </div>
+
+        </div>
+
+
+
+        <div class="requirement">
+
+            <div class="check">
+                ✓
+            </div>
+
+            <div>
+
+                <strong>
+                    Опыт игры
+                </strong>
+
+                <span>
+                    Хорошее понимание Dota 2
+                </span>
+
+            </div>
+
+        </div>
+
+
+    </div>
+
+
+</section>
+
+
+
+<!-- ======================================================
+     КАК НАЧАТЬ
+====================================================== -->
+
+<section class="section">
+
+
+    <div class="section-title">
+
+        <h2>
+            Как начать?
+        </h2>
+
+        <p>
+            Всего четыре простых шага
+        </p>
+
+    </div>
+
+
+
+    <div class="steps">
+
+
+        <div class="step">
+
+            <div class="number">
+                01
+            </div>
+
+            <h3>
+                Заявка
+            </h3>
+
+            <p>
+                Заполни форму кандидата ниже.
+            </p>
+
+        </div>
+
+
+
+        <div class="step">
+
+            <div class="number">
+                02
+            </div>
+
+            <h3>
+                Проверка
+            </h3>
+
+            <p>
+                Мы проверим твой профиль и показатели.
+            </p>
+
+        </div>
+
+
+
+        <div class="step">
+
+            <div class="number">
+                03
+            </div>
+
+            <h3>
+                Тестовый заказ
+            </h3>
+
+            <p>
+                Пройди небольшой тест
+                и покажи свой уровень.
+            </p>
+
+        </div>
+
+
+
+        <div class="step">
+
+            <div class="number">
+                04
+            </div>
+
+            <h3>
+                Старт
+            </h3>
+
+            <p>
+                Получай доступ к заказам
+                и начинай работать.
+            </p>
+
+        </div>
+
+
+    </div>
+
+
+</section>
+
+
+
+<!-- ======================================================
+     ЗАЯВКА
+====================================================== -->
+
+<section
+    class="section"
+    id="application"
+>
+
+
+    <div class="section-title">
+
+        <h2>
+            Стать бустером
+        </h2>
+
+        <p>
+            Заполни заявку, и мы свяжемся с тобой
+        </p>
+
+    </div>
+
+
+
+    <!-- FLASH-СООБЩЕНИЯ -->
+
+    {% with messages = get_flashed_messages() %}
+
+        {% if messages %}
+
+            {% for message in messages %}
+
+                <div class="flash">
+                    {{ message }}
+                </div>
+
+            {% endfor %}
+
+        {% endif %}
+
+    {% endwith %}
+
+
+
+    <div class="form-box">
+
+
+        <form
+            action="{{ url_for('job_apply') }}"
+            method="POST"
+        >
+
+
+            <div class="form-grid">
+
+
+                <!-- НИК -->
+
+                <div class="field">
+
+                    <label for="nickname">
+                        Никнейм
+                    </label>
+
+                    <input
+                        id="nickname"
+                        name="nickname"
+                        type="text"
+                        placeholder="Твой никнейм"
+                        required
+                    >
+
+                </div>
+
+
+
+                <!-- КОНТАКТ -->
+
+                <div class="field">
+
+                    <label for="contact">
+                        Telegram / Discord
+                    </label>
+
+                    <input
+                        id="contact"
+                        name="contact"
+                        type="text"
+                        placeholder="@username или Discord"
+                        required
+                    >
+
+                </div>
+
+
+
+                <!-- MMR -->
+
+                <div class="field">
+
+                    <label for="mmr">
+                        Текущий MMR
+                    </label>
+
+                    <input
+                        id="mmr"
+                        name="mmr"
+                        type="number"
+                        min="8000"
+                        placeholder="8000+"
+                        required
+                    >
+
+                </div>
+
+
+
+                <!-- ПОЗИЦИЯ -->
+
+                <div class="field">
+
+                    <label for="role">
+                        Основная позиция
+                    </label>
+
+                    <select
+                        id="role"
+                        name="role"
+                        required
+                    >
+
+                        <option value="">
+                            Выбери позицию
+                        </option>
+
+
+                        <option value="1">
+                            1 позиция — Carry
+                        </option>
+
+
+                        <option value="2">
+                            2 позиция — Mid
+                        </option>
+
+
+                        <option value="3">
+                            3 позиция — Offlane
+                        </option>
+
+
+                        <option value="4">
+                            4 позиция — Support
+                        </option>
+
+
+                        <option value="5">
+                            5 позиция — Hard Support
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+
+                <!-- ПРОФИЛЬ -->
+
+                <div class="field full">
+
+                    <label for="profile">
+                        Dotabuff / OpenDota
+                    </label>
+
+                    <input
+                        id="profile"
+                        name="profile"
+                        type="url"
+                        placeholder="Ссылка на профиль"
+                    >
+
+                </div>
+
+
+
+                <!-- О СЕБЕ -->
+
+                <div class="field full">
+
+                    <label for="about">
+                        О себе
+                    </label>
+
+                    <textarea
+                        id="about"
+                        name="about"
+                        placeholder="Расскажи немного о себе, опыте игры и удобном графике..."
+                    ></textarea>
+
+                </div>
+
+
+            </div>
+
+
+
+            <button
+                class="submit"
+                type="submit"
+            >
+                ОТПРАВИТЬ ЗАЯВКУ
+            </button>
+
+
+
+            <div class="note">
+
+                Отправляя заявку, ты соглашаешься
+                на обработку указанных данных.
+
+            </div>
+
+
+        </form>
+
+
+    </div>
+
+
+</section>
+
+
+</main>
+
+
+
+<!-- ======================================================
+     FOOTER
+====================================================== -->
+
+<footer>
+
+    © 2026 DotaFresh.
+    Все права защищены.
+
+</footer>
+
+
+</body>
+
+</html>
